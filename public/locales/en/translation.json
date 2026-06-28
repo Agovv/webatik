@@ -60,15 +60,134 @@
     "welcome": {
         "dashboard": "Dashboard",
         "logIn": "Log in",
-        "register": "Register",
-        "title": "Let's get started",
-        "description": "Laravel has an incredibly rich ecosystem.",
-        "suggestion": "We suggest starting with the following.",
-        "read": "Read the",
-        "documentation": "Documentation",
-        "watch": "Watch video tutorials at",
-        "laracasts": "Laracasts",
-        "deploy": "Deploy now"
+        "register": "Get started",
+        "brand": "Maestro",
+        "nav": {
+            "features": "Features",
+            "stack": "Stack",
+            "demo": "Demo",
+            "code": "Code"
+        },
+        "hero": {
+            "badge": "Multitenant SaaS Boilerplate",
+            "title": "Ship your SaaS,",
+            "titleAccent": "not your boilerplate.",
+            "subtitle": "Maestro is a production-ready Laravel 13 + Inertia 3 starter kit that ships with multi-tenant isolation, RBAC, i18n, themes, and passkeys — so you can focus on what makes your product unique.",
+            "ctaPrimary": "Get started",
+            "ctaSecondary": "Watch demo"
+        },
+        "logos": {
+            "kicker": "Built with the stack you already trust"
+        },
+        "features": {
+            "kicker": "Features",
+            "title": "Everything you need to launch a multitenant SaaS.",
+            "subtitle": "Six pillars, wired together and ready to extend.",
+            "items": {
+                "tenancy": {
+                    "title": "Tenancy isolation",
+                    "description": "Each tenant gets its own database and session scope, identified by domain — powered by stancl/tenancy."
+                },
+                "rbac": {
+                    "title": "Roles & permissions",
+                    "description": "Granular access control with spatie/laravel-permission. Manage roles, permissions, and policies from the UI."
+                },
+                "i18n": {
+                    "title": "Internationalization",
+                    "description": "ICU plural support, lazy-loaded namespaces, browser detection — English and Spanish out of the box."
+                },
+                "themes": {
+                    "title": "Light, dark, system",
+                    "description": "Per-user appearance preferences with SSR-safe cookies and zero flash on load."
+                },
+                "security": {
+                    "title": "Passkeys & 2FA",
+                    "description": "Passwordless sign-in via WebAuthn and TOTP-based two-factor authentication, fully integrated with Fortify."
+                },
+                "ids": {
+                    "title": "ULIDs everywhere",
+                    "description": "Sortable, time-ordered identifiers for tenants, domains, and records — ready for scale."
+                }
+            }
+        },
+        "stack": {
+            "kicker": "Stack",
+            "title": "A modern, type-safe foundation.",
+            "subtitle": "Maestro leans on battle-tested tools and ergonomic frameworks."
+        },
+        "demo": {
+            "kicker": "Demo",
+            "title": "See it in motion.",
+            "subtitle": "A 30-second tour of the dashboard, tenant switcher, and theme system.",
+            "fallback": "Your browser does not support the video tag.",
+            "comingSoon": "Demo coming soon — generate it locally with Remotion."
+        },
+        "code": {
+            "kicker": "Code",
+            "title": "Provision a tenant in three lines.",
+            "subtitle": "Domain identified. Database cloned. Migrations run. You're live.",
+            "snippet": "use App\\Models\\Tenant;\n\n$tenant = Tenant::create([\n    'name' => 'Acme Corp',\n]);\n\n$tenant->domains()->create(['domain' => 'acme.maestro.test']);",
+            "caption": "Built on stancl/tenancy + Inertia 3 + React 19."
+        },
+        "cta": {
+            "title": "Ready to compose your SaaS?",
+            "subtitle": "Fork the boilerplate, brand it, and ship your first tenant this week."
+        },
+        "footer": {
+            "copyright": "© {year} Maestro. MIT License.",
+            "madeWith": "Crafted with Laravel, Inertia & React."
+        }
+    },
+    "tenantWelcome": {
+        "kicker": "Tenant workspace",
+        "title": "Welcome to {name}",
+        "subtitle": "You're inside the tenant workspace for",
+        "explanation": "A tenant is an isolated slice of the platform — its own database, its own users, its own configuration. Everything you do here is scoped to this tenant and invisible to the others.",
+        "isolationTitle": "What isolation means",
+        "isolationSubtitle": "Three guarantees that keep every tenant safe by default.",
+        "isolationItems": {
+            "database": {
+                "title": "Isolated database",
+                "description": "Each tenant owns its own database connection. Queries can't leak across tenants — full stop."
+            },
+            "session": {
+                "title": "Scoped sessions",
+                "description": "Authentication, cookies, and cache keys are namespaced by tenant. Sessions never cross boundaries."
+            },
+            "domains": {
+                "title": "Domain routing",
+                "description": "Tenants are identified by hostname, so users always land on the right workspace — no manual switching."
+            }
+        },
+        "quickActionsTitle": "Ready to dive in?",
+        "quickActionsSubtitle": "Sign in to manage your tenant, or create an account to get started.",
+        "infoPanelTitle": "Tenant identity",
+        "infoPanelSubtitle": "Identifiers and routing info for this workspace.",
+        "stats": {
+            "region": "Region",
+            "industry": "Industry",
+            "created": "Member since",
+            "notSet": "Not set"
+        },
+        "status": {
+            "active": "Active",
+            "trial": "Trial",
+            "suspended": "Suspended"
+        },
+        "actions": {
+            "dashboard": "Open dashboard",
+            "login": "Log in",
+            "register": "Get started"
+        },
+        "meta": {
+            "tenantId": "tenant_id",
+            "slug": "slug",
+            "domain": "domain"
+        }
+    },
+    "home": {
+        "centralTitle": "Maestro — Multitenant SaaS Boilerplate",
+        "tenantTitle": "{name} — Maestro Tenant"
     },
     "auth": {
         "login": {

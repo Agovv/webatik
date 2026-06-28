@@ -1,7 +1,10 @@
 import './i18n'; // initialize i18n before any component renders
 
 import { createInertiaApp } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { StrictMode, useEffect } from 'react';
+import type { ReactElement } from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import type { Root } from 'react-dom/client';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
@@ -10,9 +13,15 @@ import AuthLayout from '@/layouts/auth-layout';
 import CentralLayout from '@/layouts/central-layout';
 import ContextualLayout from '@/layouts/contextual-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import TenantLayout from '@/layouts/tenant-layout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+declare global {
+    interface Window {
+        maestroRoot?: Root;
+        maestroRootHydrating?: boolean;
+    }
+}
 
 function SyncHtmlLang() {
     useEffect(() => {
@@ -32,11 +41,25 @@ function SyncHtmlLang() {
     return null;
 }
 
+function wrapApp(app: ReactElement): ReactElement {
+    return (
+        <StrictMode>
+            <TooltipProvider delayDuration={0}>
+                <SyncHtmlLang />
+                {app}
+                <Toaster />
+            </TooltipProvider>
+        </StrictMode>
+    );
+}
+
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
         switch (true) {
             case name === 'welcome':
+            case name === 'central/welcome':
+            case name === 'tenant/welcome':
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
@@ -50,15 +73,34 @@ createInertiaApp({
                 return ContextualLayout;
         }
     },
-    strictMode: true,
-    withApp(app) {
-        return (
-            <TooltipProvider delayDuration={0}>
-                <SyncHtmlLang />
-                {app}
-                <Toaster />
-            </TooltipProvider>
-        );
+    setup({ el, App, props }) {
+        const app = wrapApp(<App {...props} />);
+
+        if (!el) {
+            return app;
+        }
+
+        if (window.maestroRoot) {
+            if (!window.maestroRootHydrating) {
+                window.maestroRoot.render(app);
+            }
+
+            return;
+        }
+
+        if (el.dataset.serverRendered === 'true') {
+            window.maestroRootHydrating = true;
+            window.maestroRoot = hydrateRoot(el, app);
+
+            window.requestAnimationFrame(() => {
+                window.maestroRootHydrating = false;
+            });
+
+            return;
+        }
+
+        window.maestroRoot = createRoot(el);
+        window.maestroRoot.render(app);
     },
     progress: {
         color: '#4B5563',

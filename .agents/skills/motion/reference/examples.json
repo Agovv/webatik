@@ -1,0 +1,3938 @@
+{
+  "js": [
+    {
+      "id": "accordion",
+      "title": "Accordion",
+      "description": "An example of an accordion component using Motion. Animate accordion content using height: auto and accessible markup. Uses focus events and shared layout animations for keyboard accessibility.",
+      "apis": [
+        "animate",
+        "press"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "app-store",
+      "title": "iOS App Store",
+      "description": "An example of creating a card layout inspired by the iOS App Store with Modal functionality in Motion.",
+      "apis": [
+        "animateView"
+      ],
+      "category": "Layout"
+    },
+    {
+      "id": "bounce-easing",
+      "title": "Bounce easing",
+      "description": "A toggle switch that demonstrates custom easing functions with both bounce and spring animations.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "characters-remaining",
+      "title": "Characters remaining",
+      "description": "An example of creating a character counter with spring animations in Motion",
+      "apis": [
+        "animate",
+        "transform"
+      ],
+      "category": "Forms"
+    },
+    {
+      "id": "color-interpolation",
+      "title": "Color interpolation",
+      "description": "A comparison of color interpolation between Motion and the browser's native interpolation. Motion uses linear RGB color space, which avoids the dimming effect suffered by browser interpolation.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "conic-gradient-pointer",
+      "title": "Conic gradient pointer",
+      "description": "An example of creating a dynamic conic gradient that follows the pointer position.",
+      "apis": [
+        "motionValue"
+      ],
+      "category": "Experimental"
+    },
+    {
+      "id": "family-dialog",
+      "title": "Family-style dialog",
+      "description": "Family-style dialog using Motion. It uses the HTML dialog and Motion's animateView function for View Transitions.",
+      "apis": [
+        "animate",
+        "hover",
+        "press",
+        "spring",
+        "animateView"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "gestures",
+      "title": "Gestures",
+      "description": "An example of using Motion's press and hover functions to animate elements as a user presses and hovers over them.",
+      "apis": [
+        "animate",
+        "press",
+        "hover"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "hold-to-confirm",
+      "title": "Hold to confirm",
+      "description": "A Motion example showing long-press interaction. The button's events update a progress motion value that drives multiple animations of other motion values.",
+      "apis": [
+        "animate",
+        "motionValue",
+        "mapValue",
+        "styleEffect",
+        "press"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "hover",
+      "title": "Hover",
+      "description": "An example of using Motion's hover function to animate elements as a user hovers over them. hover() automatically filters out polyfilled hover events from touch screens, which can normally lead to broken visual states.",
+      "apis": [
+        "animate",
+        "hover"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "html-content",
+      "title": "HTML content",
+      "description": "An example using Motion to animate HTML content via the Element.innerText property.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "image-reveal-slider",
+      "title": "Image reveal slider",
+      "description": "An image reveal slider that uses Motion's drag functionality to create a before/after image comparison with a sliding reveal effect. It includes keyboard accessibility and smooth animations.",
+      "apis": [
+        "animate",
+        "motionValue",
+        "mapValue",
+        "styleEffect"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "ios-slider",
+      "title": "iOS slider",
+      "description": "An example of recreating the iOS slider using Motion for JavaScript. This example creates a brightness slider with iOS-like overscroll and springy animations.",
+      "apis": [
+        "animate",
+        "mix",
+        "motionValue",
+        "mapValue",
+        "transformValue",
+        "styleEffect"
+      ],
+      "category": "Forms"
+    },
+    {
+      "id": "layered-sections",
+      "title": "Layered sections",
+      "description": "An example of creating a layered scrolling effect using CSS sticky to replace GSAP's scroll pinning.",
+      "apis": [],
+      "category": "Basics"
+    },
+    {
+      "id": "lightbox",
+      "title": "Lightbox",
+      "description": "An example of a lightbox shared element transitionusing Motion's view function.",
+      "apis": [
+        "press",
+        "animateView",
+        "spring"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "loading-circle-spinner",
+      "title": "Loading: Circle spinner",
+      "description": "An example of creating a circle spinner loading animation with Motion.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-fill-text",
+      "title": "Fill text",
+      "description": "An example of creating a text fill loading animation with Motion.",
+      "apis": [
+        "animate",
+        "transform"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-infinite-path-drawing",
+      "title": "Loading: Infinite path drawing",
+      "description": "An example of creating an infinite path drawing loading animation with Motion. This example uses svgEffect to animate the path. svgEffect is the next-generation Motion SVG renderer that makes it easy to create these infinitely looping drawing animations. In a future version of Motion it'll be possible to just use the animate function below without the svgEffect setup.",
+      "apis": [
+        "animate",
+        "motionValue"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-jumping-dots",
+      "title": "Loading: Jumping dots",
+      "description": "An example of creating a jumping dots loading animation with Motion.",
+      "apis": [
+        "animate",
+        "stagger"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-line-reveal",
+      "title": "Loading overlay",
+      "description": "An example of creating a line reveal loading animation with clipPath in Motion",
+      "apis": [
+        "animate",
+        "transform"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-progress-bar",
+      "title": "Loading progress bar",
+      "description": "An example of creating a progress bar loading animation with Motion.",
+      "apis": [
+        "animate",
+        "transform"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-ripple",
+      "title": "Loading ripple",
+      "description": "An example of creating a ripple loading animation with Motion.",
+      "apis": [
+        "animate",
+        "stagger"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-three-dots-pulse",
+      "title": "Loading: Pulse dots",
+      "description": "An example of creating a pulsing dots loading animation with Motion.",
+      "apis": [
+        "animate",
+        "stagger"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "material-design-ripple",
+      "title": "Material Design: Ripple",
+      "description": "An example of creating a press ripple with Motion, inspired by Google Material Design.",
+      "apis": [
+        "animate",
+        "hover"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "modal",
+      "title": "Modal dialog",
+      "description": "An example of a modal dialog using Motion and the HTML <dialog /> element. This example demonstrates smooth animations for opening and closing the modal, with a backdrop overlay and click-outside-to-close functionality.",
+      "apis": [
+        "animate",
+        "hover",
+        "press"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "multi-state-badge",
+      "title": "Multi state badge",
+      "description": "A badge that can be in multiple states, such as processing, success, or error.",
+      "apis": [
+        "animate",
+        "motionValue",
+        "transform",
+        "press"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "notifications-list",
+      "title": "Notifications list",
+      "description": "An example of animating a list of animations as they're added and removed, using Motion for JavaScript's animation capabilities. It implements manual FLIP animations so that notifications animate into their new layouts.",
+      "apis": [
+        "animate",
+        "press"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "notifications-stack",
+      "title": "Notifications stack",
+      "description": "A iOS inspired notifications stack using Motion's variants.",
+      "apis": [
+        "animate",
+        "press"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "options",
+      "title": "Basic animation",
+      "description": "An example of using easing and duration options to customise a scale animation in Motion.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "page-wipe",
+      "title": "Page wipe",
+      "description": "An example of combining a full page wipe with a shared element transition using Motion's view function. The view function is built on the browser's native View Transition API.",
+      "apis": [
+        "press",
+        "animateView",
+        "spring"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "parallax",
+      "title": "Parallax",
+      "description": "An example of creating a parallax effect using Motion's scroll function.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "press",
+      "title": "Press",
+      "description": "An example of using Motion's press function to animate elements as a user presses them. press() automatically filters out right clicks and secondary touch points. Every element with a press gesture is keyboard accessible by default.",
+      "apis": [
+        "animate",
+        "press"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "rotate",
+      "title": "Rotate",
+      "description": "An example of a rotation animation in Motion.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-fade",
+      "title": "Scroll fade in/out",
+      "description": "An example of fading content in and out as you scroll using Motion's scroll function.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-highlight",
+      "title": "Scroll highlight",
+      "description": "An example of creating a scroll-triggered skill showcase with dynamic highlighting in Motion.",
+      "apis": [
+        "inView"
+      ],
+      "category": "Scroll"
+    },
+    {
+      "id": "scroll-pinning",
+      "title": "Scroll pinning",
+      "description": "An example of pinning content on scroll and animating content horizontally using position: sticky and Motion's scroll function.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-triggered",
+      "title": "Scroll-triggered animation",
+      "description": "An example of using Motion's inView function to trigger animations when elements enter the viewport.",
+      "apis": [
+        "animate",
+        "inView"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "shared-view-animation",
+      "title": "Shared view animation",
+      "description": "Animate shared elements between states using View Transitions API via Motion's view() function.",
+      "apis": [
+        "press",
+        "animateView",
+        "spring"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "split-text",
+      "title": "Split Text",
+      "description": "Demonstrate how to use the splitText function from Motion+ to create staggered text animations.",
+      "apis": [
+        "animate",
+        "stagger",
+        "splitText"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "split-text-scatter",
+      "title": "Split Text: Scatter",
+      "description": "Demonstrate how to use the splitText function from Motion+ to create scatter text animations.",
+      "apis": [
+        "animate",
+        "hover",
+        "splitText"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "split-text-wavy",
+      "title": "Split Text: Wavy",
+      "description": "Demonstrate how to use the splitText function from Motion+ to create wavy text animations.",
+      "apis": [
+        "animate",
+        "stagger",
+        "hover",
+        "splitText"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "spring",
+      "title": "Spring",
+      "description": "An example of a spring animation in Motion.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "spring-follow-cursor",
+      "title": "Spring: Follow Cursor",
+      "description": "An example of a spring animation that follows the cursor.",
+      "apis": [
+        "animate",
+        "styleEffect"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "stagger",
+      "title": "Stagger",
+      "description": "An example of staggering animations in Motion using its stagger() function.",
+      "apis": [
+        "animate",
+        "stagger"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "staggered-grid",
+      "title": "Physical stagger",
+      "description": "An example of animating elements with a delay staggered by physical distance.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "svg-loading-spinner",
+      "title": "SVG loading spinner",
+      "description": "An example of using Motion to animate an SVG loading spinner.",
+      "apis": [
+        "animate",
+        "stagger"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "svg-path-morphing",
+      "title": "SVG path morphing",
+      "description": "An example of using Motion and Flubber to animate an SVG between different shapes.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "text-reveal",
+      "title": "Reveal text effect",
+      "description": "An example of revealing text on hover using flexbox and Motion's layout animations.",
+      "apis": [
+        "animate",
+        "hover"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "three",
+      "title": "Three.js",
+      "description": "An example of a rotating cube using Three.js and Motion.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "tilt-card",
+      "title": "Tilt card",
+      "description": "A card that tilts based on pointer position using Motion's spring animations.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "typewriter",
+      "title": "Typewriter",
+      "description": "An example of a typewriter effect using Motion for JavaScript animation values.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "view-animation",
+      "title": "View animation",
+      "description": "An example of animating a layout change using the View Transitions API via Motion's simple view function.",
+      "apis": [
+        "press",
+        "animateView",
+        "spring"
+      ],
+      "category": "Basics"
+    }
+  ],
+  "react": [
+    {
+      "id": "accordion",
+      "title": "Accordion",
+      "description": "An example of an accordion component using Motion for React. Animate accordion content using height: auto and accessible markup. Uses focus events and shared layout animations for keyboard accessibility.",
+      "apis": [
+        "motion",
+        "MotionConfig",
+        "animate",
+        "variants",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "animate-activity",
+      "title": "AnimateActivity: Slideshow",
+      "description": "An example of using AnimateActivity to create a slideshow.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileTap",
+        "whileFocus",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "animate-presence-modes",
+      "title": "AnimatePresence modes",
+      "description": "An example of the three AnimatePresence modes (sync, wait, and popLayout) demonstrating how elements enter and exit the DOM with Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileTap"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "app-store",
+      "title": "iOS App Store",
+      "description": "An example of animating cards inspired by the iOS App Store using Motion for React's layout animations.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Layout"
+    },
+    {
+      "id": "apple-intelligence",
+      "title": "Apple Intelligence ripple",
+      "description": "An example of the 'ripple' part of the Apple Intelligence animation using Motion for React. It uses a cloned version of the current content rather than using shaders.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Experimental"
+    },
+    {
+      "id": "apple-watch-home-screen",
+      "title": "Apple Watch Home Screen",
+      "description": "A recreation of the Apple Watch home screen's iconic app grid with fluid drag interactions and dynamic scaling using Motion for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Experimental"
+    },
+    {
+      "id": "aspect-ratio",
+      "title": "Aspect ratio",
+      "description": "An example of animating aspect-ratio using Motion for React's layout animations.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "base-accordion",
+      "title": "Base UI: Accordion",
+      "description": "An example of creating an accordion component with Base UI and Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "MotionConfig",
+        "animate",
+        "whileTap",
+        "variants",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-checkbox",
+      "title": "Base UI: Checkbox",
+      "description": "An example of creating a checkbox with path line animation for the tick using Base UI and Motion for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-context-menu",
+      "title": "Base UI: Context menu",
+      "description": "An example of creating a context menu with smooth animations using Base UI and Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-dialog",
+      "title": "Base UI: Dialog",
+      "description": "An example of creating a dialog component with overlay and content animations using Base UI and Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-menu",
+      "title": "Base UI: Dropdown menu",
+      "description": "An example of creating a dropdown menu with smooth animations using Base UI and Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "whileFocus"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-progress",
+      "title": "Base UI: Progress",
+      "description": "An example of creating a progress component using Base UI and Motion for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-radio",
+      "title": "Base UI: Radio",
+      "description": "An example of creating a radio group component using Base UI and Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-select",
+      "title": "Base UI: Select",
+      "description": "An example of creating a select component using Base UI and Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "viewport"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-switch",
+      "title": "Base UI: Switch",
+      "description": "An example of creating a switch component using Base UI and Motion for React. This examples uses CSS variables, spring and layout animations to animate the switch by switching justify-content.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileFocus",
+        "layout"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-tabs",
+      "title": "Base UI: Tabs",
+      "description": "An example of creating a tabs component using Base UI and Motion for React. It uses layout animations to animate the height of the container.",
+      "apis": [
+        "AnimatePresence",
+        "LayoutGroup",
+        "motion",
+        "animate",
+        "whileTap",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-toast",
+      "title": "Base UI: Toast",
+      "description": "An example of creating a toast component using Base UI and Motion for React. It uses spring animations and AnimatePresence to provide exit animations for the toast dialog.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "viewport",
+        "drag"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-toggle-group",
+      "title": "Base UI: Toggle group",
+      "description": "An example of creating a toggle group component using Base UI and Motion for React. It uses shared layout animations and CSS mix blend modes to create an animated selected effect.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileTap",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "base-tooltip",
+      "title": "Base UI: Tooltip",
+      "description": "An example of creating a tooltip component using Base UI and Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate"
+      ],
+      "category": "Base UI"
+    },
+    {
+      "id": "bezier-curve-editor",
+      "title": "Bezier curve editor",
+      "description": "Motion Studio SDK's bezier curve editor is a controlled, stylable React input with keyboard and touch accessibility.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Studio SDK"
+    },
+    {
+      "id": "bounce-easing",
+      "title": "Bounce easing",
+      "description": "An example of creating a bounce custom easing function in Motion for React.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "card-stack",
+      "title": "Card stack",
+      "description": "An example of creating a swipeable card stack with photos in Motion for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileTap",
+        "drag"
+      ],
+      "category": "Lists"
+    },
+    {
+      "id": "carousel",
+      "title": "Carousel",
+      "description": "An example of creating a carousel using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "animate",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-autoplay",
+      "title": "Carousel: Autoplay",
+      "description": "An example of creating an autoplay carousel with a progress bar indicator using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "animate",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-coverflow",
+      "title": "Carousel: Coverflow",
+      "description": "An example of creating a coverflow-style carousel with 3D rotation using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-free-scroll",
+      "title": "Carousel: Free scroll",
+      "description": "An example of creating a free-scrolling carousel without snap points using the Motion+ Carousel component for React.",
+      "apis": [
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-ios-exposure-slider",
+      "title": "Carousel: iOS exposure slider",
+      "description": "An example of creating a camera exposure slider interface with animated notches using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useMotionValueEvent",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Forms"
+    },
+    {
+      "id": "carousel-item-offset",
+      "title": "Carousel: Offset-linked animations",
+      "description": "An example of creating a carousel with offset-linked animations using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-lightbox",
+      "title": "Carousel: Lightbox",
+      "description": "An example of creating a carousel with lightbox overlay functionality using the Motion+ Carousel component for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-loop",
+      "title": "Carousel: Loop",
+      "description": "An example of creating a carousel with infinite scrolling using the Motion+ Carousel component for React.",
+      "apis": [
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-pagination-arrows",
+      "title": "Carousel: Pagination",
+      "description": "An example of creating a carousel with clickable pagination dots and navigation arrows using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "whileHover",
+        "whileTap",
+        "drag",
+        "layout"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-pagination-page-count",
+      "title": "Carousel: Pagination with page count",
+      "description": "An example of creating a carousel with pagination indicators that show the current page and total pages using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "whileHover",
+        "whileTap",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-pagination-scaling",
+      "title": "Carousel: Scaling pagination dots",
+      "description": "An example of creating a carousel with pagination dots that scale down at the edges in Motion for React.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "drag",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-parallax",
+      "title": "Carousel: Parallax",
+      "description": "An example of creating a carousel with a parallax effectusing the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "animate",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-progress-scrubber",
+      "title": "Carousel: Progress scrubber",
+      "description": "An example of creating a carousel with a progress scrubber using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useMotionValueEvent",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-rtl",
+      "title": "Carousel: RTL",
+      "description": "An example of creating a carousel with RTL support using the Motion+ Carousel component for React. The layout of the carousel items is automatically reversed.",
+      "apis": [
+        "motion",
+        "animate",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-scale-items",
+      "title": "Carousel: Scale items",
+      "description": "An example of creating a carousel with items that scale out using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "animate",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-thumbnail-gallery",
+      "title": "Carousel: Thumbnail gallery",
+      "description": "An example of creating a carousel with a thumbnail navigation gallery using the Motion+ Carousel",
+      "apis": [
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-vertical",
+      "title": "Carousel: Vertical",
+      "description": "An example of creating a vertical carousel with navigation in Motion for React.",
+      "apis": [
+        "motion",
+        "whileHover",
+        "whileTap",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "characters-remaining",
+      "title": "Characters remaining",
+      "description": "An example of creating a character counter with spring animations in Motion for React",
+      "apis": [
+        "motion",
+        "useAnimate",
+        "animate"
+      ],
+      "category": "Forms"
+    },
+    {
+      "id": "color-interpolation",
+      "title": "Color interpolation",
+      "description": "A comparison of color interpolation between Motion and the browser's native interpolation. Motion uses linear RGB color space, which avoids the dimming effect suffered by browser interpolation.",
+      "apis": [
+        "useAnimate",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "color-picker",
+      "title": "Color picker",
+      "description": "An example of creating a circular color picker with dots that react to cursor movement with soft springs using Motion for React.",
+      "apis": [
+        "usePointerPosition",
+        "motion",
+        "useMotionValue",
+        "useSpring",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "variants"
+      ],
+      "category": "Forms"
+    },
+    {
+      "id": "conic-gradient-pointer",
+      "title": "Conic gradient pointer",
+      "description": "An example of creating a dynamic conic gradient with motion values and pointer position.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "viewport"
+      ],
+      "category": "Experimental"
+    },
+    {
+      "id": "css-spring",
+      "title": "CSS spring",
+      "description": "An example of generating a spring animation in CSS using Motion's spring function.",
+      "apis": [
+        "spring"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "cursor",
+      "title": "Cursor: Adaptive caret size",
+      "description": "An example of Motion+ Cursor with default settings. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-custom-content",
+      "title": "Cursor: Custom content",
+      "description": "An example of adding custom content to Motion+ Cursor when hovering over a specific element. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "motion",
+        "whileHover"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-floating-target",
+      "title": "Cursor: Floating target",
+      "description": "An example of creating a floating target with rotating text and hover effects using the Motion+ Cursor and usePointerPosition.",
+      "apis": [
+        "Cursor",
+        "usePointerPosition",
+        "motion",
+        "useAnimate",
+        "useSpring",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-follow",
+      "title": "Cursor: Follow",
+      "description": "An example of making an element follow the cursor with a spring animation using Motion+ Cursor. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "AnimatePresence",
+        "motion",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-hover-follow",
+      "title": "Cursor: Image hover",
+      "description": "An example of a cursor image hover effect using Motion for React. It links skewX and skewY to the cursor velocity, smoothed via useSpring.",
+      "apis": [
+        "Cursor",
+        "usePointerPosition",
+        "AnimatePresence",
+        "motion",
+        "useSpring",
+        "useTransform",
+        "useVelocity",
+        "variants",
+        "layout"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-magnetic",
+      "title": "Cursor: Magnetic target",
+      "description": "An example of Motion+ Cursor with magnetic target snapping enabled. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "motion",
+        "useMotionValue",
+        "animate",
+        "whileTap",
+        "variants",
+        "layout"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-multifollow",
+      "title": "Cursor: Multi-follow",
+      "description": "An example of attaching multiple elements to follow the cursor at the same time, all with different spring animations. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-trail",
+      "title": "Cursor trail",
+      "description": "An example of creating a cursor trail with images in Motion for React.",
+      "apis": [
+        "wrap",
+        "usePointerPosition",
+        "AnimatePresence",
+        "motion",
+        "useMotionValueEvent",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-trail-velocity",
+      "title": "Cursor trail velocity",
+      "description": "An example of creating a cursor trail with velocity-based inertia animations in Motion for React.",
+      "apis": [
+        "wrap",
+        "usePointerPosition",
+        "AnimatePresence",
+        "motion",
+        "useMotionValueEvent",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "drag",
+      "title": "Drag",
+      "description": "An example of making an element draggable using Motion for React's drag prop.",
+      "apis": [
+        "motion",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "drag-constraints",
+      "title": "Drag: Constraints",
+      "description": "An example of making an element draggable using Motion for React's drag prop. You can even set drag constraints by providing a ref to another element.",
+      "apis": [
+        "motion",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "drag-lock-direction",
+      "title": "Drag: Lock direction",
+      "description": "An example of locking the drag direction of an element based on its initial drag direction using Motion for React's dragDirectionLock prop.",
+      "apis": [
+        "motion",
+        "animate",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "enter-animation",
+      "title": "Enter animation",
+      "description": "An example of animating an element when it's added to the DOM using Motion for React.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "exit-animation",
+      "title": "Exit animation",
+      "description": "An example of animating an element when it's removed from the DOM using AnimatePresence in Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileTap"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "family-dialog",
+      "title": "Family-style dialog",
+      "description": "Family-style dialog using Motion for React. It uses the HTML dialog and Motion's shared layout animations.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "MotionConfig",
+        "animate",
+        "whileTap",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "follow-pointer-with-spring",
+      "title": "Follow pointer with spring",
+      "description": "An example of making an element follow the pointer with a spring using Motion for React's useSpring hook.",
+      "apis": [
+        "motion",
+        "useSpring"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "gestures",
+      "title": "Gestures",
+      "description": "An example of using gestures to animate an element using Motion for React's simple whileTap and whileHover props.",
+      "apis": [
+        "motion",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "hold-to-confirm",
+      "title": "Hold to confirm",
+      "description": "A Motion for React example showing long-press interaction. The button's events update a progress motion value that drives multiple animations of other motion values.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "html-content",
+      "title": "HTML content",
+      "description": "An example using Motion for React to animate HTML content by rendering a MotionValue.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "image-reveal-slider",
+      "title": "Image reveal slider",
+      "description": "An example of creating an interactive image comparison slider with Motion for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "drag"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "infinite-loading",
+      "title": "Infinite loading",
+      "description": "An example of creating an infinite loading list with staggered animations in Motion for React.",
+      "apis": [
+        "motion",
+        "animate",
+        "onViewportEnter",
+        "variants"
+      ],
+      "category": "Lists"
+    },
+    {
+      "id": "ios-pointer",
+      "title": "iOS pointer animation",
+      "description": "An example of making the iOS pointer animation using Motion+ Cursor's magnetic snapping. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "motion",
+        "whileTap",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "ios-slider",
+      "title": "iOS slider",
+      "description": "An example of recreating the iOS slider using Motion for React. This example uses useTransform to map input to slider state, and slider state to pull, squish and squash animations. It uses React'setModal onFocus and onBlur to set up keyboard-accessible inputs, with Motion's whileFocus prop to animate a custom focus indicator.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileFocus",
+        "drag"
+      ],
+      "category": "Forms"
+    },
+    {
+      "id": "keyframes",
+      "title": "Keyframes",
+      "description": "An example of animating an element using keyframes with Motion for React.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "keyframes-wildcards",
+      "title": "Keyframe wildcards",
+      "description": "An example of using Motion for React's keyframe wildcards to create interruptible keyframe animations. ",
+      "apis": [
+        "motion",
+        "whileHover"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "layout-animation",
+      "title": "Layout animation",
+      "description": "An example of animating a layout change using Motion for React's simple layout prop.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "line-graph",
+      "title": "Line graph",
+      "description": "An SVG line graph that uses Cursor and AnimateNumber to display changes in data points as an animated cursor annotation.",
+      "apis": [
+        "AnimateNumber",
+        "Cursor",
+        "AnimatePresence",
+        "motion",
+        "MotionConfig",
+        "animate",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "loading-circle-spinner",
+      "title": "Loading: Circle spinner",
+      "description": "An example of creating a circle spinner loading animation with Motion for React.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-fill-text",
+      "title": "Fill text",
+      "description": "An example of creating a text fill loading animation with Motion for React.",
+      "apis": [
+        "motion",
+        "useSpring",
+        "useTransform"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-jumping-dots",
+      "title": "Loading: Jumping dots",
+      "description": "An example of creating a jumping dots loading animation with Motion for React.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-line-reveal",
+      "title": "Loading overlay",
+      "description": "An example of creating a line reveal loading animation with clipPath in Motion for React",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useMotionValueEvent",
+        "useSpring",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-progress-bar",
+      "title": "Loading progress bar",
+      "description": "An example of creating a progress bar loading animation with Motion for React.",
+      "apis": [
+        "motion",
+        "useSpring"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-ripple",
+      "title": "Loading ripple",
+      "description": "An example of creating a ripple loading animation with Motion for React.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-three-dots-pulse",
+      "title": "Loading: Pulse dots",
+      "description": "An example of creating a pulsing dots loading animation with Motion for React.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "magnetic-filings",
+      "title": "Magnetic filings",
+      "description": "An example of creating a grid of metal filings that rotate to point towards the cursor position using Motion for React.",
+      "apis": [
+        "usePointerPosition",
+        "motion",
+        "useTransform"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "material-design-ripple",
+      "title": "Material Design: Ripple",
+      "description": "An example of creating a press ripple with Motion for React, inspired by Google Material Design.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "modal",
+      "title": "Modal dialog",
+      "description": "An example of a modal dialog using Motion for React and the HTML <dialog /> element. This example uses a custom useDialog hook to manage React's declarative API with the dialog HTML element's imperative setModal and close API. It also provides a useClickOutside hook to check when the document has been clicked outside the modal dialog to close it.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "modal-shared-layout",
+      "title": "Modal: Shared layout",
+      "description": "A modal example demonstrating shared layout animations between a grid of items and a fullscreen modal using Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "MotionConfig",
+        "useMotionValue",
+        "animate",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "motion-path",
+      "title": "Motion along a path",
+      "description": "An example of animating an element along a path using Motion for React.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "multi-state-badge",
+      "title": "Multi state badge",
+      "description": "A badge that can be in multiple states, such as processing, success, or error.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "useTransform",
+        "animate",
+        "layout"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "multifollow-pointer-with-spring",
+      "title": "Drag with spring follow",
+      "description": "An example of making multiple elements follow the pointer on drag, using Motion for React's useSpring hook.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useSpring",
+        "animate",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "notifications-list",
+      "title": "Notifications list",
+      "description": "An example of animating a list of animations as they're added and removed, using Motion for React's layout animations.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "layout"
+      ],
+      "category": "Layout"
+    },
+    {
+      "id": "notifications-stack",
+      "title": "iOS Notifications stack",
+      "description": "A iOS inspired notifications stack using Motion for React's variants.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileHover",
+        "variants"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "number-counter",
+      "title": "Number counter",
+      "description": "An example of using AnimateNumber to animate numbers. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "AnimateNumber",
+        "LayoutGroup",
+        "motion",
+        "whileHover",
+        "whileTap",
+        "whileFocus",
+        "layout"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "number-engagement-stats",
+      "title": "Engagement stats",
+      "description": "An example of using AnimateNumber to animate numbers on a social media engagement bar. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "AnimateNumber",
+        "motion",
+        "animate",
+        "whileTap",
+        "variants"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "number-formatting",
+      "title": "Number formatting",
+      "description": "An example of AnimateNumber's formatting options, including currency, rounding, and more. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "AnimateNumber",
+        "motion",
+        "animate",
+        "whileFocus",
+        "layout"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "number-price-switcher",
+      "title": "Price switcher",
+      "description": "An example of using AnimateNumber to animate a price between monthly and yearly. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "AnimateNumber",
+        "motion",
+        "animate",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "number-radix-slider",
+      "title": "Radix: Slider with AnimateNumber",
+      "description": "An example of using AnimateNumber and Radix Slider to animate numbers to label a slider input. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "AnimateNumber",
+        "useMotionValue",
+        "useSpring",
+        "useVelocity"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "parallax",
+      "title": "Parallax",
+      "description": "An example of creating a parallax effect using Motion for React's useScroll hook.",
+      "apis": [
+        "motion",
+        "useScroll",
+        "useSpring",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "path-drawing",
+      "title": "Path drawing",
+      "description": "An example of animating a SVG path to make a path drawing effect, using Motion for React.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "path-morphing",
+      "title": "Path morphing",
+      "description": "An example of creating smooth SVG path morphing animations with Motion for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "radix-accordion",
+      "title": "Radix: Accordion",
+      "description": "An accordion component with smooth height animations using Radix UI and Motion",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "MotionConfig",
+        "animate",
+        "whileTap",
+        "variants",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-checkbox",
+      "title": "Radix: Checkbox",
+      "description": "A checkbox with path line animation for the tick using Radix UI and Motion",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-context-menu",
+      "title": "Radix: Context Menu",
+      "description": "A context menu with smooth animations using Radix UI and Motion. Note: This example doesn't use AnimatePresence to add exit animations because ContextMenu.Root doesn't support controlled state. We need access to this state for AnimatePresence to conditionally render the children.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-dialog",
+      "title": "Radix: Dialog",
+      "description": "A dialog component with overlay and content animations using Radix UI and Motion",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-dropdown",
+      "title": "Radix: Dropdown Menu",
+      "description": "A dropdown menu with smooth animations using Radix UI and Motion",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "whileFocus"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-progress",
+      "title": "Radix: Progress",
+      "description": "An example of animating the Radix Progress component using Motion for React.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-radio-group",
+      "title": "Radix: Radio Group",
+      "description": "An example of animating the Radix Radio Group component using Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-select",
+      "title": "Radix: Select",
+      "description": "An example of animating the Radix Select component using Motion for React. Note that because Select doesn't support forceMount, it's impossible to create exit animations on select.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "viewport"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-switch",
+      "title": "Radix: Switch",
+      "description": "An example of animating the Radix Switch component using Motion for React. This examples uses CSS variables, spring and layout animations to animate the switch by switching justify-content.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileFocus",
+        "layout"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-tabs",
+      "title": "Radix: Tabs",
+      "description": "An example of animating the Radix Tabs component using Motion for React. It uses layout animations to animate the height of the container.",
+      "apis": [
+        "AnimatePresence",
+        "LayoutGroup",
+        "motion",
+        "animate",
+        "whileTap",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-toast",
+      "title": "Radix: Toast",
+      "description": "An example of animating the Radix Toast component using Motion for React. It uses spring animations and AnimatePresence to provide exit animations for the toast dialog.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileTap",
+        "viewport",
+        "drag"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-toggle-group",
+      "title": "Radix: Toggle Group",
+      "description": "An example of animating the Radix Toggle Group component using Motion for React. It uses shared layout animations and CSS mix blend modes to create an animated selected effect.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileTap",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-toolbar",
+      "title": "Radix: Toolbar",
+      "description": "An example of animating the Radix Toolbar component using Motion for React. The Radix toolbar can be tabbed to, with using arrow keys to move between items.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileTap",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-tooltip",
+      "title": "Radix: Tooltip",
+      "description": "An example of animating the Radix Tooltip component using Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "reorder-items",
+      "title": "Reorder animation",
+      "description": "An example of animating when items are reordered, using Motion for React's layout prop.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "rotate",
+      "title": "Rotate",
+      "description": "An example of animation the rotation of an element with Motion for React",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-container",
+      "title": "Element scroll-linked animation",
+      "description": "An example of a scroll-linked animation using a specific element's scroll position using Motion for React's useScroll hook.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useMotionValueEvent",
+        "useScroll",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-highlight",
+      "title": "Scroll highlight",
+      "description": "An example of creating a scrollable list of items where the item in the center of the view is highlighted, using the `useInView` hook and the `animate` function in Motion for React.",
+      "apis": [
+        "motion",
+        "animate",
+        "onViewportEnter",
+        "viewport"
+      ],
+      "category": "Scroll"
+    },
+    {
+      "id": "scroll-linked",
+      "title": "Scroll-linked animations",
+      "description": "An example of linking an animation to scroll using Motion for React's useScroll hook.",
+      "apis": [
+        "motion",
+        "useScroll"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-linked-with-spring",
+      "title": "Scroll-linked spring animation",
+      "description": "An example of linking an animation to scroll using Motion for React's useScroll hook and smoothing it with useSpring.",
+      "apis": [
+        "motion",
+        "useSpring",
+        "useScroll"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-track-element-in-viewport",
+      "title": "Track element within viewport",
+      "description": "An example of tracking an element within the viewport using Motion for React's useScroll hook.",
+      "apis": [
+        "motion",
+        "useScroll"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-triggered",
+      "title": "Scroll-triggered animations",
+      "description": "An example of triggering an animation when an element enters or leaves the viewport using Motion for React's whileInView prop.",
+      "apis": [
+        "motion",
+        "whileInView",
+        "viewport",
+        "variants"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "shared-layout-animation",
+      "title": "Shared layout animation",
+      "description": "An example of a shared layout animation, where two elements are animated from one to the other, using Motion for React's simple layoutId prop.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "smooth-tabs",
+      "title": "Smooth tabs",
+      "description": "A set of tabs that trigger a smooth transition between different views.",
+      "apis": [
+        "motion",
+        "useSpring",
+        "useTransform",
+        "useVelocity",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Navigation"
+    },
+    {
+      "id": "split-text",
+      "title": "Split text",
+      "description": "An example of creating a text reveal animation with split text in Motion for React",
+      "apis": [
+        "animate",
+        "stagger",
+        "splitText"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "split-text-scatter",
+      "title": "Scatter text",
+      "description": "An example of creating a scatter text animation with split text in Motion for React",
+      "apis": [
+        "animate",
+        "hover",
+        "splitText",
+        "useMotionValue"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "split-text-wavy",
+      "title": "Wavy text",
+      "description": "An example of creating a wavy text animation with split text in Motion for React",
+      "apis": [
+        "animate",
+        "stagger",
+        "splitText"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "staggered-grid",
+      "title": "Physical stagger",
+      "description": "An example of animating elements with a delay staggered by physical distance.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Lists"
+    },
+    {
+      "id": "state-updates",
+      "title": "Animate state",
+      "description": "An example of animating in response to state changes using Motion for React.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "swipe-actions",
+      "title": "Swipe actions",
+      "description": "iOS-style swipe actions where UI elements and animations respond dynamically to swipe progress. Actions trigger via taps or full swipes (for primary actions). A modern, space-efficient alternative to dropdown menus that keeps actions hidden behind the main item until revealed by a swipe gesture.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useMotionValueEvent",
+        "useSpring",
+        "useTransform",
+        "animate",
+        "drag"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "tab-select",
+      "title": "Tab select",
+      "description": "An example of using making a tab select component with Motion for React's shared layout animations. Because it uses onTap and whileFocus, it's keyboard-accessible by default. Try tabbing between the options and hitting Enter.",
+      "apis": [
+        "motion",
+        "whileTap",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Navigation"
+    },
+    {
+      "id": "text-reveal",
+      "title": "Reveal text effect",
+      "description": "An example of revealing text on hover using flexbox and Motion for React's layout animations.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "ticker",
+      "title": "Ticker",
+      "description": "An example of an animated list of items using the Motion+ Ticker component for React.",
+      "apis": [
+        "Ticker",
+        "motion",
+        "whileHover",
+        "variants"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-cursor",
+      "title": "Ticker: Cursor",
+      "description": "An example of creating a custom cursor that combines the Motion+ Ticker and Cursor components.",
+      "apis": [
+        "Cursor",
+        "Ticker",
+        "AnimatePresence",
+        "motion",
+        "variants"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-draggable",
+      "title": "Ticker: Draggable",
+      "description": "An example of an draggable list of items using the Motion+ Ticker component for React.",
+      "apis": [
+        "Ticker",
+        "motion",
+        "useMotionValue",
+        "drag"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-keyboard-navigation",
+      "title": "Ticker: Keyboard navigation",
+      "description": "An example of a Motion+ Ticker component for React containing focusable items. Tab to the ticker to select the first item, then use the arrow keys to navigate through the ticker.",
+      "apis": [
+        "Ticker",
+        "motion",
+        "whileTap"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-overflow",
+      "title": "Ticker: Overflow",
+      "description": "An example of an animated list of items using the Motion+ Ticker component for React. This example sets the overflow prop, which allows the ticker items to visually extend outside their layout. This makes it easier to embed a ticker within a longer document, but have the ticker effect extend out to the edges of the screen.",
+      "apis": [
+        "Ticker",
+        "motion",
+        "viewport",
+        "layout"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-rtl",
+      "title": "Ticker: RTL",
+      "description": "An example of Motion+ Ticker component for React with RTL support.",
+      "apis": [
+        "Ticker",
+        "motion",
+        "useTransform",
+        "layout"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-scroll",
+      "title": "Ticker: Scroll",
+      "description": "An example of a scroll-driven ticker animation Motion+ Ticker component for React.",
+      "apis": [
+        "Ticker",
+        "motion",
+        "useScroll",
+        "useTransform",
+        "onViewportEnter",
+        "viewport",
+        "drag"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-text-hover-effect",
+      "title": "Ticker: Text hover effect",
+      "description": "An example of creating a text hover effect that replaces the label with a live ticker, using Motion+ Ticker.",
+      "apis": [
+        "Ticker",
+        "AnimatePresence",
+        "motion",
+        "animate"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-use-ticker-item",
+      "title": "Ticker: useTickerItem",
+      "description": "An example of animating ticker items based on their current offset using the Motion+ Ticker's useTickerItem hook for React.",
+      "apis": [
+        "Ticker",
+        "motion",
+        "useTransform"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-y-axis",
+      "title": "Ticker: Vertical scrolling",
+      "description": "An example of a vertical scrolling ticker using the Motion+ Ticker component for React.",
+      "apis": [
+        "Ticker",
+        "drag"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "tilt-card",
+      "title": "Tilt card",
+      "description": "A card that tilts based on pointer position using Motion for React's useSpring hook.",
+      "apis": [
+        "motion",
+        "useSpring"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "todo-list",
+      "title": "To-do list",
+      "description": "A draggable to-do list with animated checkboxes and strikethrough effects using Motion for React's Reorder component.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "animate"
+      ],
+      "category": "Lists"
+    },
+    {
+      "id": "transition",
+      "title": "Transition options",
+      "description": "An example of setting transition options in Motion for React.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "typewriter",
+      "title": "Typewriter",
+      "description": "An example of a React typewriter animation using Motion for React's Typewriter component.",
+      "apis": [
+        "Typewriter"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "typewriter-change-content",
+      "title": "Typewriter: Change Content",
+      "description": "An example of a typewriter animation using Motion for React's Typewriter component. In this demo, when the content changes, the Typewriter uses a natural typing animation to animate to the latest value.",
+      "apis": [
+        "wrap",
+        "Typewriter"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "typewriter-explode",
+      "title": "Typewriter: Exploding Countdown",
+      "description": "An example of a typewriter animation using Motion for React's Typewriter component. In this demo, the Typewriter uses a natural typing animation to animate to the latest value, and then explodes the text using splitText.",
+      "apis": [
+        "animate",
+        "mix",
+        "wrap",
+        "splitText",
+        "Typewriter"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "typewriter-natural-typing",
+      "title": "Typewriter: Natural Typing",
+      "description": "An example of a React typewriter animation using Motion for React's Typewriter component. In this demo, the Typewriter uses a natural typing animation that's based on the currently-typed word length, position in word, uncommon character combinations and punctuation.",
+      "apis": [
+        "wrap",
+        "Typewriter"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "use-animation-frame",
+      "title": "Spinning 3D cube",
+      "description": "An example of using Motion for React's useAnimationFrame hook to animate a 3D cube.",
+      "apis": [],
+      "category": "Basics"
+    },
+    {
+      "id": "use-presence-data",
+      "title": "usePresenceData",
+      "description": "An example of using usePresenceData to pass custom data through AnimatePresence to exiting elements.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileTap",
+        "whileFocus"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "use-time",
+      "title": "useTime",
+      "description": "An example of using the useTime hook to animate an element at a constant speed.",
+      "apis": [
+        "motion",
+        "useTransform"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "use-transform",
+      "title": "Value transform & path drawing",
+      "description": "An example of linking SVG path length to a drag gesture using Motion for React's easy useTransform hook.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "variants",
+      "title": "Variants",
+      "description": "An example of orchestrating animation sequences using Motion for React's variants.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileHover",
+        "whileTap",
+        "variants",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "warp-overlay",
+      "title": "Warp overlay",
+      "description": "An example of creating a warp overlay effect with Motion for React.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whileTap"
+      ],
+      "category": "Experimental"
+    }
+  ],
+  "vue": [
+    {
+      "id": "accordion",
+      "title": "Accordion",
+      "description": "An example of an accordion component using Motion for Vue. Animate accordion content using height: auto and accessible markup. Uses focus events and shared layout animations for keyboard accessibility.",
+      "apis": [
+        "motion",
+        "MotionConfig",
+        "animate",
+        "whilePress",
+        "variants",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "animate-presence-modes",
+      "title": "AnimatePresence modes",
+      "description": "An example of the three AnimatePresence modes (sync, wait, and popLayout) demonstrating how elements enter and exit the DOM with Motion for Vue.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "announcement",
+      "title": "Announcement",
+      "description": "The Motion for Vue announcement animation, built using Motion for Vue itself.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "app-store",
+      "title": "iOS App Store",
+      "description": "An example of animating cards inspired by the iOS App Store using Motion for Vue's layout animations.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Layout"
+    },
+    {
+      "id": "apple-intelligence",
+      "title": "Apple Intelligence ripple",
+      "description": "An example of the 'ripple' part of the Apple Intelligence animation using Motion for Vue. It uses a cloned version of the current content rather than using shaders.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileHover",
+        "whilePress"
+      ],
+      "category": "Experimental"
+    },
+    {
+      "id": "apple-watch-home-screen",
+      "title": "Apple Watch Home Screen",
+      "description": "A recreation of the Apple Watch home screen's iconic app grid with fluid drag interactions and dynamic scaling using Motion for Vue.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Experimental"
+    },
+    {
+      "id": "aspect-ratio",
+      "title": "Aspect Ratio",
+      "description": "An example of animating aspect-ratio using Motion for Vue's layout animations.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "bounce-easing",
+      "title": "Bounce Easing",
+      "description": "An example of creating a bounce custom easing function in Motion for Vue.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "card-stack",
+      "title": "Card stack",
+      "description": "An example of creating a swipeable card stack with photos in Motion for Vue.",
+      "apis": [
+        "animate",
+        "mix",
+        "motion",
+        "transform",
+        "whilePress",
+        "drag"
+      ],
+      "category": "Lists"
+    },
+    {
+      "id": "carousel",
+      "title": "Carousel",
+      "description": "An example of creating a carousel using the Motion+ Carousel component for React.",
+      "apis": [
+        "motion",
+        "animate",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-autoplay",
+      "title": "Carousel: Autoplay",
+      "description": "An example of creating an autoplay carousel with a progress bar indicator using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "animate",
+        "motion",
+        "useMotionValue",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-coverflow",
+      "title": "Carousel: Coverflow",
+      "description": "An example of creating a coverflow-style carousel with 3D rotation using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-free-scroll",
+      "title": "Carousel: Free scroll",
+      "description": "An example of creating a free-scrolling carousel without snap points using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-item-offset",
+      "title": "Carousel: Offset-linked animations",
+      "description": "An example of creating a carousel with offset-linked animations using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-lightbox",
+      "title": "Carousel: Lightbox",
+      "description": "An example of creating a carousel with lightbox overlay functionality using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whileHover",
+        "whilePress",
+        "variants",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-loop",
+      "title": "Carousel: Loop",
+      "description": "An example of creating a carousel with infinite scrolling using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-pagination-arrows",
+      "title": "Carousel: Pagination",
+      "description": "An example of creating a carousel with clickable pagination dots and navigation arrows using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "LayoutGroup",
+        "whileHover",
+        "whilePress",
+        "drag",
+        "layout"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-pagination-page-count",
+      "title": "Carousel: Pagination with page count",
+      "description": "An example of creating a carousel with pagination indicators that show the current page and total pages using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "whileHover",
+        "whilePress",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-pagination-scaling",
+      "title": "Carousel: Scaling pagination dots",
+      "description": "An example of creating a carousel with pagination dots that scale down at the edges in Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "LayoutGroup",
+        "animate",
+        "whileHover",
+        "whilePress",
+        "drag",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-parallax",
+      "title": "Carousel: Parallax",
+      "description": "An example of creating a carousel with a parallax effectusing the Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "animate",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-progress-scrubber",
+      "title": "Carousel: Progress scrubber",
+      "description": "An example of creating a carousel with a progress scrubber using the Motion+ Carousel component for Vue.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "useMotionValue",
+        "useMotionValueEvent",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-rtl",
+      "title": "Carousel: Vertical",
+      "description": "An example of creating a vertical carousel with navigation in Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-thumbnail-gallery",
+      "title": "Carousel: Thumbnail gallery",
+      "description": "An example of creating a carousel with a thumbnail navigation gallery using the Motion+ Carousel",
+      "apis": [
+        "motion",
+        "animate",
+        "whileHover",
+        "whilePress",
+        "drag"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "carousel-vertical",
+      "title": "Carousel: Vertical",
+      "description": "An example of creating a vertical carousel with navigation in Motion for Vue.",
+      "apis": [
+        "motion",
+        "whileHover",
+        "whilePress"
+      ],
+      "category": "Carousel"
+    },
+    {
+      "id": "characters-remaining",
+      "title": "Characters remaining",
+      "description": "An example of creating a character counter with spring animations in Motion for Vue",
+      "apis": [
+        "motion",
+        "transform",
+        "useAnimate",
+        "animate"
+      ],
+      "category": "Forms"
+    },
+    {
+      "id": "color-picker",
+      "title": "Color picker",
+      "description": "An example of creating a circular color picker with dots that react to cursor movement with soft springs using Motion for Vue.",
+      "apis": [
+        "useSpring",
+        "useTransform",
+        "motion",
+        "useMotionValue",
+        "animate",
+        "whileHover",
+        "whilePress",
+        "variants"
+      ],
+      "category": "Experimental"
+    },
+    {
+      "id": "conic-gradient-pointer",
+      "title": "Conic gradient pointer",
+      "description": "An example of creating a dynamic conic gradient with motion values and pointer position.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform"
+      ],
+      "category": "Experimental"
+    },
+    {
+      "id": "css-spring",
+      "title": "CSS Spring",
+      "description": "An example of using Motion's spring function with Vue's CSS transition property.",
+      "apis": [
+        "spring"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "cursor",
+      "title": "Cursor: Adaptive caret size",
+      "description": "An example of Motion+ Cursor with default settings. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-custom-content",
+      "title": "Cursor: Custom content",
+      "description": "An example of adding custom content to Motion+ Cursor when hovering over a specific element. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "motion",
+        "Cursor",
+        "whileHover"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-floating-target",
+      "title": "Cursor: Floating target",
+      "description": "An example of creating a floating target with rotating text and hover effects using the Motion+ Cursor and usePointerPosition.",
+      "apis": [
+        "Cursor",
+        "motion",
+        "transform",
+        "useAnimate",
+        "useSpring",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whilePress",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-follow",
+      "title": "Cursor: Follow",
+      "description": "An example of making an element follow the cursor with a spring animation using Motion+ Cursor. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "motion",
+        "Cursor",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-hover-follow",
+      "title": "Cursor: Image hover",
+      "description": "An example of a cursor image hover effect using Motion for Vue. It links skewX and skewY to the cursor velocity, smoothed via useSpring.",
+      "apis": [
+        "Cursor",
+        "useSpring",
+        "useTransform",
+        "useVelocity",
+        "motion",
+        "variants",
+        "layout"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-magnetic",
+      "title": "Cursor: Magnetic target",
+      "description": "An example of Motion+ Cursor with magnetic target snapping enabled. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "animate",
+        "motion",
+        "useMotionValue",
+        "whilePress",
+        "variants",
+        "layout"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-multifollow",
+      "title": "Cursor: Multi-follow",
+      "description": "An example of attaching multiple elements to follow the cursor at the same time, all with different spring animations. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-trail",
+      "title": "Cursor trail",
+      "description": "An example of creating a cursor trail with images in Motion for Vue.",
+      "apis": [
+        "motion",
+        "useMotionValueEvent",
+        "useTransform",
+        "AnimatePresence",
+        "animate"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "cursor-trail-velocity",
+      "title": "Cursor trail velocity",
+      "description": "An example of creating a cursor trail with velocity-based inertia animations in Motion for Vue.",
+      "apis": [
+        "motion",
+        "useMotionValueEvent",
+        "useTransform",
+        "AnimatePresence",
+        "animate"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "drag",
+      "title": "Drag",
+      "description": "An example of making an element draggable using Motion for Vue's drag prop.",
+      "apis": [
+        "motion",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "drag-constraints",
+      "title": "Drag: Constraints",
+      "description": "An example of making an element draggable using Motion for Vue's drag prop. You can even set drag constraints by providing a ref to another element.",
+      "apis": [
+        "motion",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "drag-lock-direction",
+      "title": "Drag Lock Direction",
+      "description": "An example of locking the drag direction of a Motion for Vue component.",
+      "apis": [
+        "motion",
+        "animate",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "enter-animation",
+      "title": "Enter Animation",
+      "description": "An example of animating an element when it's added to the DOM using Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "exit-animation",
+      "title": "Exit animation",
+      "description": "An example of animating an element when it's removed from the DOM using AnimatePresence in Motion for Vue.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whilePress"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "family-dialog",
+      "title": "Family-style dialog",
+      "description": "Family-style dialog using Motion for Vue. It uses the HTML dialog and Motion's shared layout animations.",
+      "apis": [
+        "AnimatePresence",
+        "MotionConfig",
+        "motion",
+        "animate",
+        "whilePress",
+        "variants",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "follow-pointer-with-spring",
+      "title": "Follow pointer with spring",
+      "description": "An example of making an element follow the pointer with a spring using Motion for Vue's useSpring hook.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useSpring"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "gestures",
+      "title": "Gestures",
+      "description": "An example of using gestures to animate an element using Motion for Vue's simple press and hover props.",
+      "apis": [
+        "motion",
+        "whileHover",
+        "whilePress"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "hold-to-confirm",
+      "title": "Hold to confirm",
+      "description": "A Motion for Vue example showing long-press interaction. The button's events update a progress motion value that drives multiple animations of other motion values.",
+      "apis": [
+        "animate",
+        "motion",
+        "useMotionValue",
+        "useTransform"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "html-content",
+      "title": "HTML content",
+      "description": "An example using Motion for Vue to animate HTML content by rendering a MotionValue with RowValue component.",
+      "apis": [
+        "animate",
+        "useMotionValue",
+        "useTransform"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "image-reveal-slider",
+      "title": "Image reveal slider",
+      "description": "An image reveal slider that uses Motion for Vue's drag functionality and useTransform to map the position of the slider to a clipPath for the image reveal effect, and to the dividing line's background color to fade it out closer to the edges. The slider is made keyboard accessible with arrow keyboard input and spring animations to indicate the slider boundaries.",
+      "apis": [
+        "animate",
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "drag"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "infinite-loading",
+      "title": "Infinite loading",
+      "description": "An example of creating an infinite loading list with staggered animations in Motion for Vue.",
+      "apis": [
+        "motion",
+        "stagger",
+        "animate",
+        "variants"
+      ],
+      "category": "Lists"
+    },
+    {
+      "id": "ios-pointer",
+      "title": "iOS pointer animation",
+      "description": "An example of making the iOS pointer animation using Motion+ Cursor's magnetic snapping. Motion+ Cursor is exclusive to Motion+ members.",
+      "apis": [
+        "Cursor",
+        "motion",
+        "whilePress",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "ios-slider",
+      "title": "iOS slider",
+      "description": "An example of recreating the iOS slider using Motion for Vue. This example uses useTransform to map input to slider state, and slider state to pull, squish and squash animations. It uses Vue's onFocus and onBlur to set up keyboard-accessible inputs, with Motion's whileFocus prop to animate a custom focus indicator.",
+      "apis": [
+        "animate",
+        "motion",
+        "mix",
+        "useMotionValue",
+        "useTransform",
+        "whileFocus",
+        "drag"
+      ],
+      "category": "Forms"
+    },
+    {
+      "id": "keyframes",
+      "title": "Keyframes",
+      "description": "An example of animating an element using keyframes with Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "keyframes-wildcards",
+      "title": "Keyframe wildcards",
+      "description": "An example of using Motion for Vue's keyframe wildcards to create interruptible keyframe animations. ",
+      "apis": [
+        "motion",
+        "whileHover"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "layout-animation",
+      "title": "Layout animation",
+      "description": "An example of animating a layout change using Motion for Vue's simple layout prop.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "line-graph",
+      "title": "Line graph",
+      "description": "An SVG line graph that uses Cursor and AnimateNumber to display changes in data points as an animated cursor annotation.",
+      "apis": [
+        "motion",
+        "AnimateNumber",
+        "Cursor",
+        "animate",
+        "variants"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "loading-circle-spinner",
+      "title": "Loading: Circle spinner",
+      "description": "An example of creating a circle spinner loading animation with Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-fill-text",
+      "title": "Fill text",
+      "description": "An example of creating a text fill loading animation with Motion for Vue.",
+      "apis": [
+        "motion",
+        "useSpring",
+        "useTransform"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-jumping-dots",
+      "title": "Loading: Jumping dots",
+      "description": "An example of creating a jumping dots loading animation with Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-line-reveal",
+      "title": "Loading overlay",
+      "description": "An example of creating a line reveal loading animation with clipPath in Motion for Vue",
+      "apis": [
+        "motion",
+        "animate",
+        "useSpring",
+        "useTransform",
+        "useMotionValue"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-progress-bar",
+      "title": "Loading progress bar",
+      "description": "An example of creating a progress bar loading animation with Motion for Vue.",
+      "apis": [
+        "motion",
+        "useSpring"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-ripple",
+      "title": "Loading ripple",
+      "description": "An example of creating a ripple loading animation with Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "loading-three-dots-pulse",
+      "title": "Loading: Pulse dots",
+      "description": "An example of creating a pulsing dots loading animation with Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Loading"
+    },
+    {
+      "id": "magnetic-filings",
+      "title": "Magnetic filings",
+      "description": "An example of creating a grid of metal filings that rotate to point towards the cursor position using Motion for Vue.",
+      "apis": [
+        "useTransform"
+      ],
+      "category": "Cursor"
+    },
+    {
+      "id": "material-design-ripple",
+      "title": "Material Design: Ripple",
+      "description": "An example of creating a press ripple with Motion for Vue, inspired by Google Material Design.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whileHover"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "modal",
+      "title": "Modal dialog",
+      "description": "An example of a modal dialog using Motion for Vue and the HTML <dialog /> element. This example uses a custom useDialog hook to manage Vue's declarative API with the dialog HTML element's imperative setModal and close API. It also provides a useClickOutside hook to check when the document has been clicked outside the modal dialog to close it.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whileHover",
+        "whilePress"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "modal-shared-layout",
+      "title": "Modal: Shared layout",
+      "description": "A modal example demonstrating shared layout animations between a grid of items and a fullscreen modal using Motion for Vue.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "MotionConfig",
+        "useMotionValue",
+        "animate",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Dialog"
+    },
+    {
+      "id": "motion-path",
+      "title": "Motion along a path",
+      "description": "An example of animating an element along a path using Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "multi-state-badge",
+      "title": "Multi state badge",
+      "description": "A badge that can be in multiple states, such as processing, success, or error.",
+      "apis": [
+        "animate",
+        "useTransform",
+        "motion",
+        "AnimatePresence"
+      ],
+      "category": "Buttons"
+    },
+    {
+      "id": "multifollow-pointer-with-spring",
+      "title": "Drag with spring follow",
+      "description": "An example of making multiple elements follow the pointer on drag, using Motion for Vue's useSpring hook.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useSpring",
+        "animate",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "notifications-list",
+      "title": "Notifications list",
+      "description": "An example of animating a list of animations as they're added and removed, using Motion for Vue's layout animations.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "layout"
+      ],
+      "category": "Layout"
+    },
+    {
+      "id": "notifications-stack",
+      "title": "iOS Notifications stack",
+      "description": "A iOS inspired notifications stack using Motion for Vue's variants.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "number-counter",
+      "title": "Number counter",
+      "description": "An example of using AnimateNumber to animate numbers. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "motion",
+        "LayoutGroup",
+        "AnimateNumber",
+        "layout"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "number-engagement-stats",
+      "title": "Engagement stats",
+      "description": "An example of using AnimateNumber to animate numbers on a social media engagement bar. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "AnimateNumber",
+        "mix",
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "number-formatting",
+      "title": "Number formatting",
+      "description": "An example of AnimateNumber's formatting options, including currency, rounding, and more. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "AnimateNumber",
+        "motion",
+        "animate",
+        "layout"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "number-price-switcher",
+      "title": "Price switcher",
+      "description": "An example of using AnimateNumber to animate a price between monthly and yearly. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "AnimateNumber",
+        "motion",
+        "animate",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "number-radix-slider",
+      "title": "Radix: Slider with AnimateNumber",
+      "description": "An example of using AnimateNumber and Radix Slider to animate numbers to label a slider input. AnimateNumber is exclusive to Motion+ members.",
+      "apis": [
+        "useMotionValue",
+        "useSpring",
+        "useVelocity",
+        "AnimateNumber"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "parallax",
+      "title": "Parallax",
+      "description": "An example of creating a parallax effect using Motion for Vue's useScroll hook.",
+      "apis": [
+        "motion",
+        "useScroll",
+        "useSpring",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "path-drawing",
+      "title": "Path drawing",
+      "description": "An example of animating a SVG path to make a path drawing effect, using Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "path-morphing",
+      "title": "Path morphing",
+      "description": "An example of morphing one SVG path to another path, using Motion for Vue and Flubber.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "radix-accordion",
+      "title": "Radix: Accordion",
+      "description": "An accordion component with smooth height animations using Radix UI and Motion",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "MotionConfig",
+        "animate",
+        "whilePress",
+        "variants",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-checkbox",
+      "title": "Radix: Checkbox",
+      "description": "A checkbox with path line animation for the tick using Radix UI and Motion",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whilePress"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-context-menu",
+      "title": "Radix: Context Menu",
+      "description": "A context menu with smooth animations using Radix UI and Motion. ",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-dialog",
+      "title": "Radix: Dialog",
+      "description": "A dialog component with overlay and content animations using Radix-vue and Motion-vue",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate",
+        "whileHover",
+        "whilePress"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-dropdown",
+      "title": "Radix: Dropdown Menu",
+      "description": "A dropdown menu with smooth animations using Radix UI and Motion",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whileHover",
+        "whilePress",
+        "whileFocus"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-progress",
+      "title": "Radix: Progress",
+      "description": "An example of animating the Radix Progress component using Motion for Vue.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "animate"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-radio-group",
+      "title": "Radix: Radio Group",
+      "description": "An example of animating the Radix Radio Group component using Motion for Vue.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "useMotionValue",
+        "useTransform",
+        "animate",
+        "whileHover",
+        "whilePress",
+        "variants"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-select",
+      "title": "Radix: Select",
+      "description": "An example of animating the Radix Select component using Motion for Vue.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whileHover",
+        "whilePress"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-switch",
+      "title": "Radix: Switch",
+      "description": "An example of animating the Radix Switch component using Motion for Vue. This examples uses CSS variables, spring and layout animations to animate the switch by switching justify-content.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileFocus",
+        "layout"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-tabs",
+      "title": "Radix: Tabs",
+      "description": "An example of animating the Radix Tabs component using Motion for Vue. It uses layout animations to animate the height of the container.",
+      "apis": [
+        "LayoutGroup",
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whilePress",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-toast",
+      "title": "Radix: Toast",
+      "description": "An example of animating the Radix Toast component using Motion for Vue.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whilePress",
+        "drag"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-toggle-group",
+      "title": "Radix: Toggle Group",
+      "description": "An example of animating the Radix Toggle Group component using Motion for Vue. It uses shared layout animations and CSS mix blend modes to create an animated selected effect.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whilePress",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-toolbar",
+      "title": "Radix: Toolbar",
+      "description": "An example of animating the Radix Toolbar component using Motion for Vue. The Radix toolbar can be tabbed to, with using arrow keys to move between items.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "whilePress",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "radix-tooltip",
+      "title": "Radix: Tooltip",
+      "description": "An example of animating the Radix Tooltip component using Motion for Vue.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate"
+      ],
+      "category": "Radix"
+    },
+    {
+      "id": "reorder-items",
+      "title": "Reorder animation",
+      "description": "An example of animating when items are reordered, using Motion for Vue's layout prop.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "rotate",
+      "title": "Rotate",
+      "description": "An example of animation the rotation of an element with Motion for Vue",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scale-correction",
+      "title": "Scale correction",
+      "description": "An example of layout animation with scale correction using Motion for Vue.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-container",
+      "title": "Element scroll-linked animation",
+      "description": "An example of a scroll-linked animation using a specific element's scroll position using Motion for Vue's useScroll hook.",
+      "apis": [
+        "motion",
+        "useScroll",
+        "useMotionValue",
+        "useMotionValueEvent",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-highlight",
+      "title": "Scroll highlight",
+      "description": "An example of creating a scrollable list of items where the item in the center of the view is highlighted, using the `useInView` hook and the `animate` function in Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Scroll"
+    },
+    {
+      "id": "scroll-linked",
+      "title": "Scroll-linked animations",
+      "description": "An example of linking an animation to scroll using Motion for Vue's useScroll hook.",
+      "apis": [
+        "motion",
+        "useScroll"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-linked-with-spring",
+      "title": "Scroll-linked spring animation",
+      "description": "An example of linking an animation to scroll using Motion for Vue's useScroll hook and smoothing it with useSpring.",
+      "apis": [
+        "motion",
+        "useScroll",
+        "useSpring"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-track-element-in-viewport",
+      "title": "Track element within viewport",
+      "description": "An example of tracking an element within the viewport using Motion for Vue's useScroll hook.",
+      "apis": [
+        "motion",
+        "useScroll"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "scroll-triggered",
+      "title": "Scroll-triggered animations",
+      "description": "An example of triggering an animation when an element enters or leaves the viewport using Motion for Vue's inView prop.",
+      "apis": [
+        "motion",
+        "whileInView",
+        "variants"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "shared-layout-animation",
+      "title": "Shared layout animation",
+      "description": "An example of a shared layout animation, where two elements are animated from one to the other, using Motion for Vue's simple layoutId prop.",
+      "apis": [
+        "motion",
+        "AnimatePresence",
+        "animate",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "smooth-tabs",
+      "title": "Smooth tabs",
+      "description": "A set of tabs that trigger a smooth transition between different views.",
+      "apis": [
+        "motion",
+        "useSpring",
+        "useTransform",
+        "useVelocity",
+        "useMotionValue",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Navigation"
+    },
+    {
+      "id": "split-text",
+      "title": "Split text",
+      "description": "An example of creating a text reveal animation with split text in Motion for Vue",
+      "apis": [
+        "animate",
+        "stagger",
+        "splitText"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "split-text-wavy",
+      "title": "Wavy text",
+      "description": "An example of creating a wavy text animation with split text in Motion for Vue",
+      "apis": [
+        "animate",
+        "stagger",
+        "splitText"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "staggered-grid",
+      "title": "Physical stagger",
+      "description": "An example of animating elements with a delay staggered by physical distance.",
+      "apis": [
+        "motion",
+        "animate",
+        "variants"
+      ],
+      "category": "Lists"
+    },
+    {
+      "id": "state-updates",
+      "title": "Animate state",
+      "description": "An example of animating in response to state changes using Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "swipe-actions",
+      "title": "Swipe actions",
+      "description": "iOS-style swipe actions where UI elements and animations respond dynamically to swipe progress. Actions trigger via taps or full swipes (for primary actions). A modern, space-efficient alternative to dropdown menus that keeps actions hidden behind the main item until revealed by a swipe gesture.",
+      "apis": [
+        "animate",
+        "motion",
+        "useMotionValue",
+        "useMotionValueEvent",
+        "useSpring",
+        "useTransform"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "tab-select",
+      "title": "Tab select",
+      "description": "An example of using making a tab select component with Motion for Vue's shared layout animations. Because it uses onPress and whileFocus, it's keyboard-accessible by default. Try tabbing between the options and hitting Enter.",
+      "apis": [
+        "motion",
+        "whilePress",
+        "whileFocus",
+        "layout",
+        "layoutId"
+      ],
+      "category": "Navigation"
+    },
+    {
+      "id": "text-reveal",
+      "title": "Reveal text effect",
+      "description": "An example of revealing text on hover using flexbox and Motion for Vue's layout animations.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "ticker",
+      "title": "Ticker",
+      "description": "An example of an animated list of items using the Motion+ Ticker component for Vue.",
+      "apis": [
+        "motion",
+        "whileHover",
+        "variants"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-cursor",
+      "title": "Ticker: Cursor",
+      "description": "An example of creating a custom cursor that combines the Motion+ Ticker and Cursor components for Vue.",
+      "apis": [
+        "Cursor",
+        "motion",
+        "variants"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-draggable",
+      "title": "Ticker: Draggable",
+      "description": "An example of an draggable list of items using the Motion+ Ticker component for Vue.",
+      "apis": [
+        "motion",
+        "useMotionValue",
+        "drag"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-keyboard-navigation",
+      "title": "Ticker: Keyboard navigation",
+      "description": "An example of a Motion+ Ticker component for Vue containing focusable items. Tab to the ticker to select the first item, then use the arrow keys to navigate through the ticker.",
+      "apis": [
+        "motion",
+        "whilePress"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-overflow",
+      "title": "Ticker: Overflow",
+      "description": "An example of an animated list of items using the Motion+ Ticker component for Vue. This example sets the overflow prop, which allows the ticker items to visually extend outside their layout. This makes it easier to embed a ticker within a longer document, but have the ticker effect extend out to the edges of the screen.",
+      "apis": [
+        "motion",
+        "layout"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-rtl",
+      "title": "Ticker: RTL",
+      "description": "An example of Motion+ Ticker component for Vue with RTL support.",
+      "apis": [
+        "motion",
+        "useTransform",
+        "layout"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-scroll",
+      "title": "Ticker: Scroll",
+      "description": "An example of a scroll-driven ticker animation Motion+ Ticker component for Vue.",
+      "apis": [
+        "motion",
+        "useScroll",
+        "useTransform",
+        "whileInView",
+        "drag"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-text-hover-effect",
+      "title": "Ticker: Text hover effect",
+      "description": "An example of creating a text hover effect that replaces the label with a live ticker, using Motion+ Ticker for Vue.",
+      "apis": [
+        "AnimatePresence",
+        "motion",
+        "animate"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-use-ticker-item",
+      "title": "Ticker: useTickerItem",
+      "description": "An example of animating ticker items based on their current offset using the Motion+ Ticker's useTickerItem hook for Vue.",
+      "apis": [
+        "motion",
+        "useTransform"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "ticker-y-axis",
+      "title": "Ticker: Vertical scrolling",
+      "description": "An example of a vertical scrolling ticker using the Motion+ Ticker component for Vue.",
+      "apis": [
+        "drag"
+      ],
+      "category": "Ticker"
+    },
+    {
+      "id": "tilt-card",
+      "title": "Tilt card",
+      "description": "A card that tilts based on pointer position using Motion for Vue's useSpring hook.",
+      "apis": [
+        "motion",
+        "useSpring"
+      ],
+      "category": "Interactions"
+    },
+    {
+      "id": "todo-list",
+      "title": "To-do list",
+      "description": "A draggable to-do list with animated checkboxes and strikethrough effects using Motion for Vue's Reorder component.",
+      "apis": [
+        "LayoutGroup",
+        "motion",
+        "useMotionValue",
+        "animate"
+      ],
+      "category": "Lists"
+    },
+    {
+      "id": "transition",
+      "title": "Transition",
+      "description": "An example of setting transition options in Motion for Vue.",
+      "apis": [
+        "motion",
+        "animate"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "typewriter",
+      "title": "Typewriter",
+      "description": "An example of a typewriter effect using Motion for Vue's Typewriter component.",
+      "apis": [],
+      "category": "Text"
+    },
+    {
+      "id": "typewriter-change-content",
+      "title": "Typewriter: Change Content",
+      "description": "An example of a typewriter animation using Motion for Vue's Typewriter component. In this demo, when the content changes, the Typewriter uses a natural typing animation to animate to the latest value.",
+      "apis": [
+        "animate"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "typewriter-explode",
+      "title": "Typewriter: Exploding Countdown",
+      "description": "An example of a typewriter animation using Motion for Vue's Typewriter component. In this demo, the Typewriter uses a natural typing animation to animate to the latest value, and then explodes the text using splitText.",
+      "apis": [
+        "animate",
+        "mix",
+        "splitText"
+      ],
+      "category": "Text"
+    },
+    {
+      "id": "typewriter-natural-typing",
+      "title": "Typewriter: Natural Typing",
+      "description": "An example of a Vue typewriter animation using Motion for Vue's Typewriter component. In this demo, the Typewriter uses a natural typing animation that's based on the currently-typed word length, position in word, uncommon character combinations and punctuation.",
+      "apis": [],
+      "category": "Text"
+    },
+    {
+      "id": "use-animation-frame",
+      "title": "useAnimationFrame",
+      "description": "An example of using Motion for Vue's useAnimationFrame hook to animate a 3D cube.",
+      "apis": [],
+      "category": "Basics"
+    },
+    {
+      "id": "use-time",
+      "title": "useTime",
+      "description": "An example of using the useTime hook to animate an element at a constant speed.",
+      "apis": [
+        "motion",
+        "useTransform"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "use-transform",
+      "title": "Value transform & path drawing",
+      "description": "An example of linking SVG path length to a drag gesture using Motion for Vue's easy useTransform hook.",
+      "apis": [
+        "useMotionValue",
+        "useTransform",
+        "motion",
+        "drag"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "variants",
+      "title": "Variants",
+      "description": "An example of orchestrating animation sequences using Motion for Vue's variants.",
+      "apis": [
+        "motion",
+        "animate",
+        "whileHover",
+        "whilePress",
+        "variants"
+      ],
+      "category": "Basics"
+    },
+    {
+      "id": "warp-overlay",
+      "title": "Warp overlay",
+      "description": "An example of creating a warp overlay effect with Motion for Vue.",
+      "apis": [
+        "animate",
+        "AnimatePresence",
+        "motion",
+        "useMotionValue",
+        "useTransform",
+        "whileHover",
+        "whilePress",
+        "variants"
+      ],
+      "category": "Experimental"
+    }
+  ]
+}

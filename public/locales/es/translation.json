@@ -60,15 +60,134 @@
     "welcome": {
         "dashboard": "Panel",
         "logIn": "Iniciar sesión",
-        "register": "Registrarse",
-        "title": "Comencemos",
-        "description": "Laravel tiene un ecosistema increíblemente rico.",
-        "suggestion": "Te sugerimos comenzar con lo siguiente.",
-        "read": "Lee la",
-        "documentation": "Documentación",
-        "watch": "Mira video tutoriales en",
-        "laracasts": "Laracasts",
-        "deploy": "Desplegar ahora"
+        "register": "Comenzar",
+        "brand": "Maestro",
+        "nav": {
+            "features": "Funcionalidades",
+            "stack": "Stack",
+            "demo": "Demo",
+            "code": "Código"
+        },
+        "hero": {
+            "badge": "Boilerplate SaaS Multitenant",
+            "title": "Lanza tu SaaS,",
+            "titleAccent": "no el boilerplate.",
+            "subtitle": "Maestro es un starter kit de Laravel 13 + Inertia 3 listo para producción con aislamiento multi-tenant, RBAC, i18n, temas y passkeys — para que te enfoques en lo que hace único a tu producto.",
+            "ctaPrimary": "Comenzar",
+            "ctaSecondary": "Ver demo"
+        },
+        "logos": {
+            "kicker": "Construido con el stack que ya confías"
+        },
+        "features": {
+            "kicker": "Funcionalidades",
+            "title": "Todo lo que necesitas para lanzar un SaaS multitenant.",
+            "subtitle": "Seis pilares, conectados y listos para extender.",
+            "items": {
+                "tenancy": {
+                    "title": "Aislamiento de tenants",
+                    "description": "Cada tenant tiene su propia base de datos y scope de sesión, identificado por dominio — con stancl/tenancy."
+                },
+                "rbac": {
+                    "title": "Roles y permisos",
+                    "description": "Control de acceso granular con spatie/laravel-permission. Gestiona roles, permisos y policies desde la UI."
+                },
+                "i18n": {
+                    "title": "Internacionalización",
+                    "description": "Soporte de plurales ICU, namespaces lazy, detección del navegador — inglés y español incluidos."
+                },
+                "themes": {
+                    "title": "Claro, oscuro, sistema",
+                    "description": "Preferencias de apariencia por usuario con cookies SSR-safe y sin parpadeo al cargar."
+                },
+                "security": {
+                    "title": "Passkeys y 2FA",
+                    "description": "Inicio de sesión sin contraseña vía WebAuthn y autenticación de dos factores TOTP, integrado con Fortify."
+                },
+                "ids": {
+                    "title": "ULIDs en todo",
+                    "description": "Identificadores ordenables por tiempo para tenants, dominios y registros — listos para escalar."
+                }
+            }
+        },
+        "stack": {
+            "kicker": "Stack",
+            "title": "Una base moderna y type-safe.",
+            "subtitle": "Maestro se apoya en herramientas probadas y frameworks ergonómicos."
+        },
+        "demo": {
+            "kicker": "Demo",
+            "title": "Mira cómo se mueve.",
+            "subtitle": "Un recorrido de 30 segundos por el panel, el conmutador de tenants y el sistema de temas.",
+            "fallback": "Tu navegador no soporta la etiqueta de video.",
+            "comingSoon": "Demo próximamente — genérala localmente con Remotion."
+        },
+        "code": {
+            "kicker": "Código",
+            "title": "Aprovisiona un tenant en tres líneas.",
+            "subtitle": "Dominio identificado. Base de datos clonada. Migraciones ejecutadas. Estás en vivo.",
+            "snippet": "use App\\Models\\Tenant;\n\n$tenant = Tenant::create([\n    'name' => 'Acme Corp',\n]);\n\n$tenant->domains()->create(['domain' => 'acme.maestro.test']);",
+            "caption": "Construido con stancl/tenancy + Inertia 3 + React 19."
+        },
+        "cta": {
+            "title": "¿Listo para componer tu SaaS?",
+            "subtitle": "Haz fork del boilerplate, ponle tu marca y lanza tu primer tenant esta semana."
+        },
+        "footer": {
+            "copyright": "© {year} Maestro. Licencia MIT.",
+            "madeWith": "Hecho con Laravel, Inertia y React."
+        }
+    },
+    "tenantWelcome": {
+        "kicker": "Espacio del tenant",
+        "title": "Bienvenido a {name}",
+        "subtitle": "Estás dentro del espacio del tenant",
+        "explanation": "Un tenant es una porción aislada de la plataforma — su propia base de datos, sus propios usuarios, su propia configuración. Todo lo que hagas aquí está acotado a este tenant y es invisible para los demás.",
+        "isolationTitle": "Qué significa el aislamiento",
+        "isolationSubtitle": "Tres garantías que mantienen a cada tenant seguro por defecto.",
+        "isolationItems": {
+            "database": {
+                "title": "Base de datos aislada",
+                "description": "Cada tenant tiene su propia conexión de base de datos. Las consultas no pueden filtrarse entre tenants — punto."
+            },
+            "session": {
+                "title": "Sesiones con ámbito",
+                "description": "La autenticación, las cookies y las claves de caché están namespaced por tenant. Las sesiones nunca cruzan fronteras."
+            },
+            "domains": {
+                "title": "Enrutamiento por dominio",
+                "description": "Los tenants se identifican por hostname, así que los usuarios siempre aterrizan en su espacio — sin cambios manuales."
+            }
+        },
+        "quickActionsTitle": "¿Listo para empezar?",
+        "quickActionsSubtitle": "Inicia sesión para administrar tu tenant o crea una cuenta para comenzar.",
+        "infoPanelTitle": "Identidad del tenant",
+        "infoPanelSubtitle": "Identificadores e información de enrutamiento de este espacio.",
+        "stats": {
+            "region": "Región",
+            "industry": "Industria",
+            "created": "Miembro desde",
+            "notSet": "Sin definir"
+        },
+        "status": {
+            "active": "Activo",
+            "trial": "Prueba",
+            "suspended": "Suspendido"
+        },
+        "actions": {
+            "dashboard": "Ir al panel",
+            "login": "Iniciar sesión",
+            "register": "Comenzar"
+        },
+        "meta": {
+            "tenantId": "tenant_id",
+            "slug": "slug",
+            "domain": "dominio"
+        }
+    },
+    "home": {
+        "centralTitle": "Maestro — Boilerplate SaaS Multitenant",
+        "tenantTitle": "{name} — Tenant de Maestro"
     },
     "auth": {
         "login": {

@@ -27,7 +27,10 @@
       "Bash(git stash *)",
       "Bash(pnpm types:check)",
       "Bash(pnpm lint:check)",
-      "Bash(pnpm format:check)"
+      "Bash(pnpm format:check)",
+      "Bash(ls /var/www/maestro.test/.claude/skills/ && echo \"---\" && ls /home/owl/.claude/skills/ 2>/dev/null | head -30)",
+      "Read(//home/owl/.claude/skills/**)",
+      "Bash(grep -rB 2 -A 25 \"function shouldBeSkipped\" /var/www/maestro.test/vendor/stancl/tenancy/src/)"
     ]
   }
 }

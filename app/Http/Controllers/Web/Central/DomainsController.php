@@ -28,6 +28,7 @@ class DomainsController extends Controller
             'tenantOptions' => Tenant::query()
                 ->where('status', '!=', 'suspended')
                 ->select(['id', 'name', 'slug'])
+                ->withCount('domains')
                 ->orderBy('name')
                 ->get(),
             'centralDomain' => $this->centralDomain(),
@@ -43,6 +44,8 @@ class DomainsController extends Controller
         unset($validated['tenant_id']);
 
         DB::transaction(function () use ($tenant, $validated): void {
+            $validated['is_primary'] = ! $tenant->domains()->exists() || (bool) $validated['is_primary'];
+
             if ((bool) $validated['is_primary']) {
                 $tenant->domains()->update(['is_primary' => false]);
             }

@@ -1,6 +1,17 @@
 /.phpunit.cache
 /bootstrap/ssr
 /node_modules
+/remotion/node_modules
+/remotion/.cache
+/remotion/.remotion
+/remotion/out
+/remotion/build
+/remotion/dist
+/remotion/*.webm
+/remotion/*.mp4
+/remotion/*.mov
+/remotion/*.avi
+/remotion/*.mkv
 /public/build
 /public/fonts-manifest.dev.json
 /public/hot

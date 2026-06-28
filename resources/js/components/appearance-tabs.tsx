@@ -14,9 +14,21 @@ export default function AppearanceToggleTab({
     const { t } = useTranslation();
 
     const tabs: { value: Appearance; icon: LucideIcon; label: string }[] = [
-        { value: 'light', icon: Sun, label: t('appearance.light') },
-        { value: 'dark', icon: Moon, label: t('appearance.dark') },
-        { value: 'system', icon: Monitor, label: t('appearance.system') },
+        {
+            value: 'light',
+            icon: Sun,
+            label: t('appearance.light', { defaultValue: 'Light' }),
+        },
+        {
+            value: 'dark',
+            icon: Moon,
+            label: t('appearance.dark', { defaultValue: 'Dark' }),
+        },
+        {
+            value: 'system',
+            icon: Monitor,
+            label: t('appearance.system', { defaultValue: 'System' }),
+        },
     ];
 
     return (
@@ -30,6 +42,9 @@ export default function AppearanceToggleTab({
             {tabs.map(({ value, icon: Icon, label }) => (
                 <button
                     key={value}
+                    type="button"
+                    aria-pressed={appearance === value}
+                    aria-label={label}
                     onClick={() => updateAppearance(value)}
                     className={cn(
                         'flex items-center rounded-md px-3.5 py-1.5 transition-colors',

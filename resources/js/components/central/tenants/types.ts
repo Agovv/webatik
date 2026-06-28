@@ -34,7 +34,9 @@ export type Tenant = {
     domains_count?: number;
 };
 
-export type TenantOption = Pick<Tenant, 'id' | 'name' | 'slug'>;
+export type TenantOption = Pick<Tenant, 'id' | 'name' | 'slug'> & {
+    domains_count?: number;
+};
 
 export type PaginationLink = {
     url: string | null;

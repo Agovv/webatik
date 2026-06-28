@@ -74,7 +74,7 @@ test('tenant users can authenticate through fortify on tenant domains', function
 
     $this->get('https://acme.test/')
         ->assertOk()
-        ->assertInertia(fn (Assert $page) => $page->component('welcome'));
+        ->assertInertia(fn (Assert $page) => $page->component('tenant/welcome'));
 });
 
 test('trial tenant app shares the tenant status in inertia props', function () {
@@ -90,9 +90,9 @@ test('trial tenant app shares the tenant status in inertia props', function () {
     $this->get('https://trial.test/')
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
-            ->component('welcome')
-            ->where('tenant.status', 'trial')
-            ->where('tenant.slug', 'trial-co')
+            ->component('tenant/welcome')
+            ->where('tenantData.status', 'trial')
+            ->where('tenantData.slug', 'trial-co')
             ->etc()
         );
 });

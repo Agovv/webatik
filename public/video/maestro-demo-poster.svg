@@ -1,0 +1,45 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1920" height="1080" fill="#050505"/>
+  <circle cx="300" cy="190" r="360" fill="#2DD4BF" fill-opacity=".12"/>
+  <circle cx="1640" cy="170" r="300" fill="#FACC15" fill-opacity=".09"/>
+  <g opacity=".14">
+    <path d="M0 108H1920M0 216H1920M0 324H1920M0 432H1920M0 540H1920M0 648H1920M0 756H1920M0 864H1920M0 972H1920" stroke="#FAFAFA"/>
+    <path d="M108 0V1080M216 0V1080M324 0V1080M432 0V1080M540 0V1080M648 0V1080M756 0V1080M864 0V1080M972 0V1080M1080 0V1080M1188 0V1080M1296 0V1080M1404 0V1080M1512 0V1080M1620 0V1080M1728 0V1080M1836 0V1080" stroke="#FAFAFA"/>
+  </g>
+  <rect x="150" y="183" width="116" height="116" rx="29" fill="#FAFAFA"/>
+  <path d="M174 270V214h16.6l17.4 25.5 17.4-25.5H242v56h-16v-29.6l-12.7 18.3h-10.6L190 240.4V270h-16Z" fill="#050505"/>
+  <path d="M237 198L240 208.2L250 211L240 214L237 224L234 214L224 211L234 208.2L237 198Z" fill="#050505"/>
+  <text x="302" y="260" fill="#FAFAFA" font-family="Instrument Sans, Arial, sans-serif" font-size="42" font-weight="700">Maestro</text>
+  <text x="150" y="415" fill="#FAFAFA" font-family="Instrument Sans, Arial, sans-serif" font-size="112" font-weight="800" letter-spacing="-5">Ship your SaaS,</text>
+  <text x="150" y="535" fill="#8F8F8F" font-family="Instrument Serif, Georgia, serif" font-size="112" font-style="italic">not your boilerplate.</text>
+  <text x="150" y="628" fill="#A3A3A3" font-family="Instrument Sans, Arial, sans-serif" font-size="34">Laravel 13 + Inertia 3, tenant isolation, RBAC, i18n, themes and passkeys.</text>
+  <rect x="1046" y="190" width="724" height="610" rx="18" fill="#121212" fill-opacity=".92" stroke="#303030"/>
+  <rect x="1046" y="190" width="724" height="64" rx="18" fill="#121212" stroke="#303030"/>
+  <circle cx="1086" cy="222" r="8" fill="#FB7185"/>
+  <circle cx="1114" cy="222" r="8" fill="#FACC15"/>
+  <circle cx="1142" cy="222" r="8" fill="#2DD4BF"/>
+  <text x="1614" y="229" fill="#666" font-family="JetBrains Mono, monospace" font-size="21">tenant:acme</text>
+  <rect x="1092" y="310" width="632" height="112" rx="16" fill="#181818" stroke="#303030"/>
+  <text x="1128" y="353" fill="#777" font-family="JetBrains Mono, monospace" font-size="22" letter-spacing="2">STATUS</text>
+  <text x="1128" y="397" fill="#FAFAFA" font-family="Instrument Sans, Arial, sans-serif" font-size="38" font-weight="700">Production ready</text>
+  <rect x="1610" y="345" width="62" height="36" rx="18" fill="#2DD4BF"/>
+  <text x="1626" y="370" fill="#050505" font-family="Instrument Sans, Arial, sans-serif" font-size="18" font-weight="700">live</text>
+  <g fill="#181818" stroke="#303030">
+    <rect x="1092" y="454" width="300" height="126" rx="16"/>
+    <rect x="1424" y="454" width="300" height="126" rx="16"/>
+    <rect x="1092" y="606" width="300" height="126" rx="16"/>
+    <rect x="1424" y="606" width="300" height="126" rx="16"/>
+  </g>
+  <g font-family="JetBrains Mono, monospace" font-size="22" fill="#777">
+    <text x="1126" y="500">tenants</text>
+    <text x="1458" y="500">domains</text>
+    <text x="1126" y="652">roles</text>
+    <text x="1458" y="652">locales</text>
+  </g>
+  <g font-family="Instrument Sans, Arial, sans-serif" font-size="48" font-weight="800" fill="#FAFAFA">
+    <text x="1126" y="555">128</text>
+    <text x="1458" y="555">342</text>
+    <text x="1126" y="707">24</text>
+    <text x="1458" y="707">2</text>
+  </g>
+</svg>

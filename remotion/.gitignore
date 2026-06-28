@@ -1,0 +1,13 @@
+node_modules/
+out/
+build/
+dist/
+.cache/
+.remotion/
+*.webm
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.log
+.DS_Store

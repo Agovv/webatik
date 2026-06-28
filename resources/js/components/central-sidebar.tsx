@@ -27,10 +27,10 @@ import type { PermissionName } from '@/hooks/use-permissions';
 import { dashboard } from '@/routes';
 import { index as domainsIndex } from '@/routes/manage/domains';
 import { index as tenantsIndex } from '@/routes/manage/tenants/index';
-import type { NavItem } from '@/types';
 import { index as permissionsIndex } from '@/routes/permissions';
 import { index as rolesIndex } from '@/routes/roles';
 import { index as usersIndex } from '@/routes/users';
+import type { NavItem } from '@/types';
 
 
 type PermissionNavItem = NavItem & {

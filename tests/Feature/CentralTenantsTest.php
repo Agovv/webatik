@@ -243,7 +243,7 @@ test('domains can be associated with a tenant and removed', function () {
     $this->post(route('manage.tenants.domains.store', $tenant), [
         'domain' => 'bistro-nova.test',
         'type' => 'custom',
-        'is_primary' => true,
+        'is_primary' => false,
         'status' => 'active',
         'dns_status' => 'verified',
         'ssl_status' => 'verified',
@@ -285,6 +285,7 @@ test('domain index lists domains grouped by tenant', function () {
             ->where('tenants.0.name', 'FreshMart Domains')
             ->where('tenants.0.domains.0.domain', 'freshmart-domains.test')
             ->where('tenantOptions.0.name', 'FreshMart Domains')
+            ->where('tenantOptions.0.domains_count', 1)
             ->where('centralDomain', parse_url(config('app.url'), PHP_URL_HOST))
             ->etc()
         );

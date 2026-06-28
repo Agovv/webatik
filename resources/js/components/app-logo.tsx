@@ -2,7 +2,7 @@ import { usePage } from '@inertiajs/react';
 import AppLogoIcon from '@/components/app-logo-icon';
 import type { TenantSummary } from '@/types/global';
 
-const APP_NAME = import.meta.env.VITE_APP_NAME ?? 'Laravel Starter Kit';
+const APP_NAME = import.meta.env.VITE_APP_NAME ?? 'Maestro';
 
 export default function AppLogo() {
     const tenant: TenantSummary|null = usePage().props.currentTenant;

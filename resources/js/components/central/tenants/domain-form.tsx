@@ -1,6 +1,6 @@
 import { Form } from '@inertiajs/react';
 import { PlusIcon, SaveIcon } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
@@ -44,6 +44,22 @@ function subdomainFromDomain(
     return '';
 }
 
+function domainCountForTenant(tenant?: Tenant | TenantOption) {
+    if (!tenant) {
+        return 0;
+    }
+
+    if ('domains_count' in tenant && typeof tenant.domains_count === 'number') {
+        return tenant.domains_count;
+    }
+
+    if ('domains' in tenant && Array.isArray(tenant.domains)) {
+        return tenant.domains.length;
+    }
+
+    return 0;
+}
+
 export function DomainForm({
     tenant,
     tenants = [],
@@ -70,6 +86,12 @@ export function DomainForm({
             ),
         [selectedTenantId, tenant, tenants],
     );
+    const selectedTenantDomainCount = domainCountForTenant(selectedTenant);
+    const suggestedPrimaryValue =
+        !domain && selectedTenantDomainCount === 0 ? '1' : '0';
+    const [isPrimary, setIsPrimary] = useState(
+        domain?.is_primary ? '1' : suggestedPrimaryValue,
+    );
     const [subdomain, setSubdomain] = useState(
         subdomainFromDomain(domain?.domain, centralDomain) ||
             randomSubdomain(selectedTenant?.slug),
@@ -84,6 +106,12 @@ export function DomainForm({
         : tenant
           ? storeDomain.form(tenant.id)
           : storeGlobalDomain.form();
+
+    useEffect(() => {
+        if (!domain) {
+            setIsPrimary(suggestedPrimaryValue);
+        }
+    }, [domain, suggestedPrimaryValue]);
 
     return (
         <Form
@@ -246,9 +274,8 @@ export function DomainForm({
                                 </FieldLabel>
                                 <Select
                                     name="is_primary"
-                                    defaultValue={
-                                        domain?.is_primary ? '1' : '0'
-                                    }
+                                    value={isPrimary}
+                                    onValueChange={setIsPrimary}
                                 >
                                     <SelectTrigger
                                         className="w-full"
@@ -284,7 +311,7 @@ export function DomainForm({
                                 </FieldLabel>
                                 <Select
                                     name="status"
-                                    defaultValue={domain?.status ?? 'pending'}
+                                    defaultValue={domain?.status ?? 'active'}
                                 >
                                     <SelectTrigger
                                         className="w-full"
@@ -318,7 +345,7 @@ export function DomainForm({
                                 <Select
                                     name="dns_status"
                                     defaultValue={
-                                        domain?.dns_status ?? 'pending'
+                                        domain?.dns_status ?? 'verified'
                                     }
                                 >
                                     <SelectTrigger
@@ -353,7 +380,7 @@ export function DomainForm({
                                 <Select
                                     name="ssl_status"
                                     defaultValue={
-                                        domain?.ssl_status ?? 'pending'
+                                        domain?.ssl_status ?? 'verified'
                                     }
                                 >
                                     <SelectTrigger
