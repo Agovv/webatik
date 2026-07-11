@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Jobs\DeleteTenantIcon;
+use App\Jobs\DeleteTenantLogs;
+use App\Listeners\ConfigureTenantAuth;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Event;
@@ -11,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Actions\CloneRoutesAsTenant;
+use Stancl\Tenancy\Bootstrappers\BroadcastChannelPrefixBootstrapper;
 use Stancl\Tenancy\Bootstrappers\Integrations\FortifyRouteBootstrapper;
 use Stancl\Tenancy\Bootstrappers\RootUrlBootstrapper;
 use Stancl\Tenancy\Events;
@@ -50,7 +54,8 @@ class TenancyServiceProvider extends ServiceProvider
                     Jobs\CreateDatabase::class,
                     Jobs\MigrateDatabase::class,
                     Jobs\SeedDatabase::class,
-                    // Jobs\CreateStorageSymlinks::class,
+                    // SendTenantWelcomeNotification::class,
+                    Jobs\CreateStorageSymlinks::class,
 
                     // Your own jobs to prepare the tenant.
                     // Provision API keys, create S3 buckets, anything you want!
@@ -65,8 +70,8 @@ class TenancyServiceProvider extends ServiceProvider
             Events\DeletingTenant::class => [
                 JobPipeline::make([
                     Jobs\DeleteDomains::class,
-                    // Jobs\DeleteTenantStorage::class,
-                    // Jobs\RemoveStorageSymlinks::class,
+                    Jobs\DeleteTenantStorage::class,
+                    Jobs\RemoveStorageSymlinks::class,
                 ])->send(function (Events\DeletingTenant $event) {
                     return $event->tenant;
                 })->shouldBeQueued(false),
@@ -74,6 +79,8 @@ class TenancyServiceProvider extends ServiceProvider
             Events\TenantDeleted::class => [
                 JobPipeline::make([
                     Jobs\DeleteDatabase::class,
+                    DeleteTenantLogs::class,
+                    DeleteTenantIcon::class,
                 ])->send(function (Events\TenantDeleted $event) {
                     return $event->tenant;
                 })->shouldBeQueued(false),
@@ -111,6 +118,7 @@ class TenancyServiceProvider extends ServiceProvider
             Events\InitializingTenancy::class => [],
             Events\TenancyInitialized::class => [
                 Listeners\BootstrapTenancy::class,
+                ConfigureTenantAuth::class,
             ],
 
             Events\EndingTenancy::class => [],
@@ -193,13 +201,19 @@ class TenancyServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->bootEvents();
+
         FortifyRouteBootstrapper::$fortifyHome = null;
         FortifyRouteBootstrapper::$passTenantParameter = false;
         InitializeTenancyByDomain::$onFail = fn () => abort(404);
+
         // $this->mapRoutes();
 
         $this->makeTenancyMiddlewareHighestPriority();
         $this->overrideUrlInTenantContext();
+
+        BroadcastChannelPrefixBootstrapper::pusher();
+        // BroadcastChannelPrefixBootstrapper::reverb();
+        // BroadcastChannelPrefixBootstrapper::ably();
 
         // // Include soft deleted resources in synced resource queries.
         // ResourceSyncing\Listeners\UpdateOrCreateSyncedResource::$scopeGetModelQuery = function (Builder $query) {

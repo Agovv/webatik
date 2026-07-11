@@ -2,9 +2,9 @@
 
 namespace Database\Seeders\Tenant;
 
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Tenant\User as TenantUser;
+use App\Models\Universal\Permission;
+use App\Models\Universal\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\PermissionRegistrar;
@@ -19,9 +19,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $cruds = [
+            'tenant announcements',
             'permissions',
             'roles',
             'users',
+            // 'tickets',
         ];
 
         $permissions = [];
@@ -31,6 +33,9 @@ class DatabaseSeeder extends Seeder
             $permissions[] = "update $crud";
             $permissions[] = "delete $crud";
         }
+
+        // Tenants get create/read/update/delete + reply on tickets but not assign.
+        // $permissions[] = 'reply tickets';
 
         // forget cache otherwise the permissions will not be created
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
@@ -46,12 +51,33 @@ class DatabaseSeeder extends Seeder
         $adminRole = Role::findOrCreate('admin');
         $adminRole->syncPermissions($dbPermissions);
 
-        $user = User::factory()->create([
+        $managerRole = Role::findOrCreate('manager');
+        // only tenant announcements
+        $permissionsManager = collect($dbPermissions)->filter(function ($permission) {
+            return str_starts_with($permission->name, 'tenant announcements');
+        });
+        $managerRole->syncPermissions($permissionsManager);
+
+        $rootUser = TenantUser::factory()->create([
             'name' => config('maestro.default.superuser.username'),
             'username' => config('maestro.default.superuser.username'),
             'email' => config('maestro.default.superuser.email'),
+            'phone' => config('maestro.default.superuser.phone'),
+            'password' => config('maestro.default.superuser.password'),
         ]);
 
-        $user->assignRole($rootRole);
+        $rootUser->assignRole($rootRole);
+        $rootUser->assignRole($managerRole);
+
+        $adminUser = TenantUser::factory()->create([
+            'name' => config('maestro.default.admin.username'),
+            'username' => config('maestro.default.admin.username'),
+            'email' => config('maestro.default.admin.email'),
+            'phone' => config('maestro.default.admin.phone'),
+            'password' => config('maestro.default.admin.password'),
+        ]);
+
+        $adminUser->assignRole($adminRole);
+        $adminUser->assignRole($managerRole);
     }
 }

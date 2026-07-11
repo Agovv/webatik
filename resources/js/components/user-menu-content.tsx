@@ -1,5 +1,6 @@
 import { Link, router } from '@inertiajs/react';
 import { LogOut, Settings } from 'lucide-react';
+
 import { useTranslation } from 'react-i18next';
 import { LanguageMenuSub } from '@/components/language-switcher';
 import {

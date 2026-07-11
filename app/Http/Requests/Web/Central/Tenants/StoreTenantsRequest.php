@@ -5,7 +5,6 @@ namespace App\Http\Requests\Web\Central\Tenants;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class StoreTenantsRequest extends FormRequest
 {
@@ -26,7 +25,6 @@ class StoreTenantsRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            // 'slug' => ['required', 'string', 'max:255', Rule::unique('tenants', 'slug')],
             'status' => 'required|string|in:active,trial,suspended',
             'contact_mail' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:20',

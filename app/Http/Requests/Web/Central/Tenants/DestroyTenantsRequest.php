@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Web\Central\Tenants;
 
-use App\Models\Tenant;
+use App\Models\Central\Tenant;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;

@@ -1,5 +1,7 @@
+import { router } from '@inertiajs/react';
 import { Check, Languages } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,24 +11,50 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import i18n, { SUPPORTED_LANGUAGES } from '@/i18n';
-import type { SupportedLanguage } from '@/i18n';
+import type { Locale } from '@/i18n';
+import { update as updateLocale } from '@/routes/locale';
 
-const languageLabels: Record<SupportedLanguage, string> = {
+const supportedLanguages: Locale[] = ['es', 'en'];
+
+const languageLabels: Record<Locale, string> = {
     en: 'language.english',
     es: 'language.spanish',
 };
 
-function useCurrentLanguage(): SupportedLanguage {
+function useCurrentLanguage(): Locale {
     const { i18n: i18nInstance } = useTranslation();
+    const currentLanguage =
+        i18nInstance.resolvedLanguage ?? i18nInstance.language ?? 'es';
 
-    return (i18nInstance.resolvedLanguage ??
-        i18nInstance.language ??
-        'en') as SupportedLanguage;
+    return supportedLanguages.includes(currentLanguage as Locale)
+        ? (currentLanguage as Locale)
+        : 'es';
 }
 
-function changeLanguage(lng: SupportedLanguage) {
-    void i18n.changeLanguage(lng);
+function useChangeLanguage() {
+    const { i18n } = useTranslation();
+
+    return (locale: Locale) => {
+        if (locale === i18n.language) {
+            return;
+        }
+
+        const previous = i18n.language;
+
+        void i18n.changeLanguage(locale);
+
+        router.post(
+            updateLocale.url(),
+            { locale },
+            {
+                preserveScroll: true,
+                preserveState: true,
+                onError: () => {
+                    void i18n.changeLanguage(previous);
+                },
+            },
+        );
+    };
 }
 
 /**
@@ -36,6 +64,7 @@ function changeLanguage(lng: SupportedLanguage) {
 export function LanguageSwitcher() {
     const { t } = useTranslation();
     const current = useCurrentLanguage();
+    const changeLanguage = useChangeLanguage();
 
     return (
         <DropdownMenu>
@@ -50,11 +79,12 @@ export function LanguageSwitcher() {
                 </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-40">
-                {SUPPORTED_LANGUAGES.map((lng) => (
+                {supportedLanguages.map((lng) => (
                     <LanguageItem
                         key={lng}
                         lng={lng}
                         active={lng === current}
+                        onSelect={changeLanguage}
                     />
                 ))}
             </DropdownMenuContent>
@@ -68,6 +98,7 @@ export function LanguageSwitcher() {
 export function LanguageMenuSub() {
     const { t } = useTranslation();
     const current = useCurrentLanguage();
+    const changeLanguage = useChangeLanguage();
 
     return (
         <DropdownMenuSub>
@@ -79,11 +110,12 @@ export function LanguageMenuSub() {
                 </span>
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
-                {SUPPORTED_LANGUAGES.map((lng) => (
+                {supportedLanguages.map((lng) => (
                     <LanguageItem
                         key={lng}
                         lng={lng}
                         active={lng === current}
+                        onSelect={changeLanguage}
                     />
                 ))}
             </DropdownMenuSubContent>
@@ -94,18 +126,17 @@ export function LanguageMenuSub() {
 function LanguageItem({
     lng,
     active,
+    onSelect,
 }: {
-    lng: SupportedLanguage;
+    lng: Locale;
     active: boolean;
+    onSelect: (locale: Locale) => void;
 }) {
     const { t } = useTranslation();
 
     return (
         <DropdownMenuItem
-            onSelect={(event) => {
-                event.preventDefault();
-                changeLanguage(lng);
-            }}
+            onSelect={() => onSelect(lng)}
             data-test={`language-option-${lng}`}
         >
             <span className="flex-1">{t(languageLabels[lng])}</span>

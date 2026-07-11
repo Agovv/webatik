@@ -2,7 +2,8 @@
 
 namespace App\Concerns;
 
-use App\Models\User;
+use App\Models\Central\User as CentralUser;
+use App\Models\Tenant\User as TenantUser;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rule;
 
@@ -15,6 +16,8 @@ trait ProfileValidationRules
      */
     protected function profileRules(?int $userId = null): array
     {
+        $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
+
         return [
             'name' => $this->nameRules(),
             'email' => $this->emailRules($userId),
@@ -23,8 +26,16 @@ trait ProfileValidationRules
                 'string',
                 'max:255',
                 $userId === null
-                    ? Rule::unique(User::class)
-                    : Rule::unique(User::class)->ignore($userId),
+                    ? Rule::unique($model)
+                    : Rule::unique($model)->ignore($userId),
+            ],
+            'phone' => [
+                'nullable',
+                'string',
+                'max:20',
+                $userId === null
+                    ? Rule::unique($model)
+                    : Rule::unique($model)->ignore($userId),
             ],
         ];
     }
@@ -46,14 +57,16 @@ trait ProfileValidationRules
      */
     protected function emailRules(?int $userId = null): array
     {
+        $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
+
         return [
             'required',
             'string',
             'email',
             'max:255',
             $userId === null
-                ? Rule::unique(User::class)
-                : Rule::unique(User::class)->ignore($userId),
+                ? Rule::unique($model)
+                : Rule::unique($model)->ignore($userId),
         ];
     }
 }

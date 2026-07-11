@@ -1,4 +1,5 @@
 import { usePage } from '@inertiajs/react';
+
 import CentralLayout from '@/layouts/central-layout';
 import TenantLayout from '@/layouts/tenant-layout';
 import type { BreadcrumbItem } from '@/types';

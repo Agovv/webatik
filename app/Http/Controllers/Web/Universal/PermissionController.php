@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Web\Universal;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Universal\Permissions\StorePermissionRequest;
 use App\Http\Requests\Web\Universal\Permissions\UpdatePermissionRequest;
-use App\Models\Permission;
+use App\Models\Universal\Permission;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

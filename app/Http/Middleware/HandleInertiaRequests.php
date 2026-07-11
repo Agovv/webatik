@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\Notifications\UnreadNotificationsCount;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,16 +36,25 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $locale = app()->getLocale();
         $user = $request->user();
         $tenant = tenant();
 
         return [
             ...parent::share($request),
             'name' => config('app.name'),
+            'locale' => $locale,
+            'translations' => fn () => collect(config('app.supported_locales'))
+                ->mapWithKeys(fn (string $locale) => [
+                    $locale => $this->loadTranslations($locale),
+                ])
+                ->all(),
             'auth' => [
-                'user' => $user,
+                'notificationsModel' => $this->getNotificationChannelForUser($user),
+                'user' => $request->user(),
                 'roles' => $user?->getRoleNames()->values()->all() ?? [],
                 'permissions' => $user?->getAllPermissions()->pluck('name')->values()->all() ?? [],
+                'unreadNotificationsCount' => UnreadNotificationsCount::for($user),
             ],
             'currentTenant' => $tenant
                 ? [
@@ -57,5 +67,25 @@ class HandleInertiaRequests extends Middleware
                 : null,
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
+    }
+
+    private function loadTranslations(string $locale): array
+    {
+        $path = lang_path("{$locale}.json");
+
+        return file_exists($path) ? json_decode(file_get_contents($path), true) : [];
+    }
+
+    private function getNotificationChannelForUser($user): string
+    {
+        if (! $user) {
+            return '';
+        }
+
+        if (tenant()) {
+            return tenant()->id.'.App.Models.Tenant.User.'.$user->id;
+        }
+
+        return 'App.Models.Central.User.'.$user->id;
     }
 }

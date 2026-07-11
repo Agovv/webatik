@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Web\Universal;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Universal\Roles\StoreRoleRequest;
 use App\Http\Requests\Web\Universal\Roles\UpdateRoleRequest;
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Central\User as CentralUser;
+use App\Models\Tenant\User as TenantUser;
+use App\Models\Universal\Permission;
+use App\Models\Universal\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class RoleController extends Controller
         return in_array($user->username, [$rootUsr]);
     }
 
-    private function getRoles(User $currentUser, bool $isPrivilegedUser, ?string $search = null): array
+    private function getRoles(CentralUser|TenantUser $currentUser, bool $isPrivilegedUser, ?string $search = null): array
     {
         $userRoleIds = $isPrivilegedUser ? null : $currentUser->roles->pluck('id');
 
@@ -36,7 +37,7 @@ class RoleController extends Controller
             ->toArray();
     }
 
-    private function getPermissions(User $currentUser, bool $isPrivilegedUser): array
+    private function getPermissions(CentralUser|TenantUser $currentUser, bool $isPrivilegedUser): array
     {
         return $isPrivilegedUser
             ? Permission::orderBy('name')->get(['id', 'name'])->toArray()

@@ -5,34 +5,20 @@ import {
     useForm,
     usePage,
 } from '@inertiajs/react';
-import { Edit, Plus, Search, Trash2, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from '@/components/ui/table';
+
 import { usePermissions } from '@/hooks/use-permissions';
 import { destroy, index, store, update } from '@/routes/permissions';
-import type { Permission, PermissionsPageProps } from '../types';
+
+import { PermissionDeleteDialog } from './components/permission-delete-dialog';
+import { PermissionFormDialog } from './components/permission-form-dialog';
+import { PermissionSearch } from './components/permission-search';
+import { PermissionTable } from './components/permission-table';
+
+import type { Permission, PermissionsPageProps } from './types';
+import type { FormEvent } from 'react';
 
 export default function Permissions() {
     const {
@@ -52,6 +38,10 @@ export default function Permissions() {
     const [searchTerm, setSearchTerm] = useState(filters?.search || '');
     const searchInputRef = useRef<HTMLInputElement>(null);
 
+    const createForm = useForm({ name: '' });
+    const editForm = useForm({ name: '' });
+    const deleteForm = useForm({});
+
     setLayoutProps({
         breadcrumbs: [
             {
@@ -61,7 +51,6 @@ export default function Permissions() {
         ],
     });
 
-    // Focus the search input with Ctrl/Cmd + K.
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
@@ -72,76 +61,43 @@ export default function Permissions() {
 
         document.addEventListener('keydown', handleKeyDown);
 
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-        };
+        return () => document.removeEventListener('keydown', handleKeyDown);
     }, []);
 
-    // Debounce server-side search requests.
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            const params = new URLSearchParams(window.location.search);
-
-            if (searchTerm) {
-                params.set('search', searchTerm);
-            } else {
-                params.delete('search');
+        const timeoutId = window.setTimeout(() => {
+            if (searchTerm === (filters?.search || '')) {
+                return;
             }
 
-            const newUrl =
-                window.location.pathname +
-                (params.toString() ? '?' + params.toString() : '');
-            window.history.replaceState({}, '', newUrl);
-
-            // Only request fresh data when the search differs from the current filter.
-            if (searchTerm !== (filters?.search || '')) {
-                router.get(
-                    index().url,
-                    searchTerm ? { search: searchTerm } : {},
-                    {
-                        preserveState: true,
-                        preserveScroll: true,
-                        replace: true,
-                    },
-                );
-            }
+            router.get(index().url, searchTerm ? { search: searchTerm } : {}, {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            });
         }, 500);
 
-        return () => clearTimeout(timeoutId);
+        return () => window.clearTimeout(timeoutId);
     }, [searchTerm, filters?.search]);
 
-    const clearSearch = () => {
-        setSearchTerm('');
-    };
-
-    // Surface server flash and validation messages as toasts.
     useEffect(() => {
         if (success) {
             toast.success(success);
         }
 
         if (pageErrors && Object.keys(pageErrors).length > 0) {
-            const errorMessages = Object.values(pageErrors).flat();
-            errorMessages.forEach((error) => {
-                if (typeof error === 'string') {
-                    toast.error(error);
-                }
-            });
+            Object.values(pageErrors)
+                .flat()
+                .forEach((error) => {
+                    if (typeof error === 'string') {
+                        toast.error(error);
+                    }
+                });
         }
     }, [success, pageErrors]);
 
-    const createForm = useForm({
-        name: '',
-    });
-
-    const editForm = useForm({
-        name: '',
-    });
-
-    const deleteForm = useForm({});
-
-    const handleCreate = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleCreate = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
         createForm.post(store().url, {
             onSuccess: () => {
@@ -151,8 +107,8 @@ export default function Permissions() {
         });
     };
 
-    const handleEdit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleEdit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
         if (!selectedPermission) {
             return;
@@ -194,295 +150,54 @@ export default function Permissions() {
     return (
         <>
             <Head title={t('permissions.title')} />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="flex items-center justify-between">
+            <div className="@container flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                <div className="flex flex-col gap-3 @md:flex-row @md:items-center @md:justify-between">
                     <h1 className="text-2xl font-bold">
                         {t('permissions.heading')}
                     </h1>
                     {can('create permissions') && (
-                        <Dialog
+                        <PermissionFormDialog
+                            mode="create"
                             open={createModalOpen}
+                            form={createForm}
                             onOpenChange={setCreateModalOpen}
-                        >
-                            <DialogTrigger asChild>
-                                <Button>
-                                    <Plus className="h-4 w-4" />
-                                    {t('permissions.create.button')}
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-5xl">
-                                <DialogHeader>
-                                    <DialogTitle>
-                                        {t('permissions.create.title')}
-                                    </DialogTitle>
-                                    <DialogDescription>
-                                        {t('permissions.create.description')}
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <form onSubmit={handleCreate}>
-                                    <div className="grid gap-4 py-4">
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label
-                                                htmlFor="name"
-                                                className="text-right"
-                                            >
-                                                {t('permissions.form.name')}
-                                            </Label>
-                                            <Input
-                                                id="name"
-                                                value={createForm.data.name}
-                                                onChange={(e) =>
-                                                    createForm.setData(
-                                                        'name',
-                                                        e.target.value,
-                                                    )
-                                                }
-                                                className="col-span-3"
-                                                placeholder={t(
-                                                    'permissions.form.placeholder',
-                                                )}
-                                                required
-                                            />
-                                            {createForm.errors.name && (
-                                                <div className="col-span-4 text-sm text-red-600">
-                                                    {createForm.errors.name}
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <DialogFooter>
-                                        <Button
-                                            type="button"
-                                            variant="outline"
-                                            onClick={() =>
-                                                setCreateModalOpen(false)
-                                            }
-                                        >
-                                            {t('common.cancel')}
-                                        </Button>
-                                        <Button
-                                            type="submit"
-                                            disabled={createForm.processing}
-                                        >
-                                            {createForm.processing
-                                                ? t(
-                                                      'permissions.create.processing',
-                                                  )
-                                                : t(
-                                                      'permissions.create.submit',
-                                                  )}
-                                        </Button>
-                                    </DialogFooter>
-                                </form>
-                            </DialogContent>
-                        </Dialog>
-                    )}
-                </div>
-
-                {/* Search */}
-                <div className="flex items-center gap-4">
-                    <div className="relative max-w-sm flex-1">
-                        <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
-                        <Input
-                            ref={searchInputRef}
-                            placeholder={t('permissions.search.placeholder')}
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pr-10 pl-10"
-                            aria-label={t('permissions.search.aria')}
+                            onSubmit={handleCreate}
                         />
-                        {searchTerm && (
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                className="absolute top-1/2 right-1 h-7 w-7 -translate-y-1/2 transform p-0"
-                                onClick={clearSearch}
-                            >
-                                <X className="h-4 w-4" />
-                            </Button>
-                        )}
-                    </div>
-                    {searchTerm && (
-                        <div className="text-sm text-muted-foreground">
-                            {permissions.length === 0
-                                ? t('common.noResults')
-                                : t('permissions.search.results', {
-                                      count: permissions.length,
-                                  })}
-                        </div>
                     )}
                 </div>
 
-                <Table>
-                    <TableCaption>
-                        {searchTerm
-                            ? t('permissions.table.searchCaption', {
-                                  search: searchTerm,
-                              })
-                            : t('permissions.table.caption')}
-                    </TableCaption>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="w-25">ID</TableHead>
-                            <TableHead>{t('permissions.table.name')}</TableHead>
-                            <TableHead className="text-right">
-                                {t('common.actions')}
-                            </TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {permissions.map((permission) => (
-                            <TableRow key={permission.id}>
-                                <TableCell className="font-medium">
-                                    {permission.id}
-                                </TableCell>
-                                <TableCell>{permission.name}</TableCell>
-                                <TableCell className="text-right">
-                                    <div className="flex justify-end gap-2">
-                                        {can('update permissions') && (
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() =>
-                                                    openEditModal(permission)
-                                                }
-                                                className="text-xs"
-                                            >
-                                                <Edit className="h-4 w-4" />
-                                                {t('common.edit')}
-                                            </Button>
-                                        )}
-                                        {can('delete permissions') && (
-                                            <Button
-                                                variant="destructive"
-                                                size="sm"
-                                                onClick={() =>
-                                                    openDeleteModal(permission)
-                                                }
-                                                className="text-xs"
-                                            >
-                                                <Trash2 className="h-4 w-4" />
-                                                {t('common.delete')}
-                                            </Button>
-                                        )}
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                        {permissions.length === 0 && (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={3}
-                                    className="py-8 text-center text-muted-foreground"
-                                >
-                                    {searchTerm
-                                        ? t('permissions.empty.search', {
-                                              search: searchTerm,
-                                          })
-                                        : t('permissions.empty.default')}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                <PermissionSearch
+                    value={searchTerm}
+                    resultCount={permissions.length}
+                    inputRef={searchInputRef}
+                    onChange={setSearchTerm}
+                    onClear={() => setSearchTerm('')}
+                />
 
-                {/* Edit dialog */}
-                <Dialog open={editModalOpen} onOpenChange={setEditModalOpen}>
-                    <DialogContent className="sm:max-w-5xl">
-                        <DialogHeader>
-                            <DialogTitle>
-                                {t('permissions.edit.title')}
-                            </DialogTitle>
-                            <DialogDescription>
-                                {t('permissions.edit.description')}
-                            </DialogDescription>
-                        </DialogHeader>
-                        <form onSubmit={handleEdit}>
-                            <div className="grid gap-4 py-4">
-                                <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label
-                                        htmlFor="edit-name"
-                                        className="text-right"
-                                    >
-                                        {t('permissions.form.name')}
-                                    </Label>
-                                    <Input
-                                        id="edit-name"
-                                        value={editForm.data.name}
-                                        onChange={(e) =>
-                                            editForm.setData(
-                                                'name',
-                                                e.target.value,
-                                            )
-                                        }
-                                        className="col-span-3"
-                                        required
-                                    />
-                                    {editForm.errors.name && (
-                                        <div className="col-span-4 text-sm text-red-600">
-                                            {editForm.errors.name}
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                            <DialogFooter>
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    onClick={() => setEditModalOpen(false)}
-                                >
-                                    {t('common.cancel')}
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    disabled={editForm.processing}
-                                >
-                                    {editForm.processing
-                                        ? t('permissions.edit.processing')
-                                        : t('permissions.edit.submit')}
-                                </Button>
-                            </DialogFooter>
-                        </form>
-                    </DialogContent>
-                </Dialog>
+                <PermissionTable
+                    permissions={permissions}
+                    searchTerm={searchTerm}
+                    canUpdate={can('update permissions')}
+                    canDelete={can('delete permissions')}
+                    onEdit={openEditModal}
+                    onDelete={openDeleteModal}
+                />
 
-                {/* Delete dialog */}
-                <Dialog
+                <PermissionFormDialog
+                    mode="edit"
+                    open={editModalOpen}
+                    form={editForm}
+                    onOpenChange={setEditModalOpen}
+                    onSubmit={handleEdit}
+                />
+
+                <PermissionDeleteDialog
                     open={deleteModalOpen}
+                    permission={selectedPermission}
+                    processing={deleteForm.processing}
                     onOpenChange={setDeleteModalOpen}
-                >
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>
-                                {t('permissions.delete.title')}
-                            </DialogTitle>
-                            <DialogDescription>
-                                {t('permissions.delete.description', {
-                                    name: selectedPermission?.name,
-                                })}
-                            </DialogDescription>
-                        </DialogHeader>
-                        <DialogFooter>
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => setDeleteModalOpen(false)}
-                            >
-                                {t('common.cancel')}
-                            </Button>
-                            <Button
-                                variant="destructive"
-                                onClick={handleDelete}
-                                disabled={deleteForm.processing}
-                            >
-                                {deleteForm.processing
-                                    ? t('permissions.delete.processing')
-                                    : t('common.delete')}
-                            </Button>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
+                    onConfirm={handleDelete}
+                />
             </div>
         </>
     );

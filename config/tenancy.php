@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use App\Bootstrappers\SpatiePermissionsBootstrapper;
-use App\Models\Domain;
-use App\Models\Tenant;
+use App\Models\Central\Domain;
+use App\Models\Central\Tenant;
 use Stancl\Tenancy\Bootstrappers;
 use Stancl\Tenancy\Concerns\UsableWithEarlyIdentification;
 use Stancl\Tenancy\Database\Models\ImpersonationToken;
@@ -205,7 +205,7 @@ return [
         // Bootstrappers\UrlGeneratorBootstrapper::class,
         // Bootstrappers\MailConfigBootstrapper::class,
         // Bootstrappers\BroadcastingConfigBootstrapper::class,
-        // Bootstrappers\BroadcastChannelPrefixBootstrapper::class,
+        Bootstrappers\BroadcastChannelPrefixBootstrapper::class,
 
         // Integration bootstrappers
         Bootstrappers\Integrations\FortifyRouteBootstrapper::class,
@@ -499,6 +499,6 @@ return [
      */
     'seeder_parameters' => [
         '--class' => 'Database\Seeders\DatabaseSeeder', // root seeder class
-        // '--force' => true,
+        '--force' => true,
     ],
 ];

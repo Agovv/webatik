@@ -1,9 +1,10 @@
 {
     "(and :count more error)": "(and :count more error)",
     "(and :count more errors)": "(and :count more error)|(and :count more errors)|(and :count more errors)",
+    ":inviterName has invited you to join the :teamName team.": ":inviterName has invited you to join the :teamName team.",
     "A decryption key is required.": "A decryption key is required.",
     "All rights reserved.": "All rights reserved.",
-    "Cannot delete role because it has assigned users.": "Cannot delete role because it has assigned users.",
+    "An invitation has already been sent to this email address.": "An invitation has already been sent to this email address.",
     "Encrypted environment file already exists.": "Encrypted environment file already exists.",
     "Encrypted environment file not found.": "Encrypted environment file not found.",
     "Environment file already exists.": "Environment file already exists.",
@@ -18,10 +19,18 @@
     "Invalid credential format.": "Invalid credential format.",
     "Invalid filename.": "Invalid filename.",
     "Invalid JSON was returned from the route.": "Invalid JSON was returned from the route.",
+    "Invitation accepted.": "Invitation accepted.",
+    "Invitation cancelled.": "Invitation cancelled.",
+    "Invitation declined.": "Invitation declined.",
+    "Invitation sent.": "Invitation sent.",
     "length": "length",
     "Location": "Location",
+    "Log in": "Log in",
+    "Log in and visit your dashboard to accept or decline this invitation.": "Log in and visit your dashboard to accept or decline this invitation.",
     "Login": "Login",
     "Logout": "Logout",
+    "Member removed.": "Member removed.",
+    "Member role updated.": "Member role updated.",
     "Not Found": "Not Found",
     "of": "of",
     "Page Expired": "Page Expired",
@@ -29,19 +38,22 @@
     "Passkey not recognized. It may have been removed from your account.": "Passkey not recognized. It may have been removed from your account.",
     "Passkey registration session expired. Please try again.": "Passkey registration session expired. Please try again.",
     "Passkey verification session expired. Please try again.": "Passkey verification session expired. Please try again.",
+    "Password updated.": "Password updated.",
     "Payment Required": "Payment Required",
     "Please click the button below to verify your email address.": "Please click the button below to verify your email address.",
+    "Profile updated.": "Profile updated.",
     "Regards,": "Regards,",
     "Register": "Register",
     "Reset Password": "Reset Password",
     "Reset your password": "Reset your password",
     "results": "results",
-    "Role created successfully.": "Role created successfully.",
-    "Role deleted successfully.": "Role deleted successfully.",
-    "Role updated successfully.": "Role updated successfully.",
     "Server Error": "Server Error",
     "Service Unavailable": "Service Unavailable",
     "Showing": "Showing",
+    "status": "status",
+    "Team created.": "Team created.",
+    "Team deleted.": "Team deleted.",
+    "Team updated.": "Team updated.",
     "The :attribute must be at least :length characters and contain at least one number.": "The :attribute must be at least :length characters and contain at least one number.",
     "The :attribute must be at least :length characters and contain at least one special character and one number.": "The :attribute must be at least :length characters and contain at least one special character and one number.",
     "The :attribute must be at least :length characters and contain at least one special character.": "The :attribute must be at least :length characters and contain at least one special character.",
@@ -57,8 +69,15 @@
     "The provided two factor recovery code was invalid.": "The provided two factor recovery code was invalid.",
     "The response is not a streamed response.": "The response is not a streamed response.",
     "The response is not a view.": "The response is not a view.",
+    "The team name does not match.": "The team name does not match.",
+    "The team owner cannot be removed.": "The team owner cannot be removed.",
     "This action is unauthorized.": "This action is unauthorized.",
+    "This invitation has already been accepted.": "This invitation has already been accepted.",
+    "This invitation has expired.": "This invitation has expired.",
+    "This invitation was sent to a different email address.": "This invitation was sent to a different email address.",
     "This password reset link will expire in :count minutes.": "This password reset link will expire in :count minutes.",
+    "This team name is reserved and cannot be used.": "This team name is reserved and cannot be used.",
+    "This user is already a member of the team.": "This user is already a member of the team.",
     "to": "to",
     "Toggle navigation": "Toggle navigation",
     "Too Many Requests": "Too Many Requests",
@@ -71,7 +90,908 @@
     "Verify your email address": "Verify your email address",
     "Whoops!": "Whoops!",
     "You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account.",
-    "Permission created.": "Permission created.",
-    "Permission updated.": "Permission updated.",
-    "Permission deleted.": "Permission deleted."
+    "You left the team \":name\"": "You left the team \":name\"",
+    "You've been invited to join :teamName": "You've been invited to join :teamName",
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "back": "Back",
+        "continue": "Continue",
+        "loading": "Loading...",
+        "search": "Search",
+        "all": "All",
+        "notSet": "Not set",
+        "yes": "Yes",
+        "no": "No",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "close": "Close",
+        "noResults": "No results",
+        "more": "more",
+        "selectAll": "Select all",
+        "deselectAll": "Deselect all"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "tenants": "Tenants",
+        "domains": "Domains",
+        "permissions": "Permissions",
+        "roles": "Roles",
+        "users": "Users",
+        "tickets": "Tickets",
+        "repository": "Repository",
+        "documentation": "Documentation",
+        "settings": "Settings",
+        "logOut": "Log out"
+    },
+    "sidebar": {
+        "platform": "Platform",
+        "central": "Central admin",
+        "tenant": "Application"
+    },
+    "header": {
+        "navigation": "Navigation menu"
+    },
+    "footer": {
+        "trial": "Trial app — not for commercial use",
+        "poweredBy": "Powered by {name}"
+    },
+    "appearance": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+    },
+    "password": {
+        "show": "Show password",
+        "hide": "Hide password"
+    },
+    "language": {
+        "label": "Language",
+        "english": "English",
+        "spanish": "Spanish"
+    },
+    "welcome": {
+        "dashboard": "Dashboard",
+        "logIn": "Log in",
+        "register": "Get started",
+        "brand": "Maestro",
+        "nav": {
+            "features": "Features",
+            "stack": "Stack",
+            "demo": "Demo",
+            "code": "Code"
+        },
+        "hero": {
+            "badge": "Multitenant SaaS Boilerplate",
+            "title": "Ship your SaaS,",
+            "titleAccent": "not your boilerplate.",
+            "subtitle": "Maestro is a production-ready Laravel 13 + Inertia 3 starter kit that ships with multi-tenant isolation, RBAC, i18n, themes, and passkeys — so you can focus on what makes your product unique.",
+            "ctaPrimary": "Get started",
+            "ctaSecondary": "Watch demo"
+        },
+        "logos": {
+            "kicker": "Built with the stack you already trust"
+        },
+        "features": {
+            "kicker": "Features",
+            "title": "Everything you need to launch a multitenant SaaS.",
+            "subtitle": "Six pillars, wired together and ready to extend.",
+            "items": {
+                "tenancy": {
+                    "title": "Tenancy isolation",
+                    "description": "Each tenant gets its own database and session scope, identified by domain — powered by stancl/tenancy."
+                },
+                "rbac": {
+                    "title": "Roles & permissions",
+                    "description": "Granular access control with spatie/laravel-permission. Manage roles, permissions, and policies from the UI."
+                },
+                "i18n": {
+                    "title": "Internationalization",
+                    "description": "ICU plural support, lazy-loaded namespaces, browser detection — English and Spanish out of the box."
+                },
+                "themes": {
+                    "title": "Light, dark, system",
+                    "description": "Per-user appearance preferences with SSR-safe cookies and zero flash on load."
+                },
+                "security": {
+                    "title": "Passkeys & 2FA",
+                    "description": "Passwordless sign-in via WebAuthn and TOTP-based two-factor authentication, fully integrated with Fortify."
+                },
+                "ids": {
+                    "title": "ULIDs everywhere",
+                    "description": "Sortable, time-ordered identifiers for tenants, domains, and records — ready for scale."
+                }
+            }
+        },
+        "stack": {
+            "kicker": "Stack",
+            "title": "A modern, type-safe foundation.",
+            "subtitle": "Maestro leans on battle-tested tools and ergonomic frameworks."
+        },
+        "demo": {
+            "kicker": "Demo",
+            "title": "See it in motion.",
+            "subtitle": "A 30-second tour of the dashboard, tenant switcher, and theme system.",
+            "fallback": "Your browser does not support the video tag.",
+            "comingSoon": "Demo coming soon — generate it locally with Remotion."
+        },
+        "code": {
+            "kicker": "Code",
+            "title": "Provision a tenant in three lines.",
+            "subtitle": "Domain identified. Database cloned. Migrations run. You're live.",
+            "snippet": "use App\\Models\\Tenant;\n\n$tenant = Tenant::create([\n    'name' => 'Acme Corp',\n]);\n\n$tenant->domains()->create(['domain' => 'acme.maestro.test']);",
+            "caption": "Built on stancl/tenancy + Inertia 3 + React 19."
+        },
+        "cta": {
+            "title": "Ready to compose your SaaS?",
+            "subtitle": "Fork the boilerplate, brand it, and ship your first tenant this week."
+        },
+        "footer": {
+            "copyright": "© {year} Maestro. MIT License.",
+            "madeWith": "Crafted with Laravel, Inertia & React."
+        }
+    },
+    "tenantWelcome": {
+        "kicker": "Tenant workspace",
+        "title": "Welcome to {name}",
+        "subtitle": "You're inside the tenant workspace for",
+        "explanation": "A tenant is an isolated slice of the platform — its own database, its own users, its own configuration. Everything you do here is scoped to this tenant and invisible to the others.",
+        "isolationTitle": "What isolation means",
+        "isolationSubtitle": "Three guarantees that keep every tenant safe by default.",
+        "isolationItems": {
+            "database": {
+                "title": "Isolated database",
+                "description": "Each tenant owns its own database connection. Queries can't leak across tenants — full stop."
+            },
+            "session": {
+                "title": "Scoped sessions",
+                "description": "Authentication, cookies, and cache keys are namespaced by tenant. Sessions never cross boundaries."
+            },
+            "domains": {
+                "title": "Domain routing",
+                "description": "Tenants are identified by hostname, so users always land on the right workspace — no manual switching."
+            }
+        },
+        "quickActionsTitle": "Ready to dive in?",
+        "quickActionsSubtitle": "Sign in to manage your tenant, or create an account to get started.",
+        "infoPanelTitle": "Tenant identity",
+        "infoPanelSubtitle": "Identifiers and routing info for this workspace.",
+        "poweredBy": "Powered by {name}",
+        "stats": {
+            "region": "Region",
+            "industry": "Industry",
+            "created": "Member since",
+            "notSet": "Not set"
+        },
+        "status": {
+            "active": "Active",
+            "trial": "Trial",
+            "suspended": "Suspended"
+        },
+        "actions": {
+            "dashboard": "Open dashboard",
+            "login": "Log in",
+            "register": "Get started"
+        },
+        "meta": {
+            "tenantId": "tenant_id",
+            "slug": "slug",
+            "domain": "domain"
+        }
+    },
+    "home": {
+        "centralTitle": "Maestro — Multitenant SaaS Boilerplate",
+        "tenantTitle": "{name} — Maestro Tenant"
+    },
+    "auth": {
+        "home": "Home",
+        "login": {
+            "title": "Log in to your account",
+            "description": "Enter your email and password below to log in",
+            "email": "Email address",
+            "password": "Password",
+            "remember": "Remember me",
+            "forgot": "Forgot your password?",
+            "submit": "Log in",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign up",
+            "passkey": "Sign in with a passkey",
+            "authenticating": "Authenticating...",
+            "separator": "Or continue with email",
+            "emailPlaceholder": "email@example.com"
+        },
+        "register": {
+            "title": "Create an account",
+            "description": "Enter your details below to create your account",
+            "name": "Name",
+            "username": "Username",
+            "email": "Email address",
+            "password": "Password",
+            "confirmPassword": "Confirm password",
+            "submit": "Create account",
+            "haveAccount": "Already have an account?",
+            "logIn": "Log in",
+            "fullNamePlaceholder": "Full name",
+            "usernamePlaceholder": "Username",
+            "emailPlaceholder": "email@example.com"
+        },
+        "forgotPassword": {
+            "title": "Forgot password",
+            "description": "Enter your email to receive a password reset link",
+            "email": "Email address",
+            "submit": "Email password reset link",
+            "orReturn": "Or, return to",
+            "logIn": "log in",
+            "emailPlaceholder": "email@example.com"
+        },
+        "resetPassword": {
+            "title": "Reset password",
+            "description": "Please enter your new password below",
+            "email": "Email",
+            "password": "Password",
+            "currentPassword": "Current password",
+            "newPassword": "New password",
+            "confirmPassword": "Confirm password",
+            "submit": "Reset password",
+            "currentPasswordPlaceholder": "Current password",
+            "newPasswordPlaceholder": "New password",
+            "confirmPasswordPlaceholder": "Confirm password"
+        },
+        "verifyEmail": {
+            "title": "Email verification",
+            "description": "Please verify your email address by clicking on the link we just emailed to you.",
+            "resend": "Resend verification email",
+            "logOut": "Log out",
+            "sent": "A new verification link has been sent to the email address you provided during registration."
+        },
+        "confirmPassword": {
+            "title": "Confirm password",
+            "description": "This is a secure area of the application. Please confirm your password before continuing.",
+            "password": "Password",
+            "submit": "Confirm password",
+            "passkey": "Confirm with passkey",
+            "loading": "Confirming...",
+            "separator": "Or confirm with password",
+            "passwordPlaceholder": "Password"
+        },
+        "twoFactor": {
+            "headTitle": "Two-factor authentication",
+            "codeTitle": "Authentication code",
+            "codeDescription": "Enter the authentication code provided by your authenticator application.",
+            "recoveryTitle": "Recovery code",
+            "recoveryDescription": "Please confirm access to your account by entering one of your emergency recovery codes.",
+            "useCode": "login using an authentication code",
+            "useRecovery": "login using a recovery code",
+            "or": "or you can",
+            "recoveryPlaceholder": "Enter recovery code",
+            "continue": "Continue"
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "description": "Manage your profile and account settings",
+        "nav": {
+            "profile": "Profile",
+            "security": "Security",
+            "appearance": "Appearance"
+        },
+        "profile": {
+            "title": "Profile settings",
+            "heading": "Profile",
+            "headingDescription": "Update your name and email address",
+            "name": "Name",
+            "email": "Email address",
+            "namePlaceholder": "Full name",
+            "emailPlaceholder": "Email address",
+            "unverified": "Your email address is unverified.",
+            "resendEmail": "Click here to re-send the verification email.",
+            "verificationSent": "A new verification link has been sent to your email address.",
+            "save": "Save"
+        },
+        "security": {
+            "title": "Security settings",
+            "updatePassword": {
+                "heading": "Update password",
+                "description": "Ensure your account is using a long, random password to stay secure"
+            },
+            "twoFactor": {
+                "title": "Two-factor authentication",
+                "description": "Manage your two-factor authentication settings",
+                "enabledMessage": "You will be prompted for a secure, random pin during login, which you can retrieve from the TOTP-supported application on your phone.",
+                "disabledMessage": "When you enable two-factor authentication, you will be prompted for a secure pin during login. This pin can be retrieved from a TOTP-supported application on your phone.",
+                "disable": "Disable 2FA",
+                "continueSetup": "Continue setup",
+                "enable": "Enable 2FA"
+            },
+            "passkeys": {
+                "title": "Passkeys",
+                "description": "Manage your passkeys for passwordless sign-in",
+                "empty": "No passkeys yet",
+                "emptyDescription": "Add a passkey to sign in without a password",
+                "added": "Added {time}",
+                "lastUsed": "Last used {time}"
+            }
+        },
+        "appearance": {
+            "title": "Appearance settings",
+            "description": "Update the appearance settings for your account"
+        },
+        "deleteAccount": {
+            "title": "Delete account",
+            "description": "Delete your account and all of its resources",
+            "warning": "Warning",
+            "warningText": "Please proceed with caution, this cannot be undone.",
+            "button": "Delete account",
+            "confirmTitle": "Are you sure you want to delete your account?",
+            "confirmText": "Once your account is deleted, all of its resources and data will also be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
+            "passwordPlaceholder": "Password"
+        }
+    },
+    "twoFactor": {
+        "recoveryCodes": {
+            "title": "2FA recovery codes",
+            "description": "Recovery codes let you regain access if you lose your 2FA device. Store them in a secure password manager.",
+            "view": "View recovery codes",
+            "hide": "Hide recovery codes",
+            "regenerate": "Regenerate codes",
+            "regenerateHelp": "Each recovery code can be used once to access your account and will be removed after use. If you need more, click",
+            "regenerateHelpBold": "Regenerate codes",
+            "regenerateHelpSuffix": "above.",
+            "loadingCodes": "Loading recovery codes"
+        },
+        "setup": {
+            "enabled": {
+                "title": "Two-factor authentication enabled",
+                "description": "Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.",
+                "button": "Close"
+            },
+            "verify": {
+                "title": "Verify authentication code",
+                "description": "Enter the 6-digit code from your authenticator app",
+                "button": "Continue"
+            },
+            "enable": {
+                "title": "Enable two-factor authentication",
+                "description": "To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app",
+                "button": "Continue"
+            },
+            "orEnterManually": "or, enter the code manually",
+            "back": "Back",
+            "confirm": "Confirm"
+        }
+    },
+    "passkeys": {
+        "add": "Add passkey",
+        "notSupported": "Passkeys are not supported in this browser.",
+        "nameLabel": "Passkey name",
+        "nameHelp": "A name helps you identify this passkey later.",
+        "namePlaceholder": "e.g., MacBook Pro, iPhone",
+        "registering": "Registering...",
+        "register": "Register passkey",
+        "cancel": "Cancel",
+        "remove": "Remove",
+        "removeTitle": "Remove passkey",
+        "removeConfirm": "Are you sure you want to remove the \"{name}\" passkey? You will no longer be able to use it to sign in.",
+        "removing": "Removing...",
+        "removeSubmit": "Remove passkey"
+    },
+    "tenants": {
+        "title": "Tenants",
+        "description": "Create, filter, update, and manage central tenant domains.",
+        "viewMode": {
+            "label": "Tenant view",
+            "cards": "Cards view",
+            "table": "Table view"
+        },
+        "newTenant": "New tenant",
+        "create": {
+            "title": "Create tenant",
+            "description": "Add a central tenant profile and its operating metadata.",
+            "submit": "Create tenant"
+        },
+        "edit": {
+            "title": "Edit tenant",
+            "description": "Update central tenant metadata and contact details.",
+            "submit": "Save changes"
+        },
+        "form": {
+            "name": "Name",
+            "slug": "Slug",
+            "namePlaceholder": "Velocity Fitness",
+            "slugPlaceholder": "velocity-fit",
+            "status": "Status",
+            "region": "Region",
+            "industry": "Industry",
+            "regionPlaceholder": "us-east",
+            "industryPlaceholder": "Fitness",
+            "contactEmail": "Contact email",
+            "contactPhone": "Contact phone",
+            "emailPlaceholder": "hello@example.com",
+            "phonePlaceholder": "+1 555 0100",
+            "icon": "Icon (Upload an image file)",
+            "currentIcon": "Current icon",
+            "noIcon": "No icon uploaded",
+            "removeIcon": "Remove current icon",
+            "removeIconAria": "Remove tenant icon",
+            "notes": "Notes",
+            "notesPlaceholder": "Operational context, onboarding notes, or support details.",
+            "active": "Active",
+            "trial": "Trial",
+            "suspended": "Suspended"
+        },
+        "card": {
+            "industry": "Industry",
+            "region": "Region",
+            "domains": "Domains",
+            "created": "Created",
+            "details": "Details",
+            "expand": "Expand",
+            "collapse": "Collapse",
+            "expandAria": "Expand",
+            "collapseAria": "Collapse"
+        },
+        "table": {
+            "name": "Name",
+            "status": "Status",
+            "industry": "Industry",
+            "region": "Region",
+            "domains": "Domains",
+            "contact": "Contact"
+        },
+        "filters": {
+            "title": "Tenant filters",
+            "description": "Refine the tenant list.",
+            "search": "Search",
+            "searchPlaceholder": "Name, slug, or email",
+            "searchMobilePlaceholder": "Search tenants",
+            "searchAria": "Search tenants",
+            "status": "Status",
+            "region": "Region",
+            "industry": "Industry",
+            "domainType": "Domain type",
+            "perPage": "Per page",
+            "filters": "Filters",
+            "openFilters": "Open tenant filters",
+            "apply": "Apply",
+            "applyFilters": "Apply filters",
+            "clear": "Clear"
+        },
+        "empty": {
+            "title": "No tenants found",
+            "description": "Adjust the filters or create a new central tenant."
+        },
+        "pagination": {
+            "showing": "Showing {from} to {to} of {total}"
+        },
+        "delete": {
+            "title": "Delete this tenant permanently?",
+            "description": "This action",
+            "cannotBeUndone": "cannot be undone",
+            "deleting": "Deleting",
+            "willErase": "will permanently erase every record stored in its database — users, roles, settings, files, and all associated data. There is no backup and the data",
+            "cannotBeRecovered": "cannot be recovered in any way",
+            "confirmLabel": "To confirm, type {name} below:",
+            "ariaLabel": "Type {name} to confirm deletion",
+            "placeholder": "Type the tenant name to confirm",
+            "submit": "I understand, delete this tenant"
+        },
+        "show": {
+            "back": "Back",
+            "editAria": "Edit {name}",
+            "viewAria": "View {name}",
+            "deleteAria": "Delete {name}",
+            "industry": "Industry",
+            "region": "Region",
+            "created": "Created",
+            "contact": "Contact",
+            "phone": "Phone",
+            "email": "Email",
+            "domains": "Domains",
+            "suspended": {
+                "title": "Tenant suspended",
+                "description": "This tenant is currently suspended. Domain management is disabled until the tenant is reactivated."
+            },
+            "dns": {
+                "title": "Custom domain DNS setup",
+                "intro": "To connect a custom hostname, create a DNS record in your DNS manager such as Cloudflare, GoDaddy, Namecheap, Route 53, or similar.",
+                "type": "Type",
+                "typeValue": "CNAME",
+                "name": "Name",
+                "nameValue": "Use the subdomain you want to connect.",
+                "target": "Target",
+                "targetFallback": "Create an auto primary domain on {centralDomain} first.",
+                "ttl": "TTL",
+                "ttlValue": "Auto or 1 hour",
+                "outro": "After saving the record, keep proxy/CDN settings aligned with your provider requirements and allow DNS time to propagate before re-checking DNS and SSL status."
+            },
+            "domainsSection": {
+                "title": "Domains",
+                "description": "Hosts associated with this central tenant."
+            },
+            "noDomains": {
+                "title": "No domains yet",
+                "description": "Add the first host associated with this tenant."
+            },
+            "announcements": {
+                "title": "Announcements",
+                "description": "Send tenant-wide notifications to everyone or selected roles.",
+                "send": "Send announcement"
+            }
+        }
+    },
+    "tenantAnnouncements": {
+        "title": "Tenant announcements",
+        "description": "Send site-wide messages to everyone in a tenant or only selected roles.",
+        "breadcrumb": "Announcements",
+        "back": "Back to tenants",
+        "tenant": "Tenant",
+        "recent": "Recent announcements",
+        "openTenantView": "Open tenant view",
+        "audienceAll": "Everyone",
+        "audienceRoles": "Roles",
+        "sentOn": "Sent {date}",
+        "noDate": "No date",
+        "emptyTitle": "No announcements yet.",
+        "emptyDescription": "Send the first announcement for this tenant.",
+        "noTenantsTitle": "No tenants available.",
+        "noTenantsDescription": "Create a tenant before sending announcements.",
+        "form": {
+            "titleLabel": "Title",
+            "bodyLabel": "Message",
+            "urlLabel": "Link",
+            "urlPlaceholder": "/billing",
+            "audienceLabel": "Audience",
+            "audienceRoles": "Specific roles",
+            "audienceAll": "Everyone",
+            "rolesLabel": "Roles",
+            "submit": "Send announcement"
+        },
+        "success": "Announcement sent successfully.",
+        "validation": {
+            "selectRole": "Select at least one role for this announcement."
+        }
+    },
+    "domains": {
+        "title": "Domains",
+        "description": "All tenant domains grouped by tenant.",
+        "searchPlaceholder": "Search domains...",
+        "searchAria": "Search domains",
+        "empty": {
+            "title": "No domains found",
+            "searchDescription": "Adjust the search to find a tenant domain.",
+            "noDataDescription": "Add the first tenant domain from this page."
+        },
+        "create": {
+            "title": "Add domain",
+            "description": "Associate a generated or custom host with a tenant.",
+            "button": "Add domain",
+            "submit": "Add domain"
+        },
+        "edit": {
+            "title": "Edit domain",
+            "description": "Update the host, verification state, and primary domain setting.",
+            "ariaLabel": "Edit {domain}"
+        },
+        "delete": {
+            "title": "Delete domain",
+            "description": "This will remove {domain} from {tenant}.",
+            "submit": "Delete",
+            "ariaLabel": "Delete {domain}"
+        },
+        "form": {
+            "tenant": "Tenant",
+            "selectTenant": "Select tenant",
+            "hostname": "Hostname",
+            "customPlaceholder": "shop.acme.com",
+            "type": "Type",
+            "auto": "Auto",
+            "custom": "Custom",
+            "primary": "Primary",
+            "status": "Status",
+            "dns": "DNS",
+            "ssl": "SSL",
+            "pending": "Pending",
+            "active": "Active",
+            "disabled": "Disabled",
+            "verified": "Verified",
+            "failed": "Failed"
+        },
+        "table": {
+            "hostname": "Hostname",
+            "type": "Type",
+            "dns": "DNS",
+            "ssl": "SSL",
+            "status": "Status",
+            "actions": "Actions",
+            "noResults": "No domains match your search.",
+            "primary": "Primary",
+            "primaryTooltip": "This domain is already primary",
+            "primaryAria": "This domain {domain} is already primary",
+            "makePrimary": "Make primary",
+            "makePrimaryAria": "Make {domain} primary"
+        },
+        "count": "{count, plural, =0 {0 domains} =1 {1 domain} other {# domains}}"
+    },
+    "permissions": {
+        "title": "Permissions",
+        "heading": "Permission management",
+        "form": {
+            "name": "Name",
+            "placeholder": "e.g., read users"
+        },
+        "search": {
+            "placeholder": "Search permissions... (Ctrl+K)",
+            "basicPlaceholder": "Search permissions...",
+            "aria": "Search permissions",
+            "results": "{count, plural, =1 {1 permission found} other {# permissions found}}"
+        },
+        "count": {
+            "default": "{count, plural, =1 {1 permission} other {# permissions}}",
+            "found": "{count, plural, =1 {1 permission found} other {# permissions found}}",
+            "selected": "{count, plural, =1 {1 selected} other {# selected}}"
+        },
+        "table": {
+            "caption": "System permissions list.",
+            "searchCaption": "Search results for \"{search}\"",
+            "name": "Name"
+        },
+        "empty": {
+            "default": "No permissions registered",
+            "available": "No permissions available",
+            "none": "No permissions",
+            "search": "No permissions matched \"{search}\""
+        },
+        "create": {
+            "button": "Create permission",
+            "title": "Create permission",
+            "description": "Create a new permission in the system.",
+            "submit": "Create",
+            "processing": "Creating..."
+        },
+        "edit": {
+            "title": "Edit permission",
+            "description": "Update the permission information.",
+            "submit": "Update",
+            "processing": "Updating..."
+        },
+        "delete": {
+            "title": "Delete permission",
+            "description": "Are you sure you want to delete the permission \"{name}\"? This action cannot be undone.",
+            "processing": "Deleting..."
+        }
+    },
+    "roles": {
+        "title": "Roles",
+        "heading": "Role management",
+        "form": {
+            "name": "Name",
+            "permissions": "Permissions",
+            "placeholder": "e.g., Administrator"
+        },
+        "search": {
+            "placeholder": "Search roles... (Ctrl+K)",
+            "basicPlaceholder": "Search roles...",
+            "aria": "Search roles",
+            "results": "{count, plural, =1 {1 role found} other {# roles found}}"
+        },
+        "count": {
+            "default": "{count, plural, =1 {1 role} other {# roles}}",
+            "found": "{count, plural, =1 {1 role found} other {# roles found}}"
+        },
+        "table": {
+            "caption": "System roles list.",
+            "searchCaption": "Search results for \"{search}\"",
+            "name": "Name",
+            "permissions": "Permissions"
+        },
+        "empty": {
+            "default": "No roles registered",
+            "available": "No roles available",
+            "none": "No roles",
+            "search": "No roles matched \"{search}\""
+        },
+        "create": {
+            "button": "Create role",
+            "title": "Create role",
+            "description": "Create a new role and assign the corresponding permissions.",
+            "submit": "Create",
+            "processing": "Creating..."
+        },
+        "edit": {
+            "title": "Edit role",
+            "description": "Update the role information and its permissions.",
+            "submit": "Update",
+            "processing": "Updating..."
+        },
+        "delete": {
+            "title": "Delete role",
+            "description": "Are you sure you want to delete the role \"{name}\"? This action cannot be undone and will remove all permission assignments.",
+            "processing": "Deleting..."
+        },
+        "permissions": {
+            "view": "View permissions",
+            "title": "Role permissions: {name}",
+            "description": "Complete list of permissions assigned to this role.",
+            "empty": "This role does not have assigned permissions"
+        }
+    },
+    "users": {
+        "title": "Users",
+        "heading": "User management",
+        "form": {
+            "nameRequired": "Name *",
+            "usernameRequired": "Username *",
+            "email": "Email *",
+            "phone": "Phone",
+            "passwordRequired": "Password *",
+            "confirmPasswordRequired": "Confirm password *",
+            "namePlaceholder": "e.g., User Inc.",
+            "usernamePlaceholder": "e.g., jjimenez",
+            "emailPlaceholder": "e.g., contact@example.com",
+            "phonePlaceholder": "e.g., +1 555 123 4567"
+        },
+        "search": {
+            "placeholder": "Search users... (Ctrl+K)",
+            "aria": "Search users",
+            "results": "{count, plural, =1 {1 user found} other {# users found}}"
+        },
+        "table": {
+            "caption": "System users list.",
+            "searchCaption": "Search results for \"{search}\"",
+            "name": "Name",
+            "roles": "Roles",
+            "permissions": "Permissions"
+        },
+        "empty": {
+            "default": "No users registered",
+            "search": "No users matched \"{search}\""
+        },
+        "create": {
+            "button": "Create user",
+            "title": "Create user",
+            "description": "Create a new user in the system.",
+            "submit": "Create",
+            "processing": "Creating..."
+        },
+        "edit": {
+            "title": "Edit user",
+            "description": "Update the user information.",
+            "submit": "Update",
+            "processing": "Updating..."
+        },
+        "delete": {
+            "title": "Delete user",
+            "description": "Are you sure you want to delete the user \"{name}\"? This action cannot be undone.",
+            "processing": "Deleting..."
+        },
+        "assignRoles": {
+            "button": "Assign roles",
+            "title": "Assign roles to {name}",
+            "description": "Select the roles you want to assign to the user.",
+            "submit": "Assign roles",
+            "processing": "Assigning..."
+        },
+        "assignPermissions": {
+            "button": "Assign permissions",
+            "title": "Assign permissions to {name}",
+            "description": "Select the permissions you want to assign to the user.",
+            "submit": "Assign permissions",
+            "processing": "Assigning..."
+        }
+    },
+    "notifications": {
+        "trigger": "Open notifications",
+        "tooltip": "Notifications",
+        "title": "Notifications",
+        "pageTitle": "Notifications",
+        "subtitle": "Latest updates from your account.",
+        "empty": "You are all caught up.",
+        "allCaughtUp": "You are all caught up.",
+        "count": "{count, plural, =0 {No notifications} =1 {1 notification} other {# notifications}}",
+        "unreadCount": "{count, plural, =1 {1 unread notification} other {# unread notifications}}",
+        "unreadPageDescription": "{count, plural, =0 {You are all caught up.} =1 {1 unread notification.} other {# unread notifications.}}",
+        "markAllRead": "Mark all as read",
+        "viewAll": "View all notifications",
+        "tabs": {
+            "all": "All",
+            "unread": "Unread",
+            "read": "Read",
+            "starred": "Starred"
+        },
+        "actions": {
+            "markRead": "Mark as read",
+            "markUnread": "Mark as unread",
+            "star": "Star",
+            "unstar": "Unstar",
+            "delete": "Delete"
+        },
+        "noResults": "No notifications match this view.",
+        "pagination": {
+            "previous": "Previous notifications page",
+            "next": "Next notifications page"
+        }
+    },
+    "tickets": {
+        "title": "Tickets",
+        "tenantTitle": "My tickets",
+        "createTitle": "Open a ticket",
+        "createDescription": "Tell us what's going on. Our team will reply as soon as possible.",
+        "createMessagePlaceholder": "Describe the issue in detail...",
+        "submitting": "Submitting...",
+        "showTitle": "Ticket #{id}",
+        "count": "{count, plural, one {# ticket} other {# tickets}}",
+        "searchPlaceholder": "Search tickets...",
+        "open": "Open",
+        "empty": "No tickets yet.",
+        "unassigned": "Unassigned",
+        "internal": "Internal",
+        "properties": "Properties",
+        "filters": {
+            "status": "Status",
+            "priority": "Priority",
+            "tenant": "Tenant",
+            "assignee": "Assignee",
+            "allStatuses": "All statuses",
+            "allPriorities": "All priorities",
+            "allTenants": "All tenants",
+            "anyone": "Anyone",
+            "clear": "Clear filters"
+        },
+        "table": {
+            "subject": "Subject",
+            "tenant": "Tenant",
+            "status": "Status",
+            "priority": "Priority",
+            "assignee": "Assignee",
+            "createdBy": "Created by"
+        },
+        "meta": {
+            "fromTenant": "From {tenant} · Opened by {requester}",
+            "openedBy": "Opened by {requester}"
+        },
+        "conversation": {
+            "replies": "{count, plural, one {# reply} other {# replies}}",
+            "requester": "Requester",
+            "unknown": "Unknown",
+            "loadOlder": "Load older messages"
+        },
+        "composer": {
+            "message": "Message",
+            "messagePlaceholder": "Write a reply...",
+            "attachments": "Files",
+            "links": "Links",
+            "addFiles": "Add files",
+            "addLink": "Add link",
+            "removeFile": "Remove file",
+            "removeLink": "Remove link",
+            "send": "Send",
+            "supported": "Images, video, documents and links are supported."
+        },
+        "attachment": {
+            "link": "Link",
+            "open": "Open attachment",
+            "preview": "Preview attachment"
+        },
+        "lightbox": {
+            "title": "Preview",
+            "videoFallback": "Your browser does not support the video tag."
+        },
+        "status": {
+            "Open": "Open",
+            "Pending": "Pending",
+            "Resolved": "Resolved",
+            "Closed": "Closed"
+        },
+        "priority": {
+            "Low": "Low",
+            "Normal": "Normal",
+            "High": "High",
+            "Urgent": "Urgent"
+        }
+    },
+    "socialite": {
+        "signInWith": "Sign in with {provider}",
+        "divider": "Or continue with social login"
+    }
 }

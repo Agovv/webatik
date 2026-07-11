@@ -77,11 +77,28 @@ export default [
                         'builtin',
                         'external',
                         'internal',
-                        'parent',
-                        'sibling',
-                        'index',
+                        ['parent', 'sibling', 'index'],
+                        'object',
+                        'type',
                     ],
-                    alphabetize: { order: 'asc', caseInsensitive: true },
+                    pathGroups: [
+                        {
+                            pattern: '@/**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                    ],
+
+                    pathGroupsExcludedImportTypes: ['builtin'],
+
+                    alphabetize: {
+                        order: 'asc',
+                        caseInsensitive: true,
+                    },
+
+                    //'newlines-between': 'always',
+
+                    warnOnUnassignedImports: true,
                 },
             ],
             'import/consistent-type-specifier-style': [
@@ -95,7 +112,11 @@ export default [
             '@stylistic': stylistic,
         },
         rules: {
-            '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
+            '@stylistic/brace-style': [
+                'error',
+                '1tbs',
+                { allowSingleLine: false },
+            ],
             '@stylistic/padding-line-between-statements': [
                 'error',
                 ...paddingAroundControl,
@@ -123,7 +144,11 @@ export default [
         },
         rules: {
             curly: ['error', 'all'],
-            '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: false }],
+            '@stylistic/brace-style': [
+                'error',
+                '1tbs',
+                { allowSingleLine: false },
+            ],
         },
     },
 ];

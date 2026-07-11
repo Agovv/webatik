@@ -1,57 +1,24 @@
-import './i18n'; // initialize i18n before any component renders
-
 import { createInertiaApp } from '@inertiajs/react';
-import { StrictMode, useEffect } from 'react';
-import type { ReactElement } from 'react';
-import { createRoot, hydrateRoot } from 'react-dom/client';
-import type { Root } from 'react-dom/client';
+import { configureEcho } from '@laravel/echo-react';
+import { I18nextProvider } from 'react-i18next';
+
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
-import i18n from '@/i18n';
 import AuthLayout from '@/layouts/auth-layout';
 import CentralLayout from '@/layouts/central-layout';
 import ContextualLayout from '@/layouts/contextual-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
+import { createI18nInstance } from './i18n';
+
+import type { SharedPageProps } from './types/inertia';
+
+configureEcho({
+    broadcaster: 'pusher',
+});
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-
-declare global {
-    interface Window {
-        maestroRoot?: Root;
-        maestroRootHydrating?: boolean;
-    }
-}
-
-function SyncHtmlLang() {
-    useEffect(() => {
-        const apply = (lng: string) => {
-            document.documentElement.lang = lng;
-        };
-
-        apply(i18n.language ?? 'en');
-
-        i18n.on('languageChanged', apply);
-
-        return () => {
-            i18n.off('languageChanged', apply);
-        };
-    }, []);
-
-    return null;
-}
-
-function wrapApp(app: ReactElement): ReactElement {
-    return (
-        <StrictMode>
-            <TooltipProvider delayDuration={0}>
-                <SyncHtmlLang />
-                {app}
-                <Toaster />
-            </TooltipProvider>
-        </StrictMode>
-    );
-}
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
@@ -61,11 +28,11 @@ createInertiaApp({
             case name === 'central/welcome':
             case name === 'tenant/welcome':
                 return null;
-            case name.startsWith('auth/'):
+            case name.startsWith('universal/auth/'):
                 return AuthLayout;
             case name.startsWith('central/'):
                 return CentralLayout;
-            case name.startsWith('settings/'):
+            case name.startsWith('universal/settings/'):
                 return [ContextualLayout, SettingsLayout];
             case name.startsWith('universal/'):
                 return ContextualLayout;
@@ -73,34 +40,20 @@ createInertiaApp({
                 return ContextualLayout;
         }
     },
-    setup({ el, App, props }) {
-        const app = wrapApp(<App {...props} />);
+    strictMode: true,
+    withApp(app, { page }) {
+        const { locale, translations } =
+            page.props as unknown as SharedPageProps;
+        const i18n = createI18nInstance(locale, translations);
 
-        if (!el) {
-            return app;
-        }
-
-        if (window.maestroRoot) {
-            if (!window.maestroRootHydrating) {
-                window.maestroRoot.render(app);
-            }
-
-            return;
-        }
-
-        if (el.dataset.serverRendered === 'true') {
-            window.maestroRootHydrating = true;
-            window.maestroRoot = hydrateRoot(el, app);
-
-            window.requestAnimationFrame(() => {
-                window.maestroRootHydrating = false;
-            });
-
-            return;
-        }
-
-        window.maestroRoot = createRoot(el);
-        window.maestroRoot.render(app);
+        return (
+            <I18nextProvider i18n={i18n}>
+                <TooltipProvider delayDuration={0}>
+                    {app}
+                    <Toaster />
+                </TooltipProvider>
+            </I18nextProvider>
+        );
     },
     progress: {
         color: '#4B5563',

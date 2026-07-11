@@ -7,6 +7,17 @@ import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+    server: {
+        watch: {
+            ignored: [
+                '**/database/*.sqlite',
+                '**/database/*.sqlite-*',
+                '**/database/*_db',
+                '**/database/*_db-*',
+                '**/database/*-journal',
+            ],
+        },
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],

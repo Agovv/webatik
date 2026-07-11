@@ -19,11 +19,14 @@ return new class extends Migration
             $table->string('domain', 255)->unique();
             $table->string(Tenancy::tenantKeyColumn())->comment('no-rls');
 
+            // your custom columns may go here
+            $table->foreignUlid('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->string('type')->default('auto'); // auto, custom
             $table->boolean('is_primary')->default(false);
             $table->string('status')->default('active'); // pending, active, disabled
             $table->string('dns_status')->default('pending'); // pending, verified, failed
             $table->string('ssl_status')->default('pending'); // pending, verified, failed
+            // your custom columns may go here
 
             $table->timestamps();
             $table->foreign(Tenancy::tenantKeyColumn())->references('id')->on('tenants')->onUpdate('cascade');

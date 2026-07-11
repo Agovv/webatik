@@ -1,6 +1,7 @@
 import { router } from '@inertiajs/react';
 import { KeyRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
 import { destroy } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController';
 import Heading from '@/components/heading';
 import PasskeyItem from '@/components/passkey-item';

@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers\Web\Central;
 
+use App\Concerns\ImageTreatment;
+use App\Enums\Central\DomainDnsStatus;
+use App\Enums\Central\DomainSslStatus;
+use App\Enums\Central\DomainStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Central\Tenants\DestroyTenantsRequest;
 use App\Http\Requests\Web\Central\Tenants\StoreTenantsRequest;
 use App\Http\Requests\Web\Central\Tenants\UpdateTenantsRequest;
-use App\Models\Domain;
-use App\Models\Tenant;
+use App\Models\Central\Domain;
+use App\Models\Central\Tenant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Intervention\Image\Drivers\Imagick\Driver;
-use Intervention\Image\Exceptions\DecoderException;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Laravel\Facades\Image;
 
 class TenantsController extends Controller
 {
+    use ImageTreatment;
+
     public function index(Request $request)
     {
         abort_unless($request->user()?->can('read tenants'), 403);
@@ -78,71 +80,34 @@ class TenantsController extends Controller
         ]);
     }
 
-    private function serverSupportImagick(): bool
-    {
-        try {
-            $manager = ImageManager::usingDriver(new Driver);
-            if ($manager->driver->supports('webp')) {
-                return true;
-            }
-
-            return false;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    private function resizeIcon($upload, string $pathToSave): string|false
-    {
-        if ($upload->isValid() === false || $upload->getSize() <= 0) {
-            return false;
-        }
-        $name = Str::lower(Str::ulid()->toString());
-        $driver = $this->serverSupportImagick() ? Driver::class : \Intervention\Image\Drivers\Gd\Driver::class;
-        $manager = ImageManager::usingDriver(new $driver);
-        $ext = $upload->getClientOriginalExtension();
-
-        // If it's unsupported format, just upload without processing
-        if (! $manager->driver->supports($ext) || $ext === 'gif') {
-            Storage::disk('public')->putFileAs($pathToSave, $upload, "$name.$ext");
-
-            return "$pathToSave/$name.$ext";
-        }
-
-        // Process image
-        try {
-            $image = Image::decode($upload)->scaleDown(width: 100, height: 100);
-            $webp = (string) $image->encodeUsingFileExtension('webp', quality: 90);
-
-            Storage::disk('public')->put("$pathToSave/$name.webp", $webp);
-
-            return "$pathToSave/$name.webp";
-        } catch (DecoderException $e) {
-            // keep original file to testing
-            Storage::disk('local')->putFileAs($pathToSave, $upload, "$name.$ext");
-            report($e);
-
-            return false;
-        }
-    }
-
     public function store(StoreTenantsRequest $request)
     {
         $validated = $request->validated();
         $validated['id'] = Str::lower(Str::ulid());
-        $randomSuffix = '';
-        do {
-            $validated['slug'] = Str::limit(Str::slug($validated['name'].(empty($randomSuffix) ? '' : '-'.$randomSuffix)), 255, '');
-            $randomSuffix = Str::random(6);
-        } while (Tenant::where('slug', $validated['slug'])->exists());
+        $validated['slug'] = Tenant::uniqueSlugForName($validated['name']);
+        $validated['created_by'] = $request->user()?->getKey();
+        $centralDomain = $this->centralDomainForRequest($request);
 
         if ($request->hasFile('icon_path')) {
-            $path = $this->resizeIcon($request->file('icon_path'), 'tenant_icons');
-            $validated['icon_path'] = $path ?: null;
+            $validated = [
+                ...$validated,
+                ...$this->processTenantIcon($request->file('icon_path')),
+            ];
         }
 
         try {
-            Tenant::create($validated);
+            DB::transaction(function () use ($validated, $centralDomain): void {
+                $tenant = Tenant::create($validated);
+
+                $tenant->domains()->create([
+                    'domain' => Domain::uniqueDomainForSlug($tenant->slug, $centralDomain),
+                    'type' => 'auto',
+                    'is_primary' => true,
+                    'status' => DomainStatus::ACTIVE->value,
+                    'dns_status' => DomainDnsStatus::VERIFIED->value,
+                    'ssl_status' => DomainSslStatus::VERIFIED->value,
+                ]);
+            });
         } catch (\Exception $e) {
             return back()->with('error', 'Failed to create tenant: '.$e->getMessage());
         }
@@ -156,20 +121,18 @@ class TenantsController extends Controller
         unset($validated['remove_icon']);
 
         if ($request->boolean('remove_icon')) {
-            $old = $tenant->icon_path;
+            $this->deleteTenantIconFiles($tenant->icon_path, $tenant->icons);
+
             $validated['icon_path'] = null;
-
-            if ($old && Storage::disk('public')->exists($old)) {
-                Storage::disk('public')->delete($old);
-            }
+            $validated['icons'] = null;
         } elseif ($request->hasFile('icon_path')) {
-            $old = $tenant->icon_path;
-            $path = $this->resizeIcon($request->file('icon_path'), 'tenant_icons');
-            $validated['icon_path'] = $path ?: null;
+            $processedIcon = $this->processTenantIcon($request->file('icon_path'));
+            $this->deleteTenantIconFiles($tenant->icon_path, $tenant->icons);
 
-            if ($validated['icon_path'] && $old && Storage::disk('public')->exists($old)) {
-                Storage::disk('public')->delete($old);
-            }
+            $validated = [
+                ...$validated,
+                ...$processedIcon,
+            ];
         }
 
         try {
@@ -191,5 +154,10 @@ class TenantsController extends Controller
         }
 
         return back()->with('success', 'Tenant deleted successfully.');
+    }
+
+    private function centralDomainForRequest(Request $request): string
+    {
+        return parse_url(config('app.url'), PHP_URL_HOST) ?: $request->getHost();
     }
 }

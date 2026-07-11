@@ -1,36 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Skill(shadcn)",
-      "Skill(shadcn:*)",
-      "Bash(pnpm run *)",
-      "Bash(vendor/bin/pint --dirty --format agent)",
-      "Bash(php artisan *)",
-      "Bash(vendor/bin/pint --dirty --format agent resources/js/components/central/tenants/tenant-delete-dialog.tsx)",
-      "Bash(./node_modules/.bin/tsc --noEmit)",
-      "Bash(./node_modules/.bin/eslint resources/js/components/central/tenants/domain-delete-dialog.tsx)",
-      "Bash(./node_modules/.bin/eslint resources/js/components/central/tenants/tenant-delete-dialog.tsx)",
-      "Bash(./node_modules/.bin/prettier --check resources/js/components/central/tenants/tenant-delete-dialog.tsx)",
-      "Bash(vendor/bin/pint --dirty --format agent app/Http/Requests/Web/Central/Tenants/DestroyTenantsRequest.php app/Http/Controllers/Web/Central/TenantsController.php tests/Feature/CentralTenantsTest.php)",
-      "mcp__laravel-boost__search-docs",
-      "Bash(php -r \"json_decode\\(file_get_contents\\('public/locales/en/translation.json'\\), true, 512, JSON_THROW_ON_ERROR\\); echo 'en OK';\")",
-      "Bash(php -r \"json_decode\\(file_get_contents\\('public/locales/es/translation.json'\\), true, 512, JSON_THROW_ON_ERROR\\); echo 'es OK';\")",
-      "Bash(npm run *)",
-      "Bash(curl -s http://maestro.test/locales/es/translation.json)",
-      "Bash(python3 -c \"import sys, json; d = json.load\\(sys.stdin\\); print\\(repr\\(d['domains']['count']\\)\\)\")",
-      "Bash(npm install *)",
-      "Bash(pnpm add *)",
-      "Bash(cat /home/owl/.npm/_logs/2026-06-25T16_29_17_964Z-debug-0.log 2>/dev/null | tail -30)",
-      "Read(//home/owl/.npm/_logs/**)",
-      "Bash(pnpm remove *)",
-      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(f['test'], '|', f['message'][:200]\\) for f in d.get\\('failures',[]\\)]\")",
-      "Bash(git stash *)",
-      "Bash(pnpm types:check)",
-      "Bash(pnpm lint:check)",
-      "Bash(pnpm format:check)",
-      "Bash(ls /var/www/maestro.test/.claude/skills/ && echo \"---\" && ls /home/owl/.claude/skills/ 2>/dev/null | head -30)",
-      "Read(//home/owl/.claude/skills/**)",
-      "Bash(grep -rB 2 -A 25 \"function shouldBeSkipped\" /var/www/maestro.test/vendor/stancl/tenancy/src/)"
+      "Bash(php artisan *)"
     ]
   }
 }

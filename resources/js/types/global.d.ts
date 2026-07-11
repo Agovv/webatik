@@ -7,20 +7,11 @@ declare module 'react' {
     }
 }
 
-export type TenantSummary = {
-    id: string;
-    name: string;
-    slug: string;
-    status: 'active' | 'trial' | 'suspended';
-    logo: string | null;
-};
-
 declare module '@inertiajs/core' {
     export interface InertiaConfig {
         sharedPageProps: {
             name: string;
             auth: Auth;
-            currentTenant: TenantSummary | null;
             sidebarOpen: boolean;
             [key: string]: unknown;
         };

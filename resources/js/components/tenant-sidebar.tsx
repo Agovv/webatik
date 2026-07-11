@@ -1,5 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { BookOpen, FolderGit2, LayoutGrid, Shield, User } from 'lucide-react';
+
 import { useTranslation } from 'react-i18next';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -15,16 +16,11 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { usePermissions } from '@/hooks/use-permissions';
-import type { PermissionName } from '@/hooks/use-permissions';
 import { dashboard } from '@/routes';
 import { index as permissionsIndex } from '@/routes/permissions';
 import { index as rolesIndex } from '@/routes/roles';
 import { index as usersIndex } from '@/routes/users';
-import type { NavItem } from '@/types';
-
-type PermissionNavItem = NavItem & {
-    permission?: PermissionName;
-};
+import type { NavItem, PermissionNavItem } from '@/types';
 
 export function TenantSidebar() {
     const { t } = useTranslation();

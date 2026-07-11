@@ -1,12 +1,14 @@
-import type { UrlMethodPair } from '@inertiajs/core';
 import { router } from '@inertiajs/react';
 import { usePasskeyVerify } from '@laravel/passkeys/react';
 import { KeyRound } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
+
+import type { UrlMethodPair } from '@inertiajs/core';
 
 type Props = {
     routes?: {

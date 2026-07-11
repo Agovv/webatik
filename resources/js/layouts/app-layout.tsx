@@ -1,4 +1,4 @@
-import ContextualLayout from '@/layouts/contextual-layout';
+import AppLayoutTemplate from '@/layouts/app/app-sidebar-layout';
 import type { BreadcrumbItem } from '@/types';
 
 export default function AppLayout({
@@ -9,8 +9,8 @@ export default function AppLayout({
     children: React.ReactNode;
 }) {
     return (
-        <ContextualLayout breadcrumbs={breadcrumbs}>
+        <AppLayoutTemplate breadcrumbs={breadcrumbs}>
             {children}
-        </ContextualLayout>
+        </AppLayoutTemplate>
     );
 }

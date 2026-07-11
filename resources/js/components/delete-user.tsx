@@ -1,7 +1,8 @@
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+
+import ProfileController from '@/actions/App/Http/Controllers/Web/Universal/Settings/ProfileController';
 import Heading from '@/components/heading';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';

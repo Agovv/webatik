@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Central\User as CentralUser;
 use Inertia\Testing\AssertableInertia as Assert;
 use Laravel\Fortify\Features;
 
@@ -20,7 +20,7 @@ test('two factor challenge can be rendered', function () {
         'confirmPassword' => true,
     ]);
 
-    $user = User::factory()->withTwoFactor()->create();
+    $user = CentralUser::factory()->withTwoFactor()->create();
 
     $this->post(route('login'), [
         'email' => $user->email,

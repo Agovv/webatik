@@ -3,6 +3,7 @@ import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { Check, Copy, ScanLine } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import AlertError from '@/components/alert-error';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
@@ -125,7 +126,6 @@ function TwoFactorSetupStep({
                                         className="h-full w-full bg-background p-3 text-foreground outline-none"
                                     />
                                     <button
-                                        type="button"
                                         onClick={() => copy(manualSetupKey)}
                                         className="border-l border-border px-3 hover:bg-muted"
                                     >
@@ -260,7 +260,11 @@ export default function TwoFactorSetupModal({
     const [showVerificationStep, setShowVerificationStep] =
         useState<boolean>(false);
 
-    const modalConfig = useMemo(() => {
+    const modalConfig = useMemo<{
+        title: string;
+        description: string;
+        buttonText: string;
+    }>(() => {
         if (twoFactorEnabled) {
             return {
                 title: t('twoFactor.setup.enabled.title'),

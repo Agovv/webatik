@@ -9,6 +9,7 @@ import {
     User,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -23,19 +24,14 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { usePermissions } from '@/hooks/use-permissions';
-import type { PermissionName } from '@/hooks/use-permissions';
+import { toInternalUrl } from '@/lib/utils';
 import { dashboard } from '@/routes';
 import { index as domainsIndex } from '@/routes/manage/domains';
 import { index as tenantsIndex } from '@/routes/manage/tenants/index';
 import { index as permissionsIndex } from '@/routes/permissions';
 import { index as rolesIndex } from '@/routes/roles';
 import { index as usersIndex } from '@/routes/users';
-import type { NavItem } from '@/types';
-
-
-type PermissionNavItem = NavItem & {
-    permission?: PermissionName;
-};
+import type { NavItem, PermissionNavItem } from '@/types';
 
 export function CentralSidebar() {
     const { t } = useTranslation();
@@ -49,13 +45,13 @@ export function CentralSidebar() {
         },
         {
             title: t('nav.tenants'),
-            href: tenantsIndex(),
+            href: toInternalUrl(tenantsIndex()),
             icon: Building2Icon,
             permission: 'read tenants',
         },
         {
             title: t('nav.domains'),
-            href: domainsIndex(),
+            href: toInternalUrl(domainsIndex()),
             icon: GlobeIcon,
             permission: 'read domains',
         },
@@ -102,7 +98,7 @@ export function CentralSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={tenantsIndex()} prefetch>
+                            <Link href={dashboard()} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

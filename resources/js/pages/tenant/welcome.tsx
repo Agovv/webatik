@@ -8,10 +8,11 @@ import {
     ShieldCheck,
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import type { Variants } from 'motion/react';
+
 import { useTranslation } from 'react-i18next';
 import AppLogoIcon from '@/components/app-logo-icon';
 import AppearanceToggleTab from '@/components/appearance-tabs';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -25,10 +26,13 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { dashboard, login, register } from '@/routes';
 
+import type { Variants } from 'motion/react';
+
 type TenantData = {
     id: string;
     name: string;
     slug: string;
+    domain: string;
     status: 'active' | 'trial' | 'suspended' | string;
     logo: string | null;
     region: string | null;
@@ -44,12 +48,11 @@ const ISOLATION_ICONS: Record<IsolationKey, typeof Database> = {
     domains: Globe2,
 };
 
-const STATUS_VARIANTS: Record<string, 'success' | 'warning' | 'destructive'> =
-    {
-        active: 'success',
-        trial: 'warning',
-        suspended: 'destructive',
-    };
+const STATUS_VARIANTS: Record<string, 'success' | 'warning' | 'destructive'> = {
+    active: 'success',
+    trial: 'warning',
+    suspended: 'destructive',
+};
 
 const fadeUp: Variants = {
     hidden: { opacity: 0, y: 18 },
@@ -105,12 +108,9 @@ function TenantInitial({ tenantData }: { tenantData: TenantData }) {
 
 export default function TenantWelcome() {
     const { t, i18n } = useTranslation();
-    const {
-        auth,
-        tenantData,
-        canLogin,
-        canRegister,
-    } = usePage().props as unknown as {
+
+    const { auth, tenantData, canLogin, canRegister } = usePage()
+        .props as unknown as {
         auth: { user: { name: string } | null };
         tenantData: TenantData;
         canLogin: boolean;
@@ -118,7 +118,8 @@ export default function TenantWelcome() {
     };
 
     const statusVariant = STATUS_VARIANTS[tenantData.status] ?? 'outline';
-    const domain = `${tenantData.slug}.maestro.test`;
+    const domain = tenantData.domain;
+    const currentYear = new Date().getFullYear();
     const metaItems = [
         {
             label: t('tenantWelcome.stats.region'),
@@ -151,17 +152,33 @@ export default function TenantWelcome() {
                     <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
                         <Link
                             href="/"
-                            className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                            className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
                         >
-                            <span className="flex size-8 items-center justify-center rounded-lg border bg-background">
-                                <AppLogoIcon
-                                    className="size-4 fill-current"
-                                    aria-hidden="true"
-                                />
+                            <span className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-background">
+                                {tenantData.logo ? (
+                                    <img
+                                        src={tenantData.logo}
+                                        alt={tenantData.name}
+                                        width={32}
+                                        height={32}
+                                        className="size-full object-cover"
+                                    />
+                                ) : (
+                                    <span className="text-sm font-semibold text-foreground">
+                                        {tenantData.name
+                                            .charAt(0)
+                                            .toUpperCase()}
+                                    </span>
+                                )}
                             </span>
-                            maestro.test
+                            <span className="min-w-0 truncate">
+                                {tenantData.name}
+                            </span>
                         </Link>
-                        <AppearanceToggleTab className="scale-90" />
+                        <div className="flex items-center gap-2">
+                            <AppearanceToggleTab className="scale-90" />
+                            <LocaleSwitcher />
+                        </div>
                     </div>
                 </header>
 
@@ -179,14 +196,15 @@ export default function TenantWelcome() {
                             >
                                 <Badge
                                     variant="outline"
-                                    className="gap-2 bg-background/70 px-3 py-1.5 font-mono uppercase tracking-wider"
+                                    className="gap-2 bg-background/70 px-3 py-1.5 font-mono tracking-wider uppercase"
                                 >
-                                    <ShieldCheck
-                                        aria-hidden="true"
-                                    />
+                                    <ShieldCheck aria-hidden="true" />
                                     {t('tenantWelcome.kicker')}
                                 </Badge>
-                                <Badge variant={statusVariant} className="gap-2">
+                                <Badge
+                                    variant={statusVariant}
+                                    className="gap-2"
+                                >
                                     <span className="size-1.5 rounded-full bg-current" />
                                     {t(
                                         `tenantWelcome.status.${tenantData.status}`,
@@ -205,10 +223,10 @@ export default function TenantWelcome() {
                                     <TenantInitial tenantData={tenantData} />
                                 </Avatar>
                                 <div className="min-w-0">
-                                    <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                    <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
                                         {domain}
                                     </p>
-                                    <h1 className="mt-2 text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+                                    <h1 className="mt-2 text-4xl leading-tight font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
                                         {t('tenantWelcome.title', {
                                             name: tenantData.name,
                                         })}
@@ -218,7 +236,7 @@ export default function TenantWelcome() {
 
                             <motion.p
                                 variants={fadeUp}
-                                className="mt-7 max-w-2xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg"
+                                className="mt-7 max-w-2xl text-base leading-8 text-pretty text-muted-foreground sm:text-lg"
                             >
                                 {t('tenantWelcome.explanation')}
                             </motion.p>
@@ -273,10 +291,8 @@ export default function TenantWelcome() {
                             <div className="rounded-lg border bg-muted/35 p-5">
                                 <div className="mb-5 flex items-center justify-between gap-4">
                                     <div>
-                                        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                                            {t(
-                                                'tenantWelcome.infoPanelTitle',
-                                            )}
+                                        <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
+                                            {t('tenantWelcome.infoPanelTitle')}
                                         </p>
                                         <p className="mt-1 text-xl font-semibold">
                                             {tenantData.name}
@@ -305,7 +321,7 @@ export default function TenantWelcome() {
                             </div>
 
                             <div className="rounded-lg border bg-card p-5 text-card-foreground">
-                                <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
                                     tenant context
                                 </p>
                                 <div className="mt-4 grid gap-3 font-mono text-xs">
@@ -351,7 +367,7 @@ export default function TenantWelcome() {
                             <Badge variant="outline" className="mb-4">
                                 {t('tenantWelcome.isolationTitle')}
                             </Badge>
-                            <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+                            <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
                                 {t('tenantWelcome.isolationTitle')}
                             </h2>
                             <p className="mt-4 leading-7 text-muted-foreground">
@@ -393,6 +409,24 @@ export default function TenantWelcome() {
                         </div>
                     </motion.section>
                 </main>
+                <footer className="border-t border-border/70 bg-background/80">
+                    <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-4 py-6 text-sm text-muted-foreground sm:flex-row sm:px-6 lg:px-8">
+                        <span>
+                            &copy; {currentYear} {tenantData.name}
+                        </span>
+                        <span className="flex items-center gap-2">
+                            {t('tenantWelcome.poweredBy', {
+                                name: 'Maestro',
+                            })}
+                            <span className="flex size-7 items-center justify-center rounded-md bg-foreground text-background">
+                                <AppLogoIcon
+                                    className="size-4 fill-current"
+                                    aria-hidden="true"
+                                />
+                            </span>
+                        </span>
+                    </div>
+                </footer>
             </div>
         </>
     );

@@ -9,16 +9,13 @@ export default function AppSidebarLayout({
     breadcrumbs = [],
     sidebar,
     showTrialFooter = false,
-}: AppLayoutProps & {
-    sidebar: React.ReactNode;
-    showTrialFooter?: boolean;
-}) {
+}: AppLayoutProps) {
     return (
         <AppShell variant="sidebar">
             {sidebar}
             <AppContent variant="sidebar" className="overflow-x-hidden">
                 <AppSidebarHeader breadcrumbs={breadcrumbs} />
-                {children}
+                <div className="flex-1">{children}</div>
                 {showTrialFooter && <TrialFooter />}
             </AppContent>
         </AppShell>

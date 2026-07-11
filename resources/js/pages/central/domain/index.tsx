@@ -1,22 +1,16 @@
 import { Head, setLayoutProps } from '@inertiajs/react';
-import { Building2Icon, GlobeIcon, SearchIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { index } from '@/actions/App/Http/Controllers/Web/Central/DomainsController';
-import { DomainCreateDialog } from '@/components/central/tenants/domain-create-dialog';
-import { DomainTable } from '@/components/central/tenants/domain-table';
-import type { Tenant, TenantOption } from '@/components/central/tenants/types';
 import Heading from '@/components/heading';
-import {
-    Empty,
-    EmptyContent,
-    EmptyDescription,
-    EmptyHeader,
-    EmptyMedia,
-    EmptyTitle,
-} from '@/components/ui/empty';
-import { Input } from '@/components/ui/input';
-import { usePermissions } from '@/hooks/use-permissions';
+
+import { DomainCreateDialog } from './components/domain-create-dialog';
+import { DomainEmptyState } from './components/domain-empty-state';
+import { DomainGroupList } from './components/domain-group-list';
+import { DomainSearch } from './components/domain-search';
+
+import type { GroupedDomainTenant, Tenant, TenantOption } from './types';
 
 export default function DomainsIndex({
     tenants,
@@ -28,9 +22,8 @@ export default function DomainsIndex({
     centralDomain: string;
 }) {
     const { t } = useTranslation();
-    const { can } = usePermissions();
     const [search, setSearch] = useState('');
-    const groupedTenants = useMemo(() => {
+    const groupedTenants = useMemo<GroupedDomainTenant[]>(() => {
         const term = search.trim().toLowerCase();
 
         return tenants
@@ -81,51 +74,19 @@ export default function DomainsIndex({
                     />
                 </div>
 
-                <div className="relative max-w-md">
-                    <SearchIcon className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                        value={search}
-                        onChange={(event) => setSearch(event.target.value)}
-                        className="pl-9"
-                        placeholder={t('domains.searchPlaceholder')}
-                        aria-label={t('domains.searchAria')}
-                    />
-                </div>
+                <DomainSearch value={search} onChange={setSearch} />
 
                 {groupedTenants.length > 0 ? (
-                    <div className="flex flex-col gap-5">
-                        {groupedTenants.map((tenant) => (
-                            <DomainTable
-                                key={tenant.id}
-                                tenant={tenant}
-                                domains={tenant.domains ?? []}
-                                centralDomain={centralDomain}
-                                showSearch={false}
-                            />
-                        ))}
-                    </div>
+                    <DomainGroupList
+                        tenants={groupedTenants}
+                        centralDomain={centralDomain}
+                    />
                 ) : (
-                    <Empty>
-                        <EmptyHeader>
-                            <EmptyMedia variant="icon">
-                                {search ? <GlobeIcon /> : <Building2Icon />}
-                            </EmptyMedia>
-                            <EmptyTitle>{t('domains.empty.title')}</EmptyTitle>
-                            <EmptyDescription>
-                                {search
-                                    ? t('domains.empty.searchDescription')
-                                    : t('domains.empty.noDataDescription')}
-                            </EmptyDescription>
-                        </EmptyHeader>
-                        {!search && can('create domains') && (
-                            <EmptyContent>
-                                <DomainCreateDialog
-                                    tenants={tenantOptions}
-                                    centralDomain={centralDomain}
-                                />
-                            </EmptyContent>
-                        )}
-                    </Empty>
+                    <DomainEmptyState
+                        search={search}
+                        tenants={tenantOptions}
+                        centralDomain={centralDomain}
+                    />
                 )}
             </div>
         </>

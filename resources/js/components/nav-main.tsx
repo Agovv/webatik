@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { useTranslation } from 'react-i18next';
+
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -17,14 +17,11 @@ export function NavMain({
     items: NavItem[];
     label?: string;
 }) {
-    const { t } = useTranslation();
     const { isCurrentUrl } = useCurrentUrl();
 
     return (
         <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel>
-                {label ?? t('sidebar.platform')}
-            </SidebarGroupLabel>
+            <SidebarGroupLabel>{label ?? 'Platform'}</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>

@@ -7,9 +7,10 @@ use App\Http\Requests\Web\Universal\Users\AssignPermissionsRequest;
 use App\Http\Requests\Web\Universal\Users\AssignRolesRequest;
 use App\Http\Requests\Web\Universal\Users\StoreUserRequest;
 use App\Http\Requests\Web\Universal\Users\UpdateUserRequest;
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Central\User as CentralUser;
+use App\Models\Tenant\User as TenantUser;
+use App\Models\Universal\Permission;
+use App\Models\Universal\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,9 @@ class UserController extends Controller
 {
     private function getUsers($search = null): array
     {
-        return User::query()
+        $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
+
+        return $model::query()
             ->with(['roles:id,name', 'permissions:id,name'])
             // ->when(! Auth::user()->hasRole('root'), fn ($query) => $query->whereNotIn('username', [config('maestro.default.superuser.username')])) // problematic if the user change something of superuser
             ->whereNotIn('username', [config('maestro.default.superuser.username')])
@@ -75,12 +78,13 @@ class UserController extends Controller
     public function store(StoreUserRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        User::create($validated);
+        $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
+        $model::create($validated);
 
         return back()->with('success', 'Usuario creado.');
     }
 
-    public function update(UpdateUserRequest $request, User $user): RedirectResponse
+    public function update(UpdateUserRequest $request, CentralUser|TenantUser $user): RedirectResponse
     {
         $validated = $request->safe()->except('password');
         $password = $request->safe()->only('password');
@@ -97,7 +101,7 @@ class UserController extends Controller
         return back()->with('success', 'Usuario actualizado.');
     }
 
-    public function destroy(User $user): RedirectResponse
+    public function destroy(CentralUser|TenantUser $user): RedirectResponse
     {
         abort_if(Auth::user()->cannot('delete users'), 403, 'Unauthorized action.');
 
@@ -109,7 +113,7 @@ class UserController extends Controller
         return back()->with('success', 'Usuario eliminado.');
     }
 
-    public function assignRoles(AssignRolesRequest $request, User $user): RedirectResponse
+    public function assignRoles(AssignRolesRequest $request, CentralUser|TenantUser $user): RedirectResponse
     {
         $validated = $request->validated();
         $roles = $validated['roles'] ?? [];
@@ -126,7 +130,7 @@ class UserController extends Controller
         return back()->with('success', 'Roles asignados correctamente.');
     }
 
-    public function assignPermissions(AssignPermissionsRequest $request, User $user): RedirectResponse
+    public function assignPermissions(AssignPermissionsRequest $request, CentralUser|TenantUser $user): RedirectResponse
     {
         $validated = $request->validated();
         $user->syncPermissions($validated['permissions'] ?? []);

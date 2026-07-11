@@ -12,10 +12,11 @@ import {
     ShieldCheck,
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import type { Variants } from 'motion/react';
 import { useTranslation } from 'react-i18next';
+
 import AppLogoIcon from '@/components/app-logo-icon';
 import AppearanceToggleTab from '@/components/appearance-tabs';
+import LocaleSwitcher from '@/components/LocaleSwitcher';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,6 +28,8 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { dashboard, login, register } from '@/routes';
+
+import type { Variants } from 'motion/react';
 
 const fadeUp: Variants = {
     hidden: { opacity: 0, y: 18 },
@@ -174,6 +177,7 @@ export default function CentralWelcome() {
 
                         <div className="flex items-center gap-2">
                             <AppearanceToggleTab className="hidden lg:inline-flex" />
+                            <LocaleSwitcher />
                             {auth.user ? (
                                 <Button asChild>
                                     <Link href={dashboard()}>
@@ -218,28 +222,26 @@ export default function CentralWelcome() {
                             <motion.div variants={fadeUp}>
                                 <Badge
                                     variant="outline"
-                                    className="gap-2 bg-background/70 px-3 py-1.5 font-mono uppercase tracking-wider"
+                                    className="gap-2 bg-background/70 px-3 py-1.5 font-mono tracking-wider uppercase"
                                 >
-                                    <Blocks
-                                        aria-hidden="true"
-                                    />
+                                    <Blocks aria-hidden="true" />
                                     {t('welcome.hero.badge')}
                                 </Badge>
                             </motion.div>
 
                             <motion.h1
                                 variants={fadeUp}
-                                className="mt-7 text-balance text-5xl font-semibold leading-[0.96] tracking-tight sm:text-6xl lg:text-7xl"
+                                className="mt-7 text-5xl leading-[0.96] font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl"
                             >
                                 {t('welcome.hero.title')}{' '}
-                                <span className="font-serif italic text-muted-foreground">
+                                <span className="font-serif text-muted-foreground italic">
                                     {t('welcome.hero.titleAccent')}
                                 </span>
                             </motion.h1>
 
                             <motion.p
                                 variants={fadeUp}
-                                className="mt-7 max-w-2xl text-pretty text-base leading-8 text-muted-foreground sm:text-lg"
+                                className="mt-7 max-w-2xl text-base leading-8 text-pretty text-muted-foreground sm:text-lg"
                             >
                                 {t('welcome.hero.subtitle')}
                             </motion.p>
@@ -260,8 +262,8 @@ export default function CentralWelcome() {
                                     <a href="#demo">
                                         <Play
                                             data-icon="inline-start"
-                                        aria-hidden="true"
-                                    />
+                                            aria-hidden="true"
+                                        />
                                         {t('welcome.hero.ctaSecondary')}
                                     </a>
                                 </Button>
@@ -280,7 +282,7 @@ export default function CentralWelcome() {
                                         key={label}
                                         className="rounded-lg border bg-background/70 p-4"
                                     >
-                                        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                                        <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
                                             {label}
                                         </p>
                                         <p className="mt-1 font-medium">
@@ -313,7 +315,7 @@ export default function CentralWelcome() {
                                     <div className="rounded-lg border border-neutral-800 bg-neutral-900/70 p-4">
                                         <div className="flex items-center justify-between gap-4">
                                             <div>
-                                                <p className="font-mono text-xs uppercase tracking-wider text-neutral-500">
+                                                <p className="font-mono text-xs tracking-wider text-neutral-500 uppercase">
                                                     status
                                                 </p>
                                                 <p className="mt-1 text-xl font-semibold">
@@ -373,7 +375,7 @@ export default function CentralWelcome() {
                                 <Badge variant="outline" className="mb-4">
                                     {t('welcome.features.kicker')}
                                 </Badge>
-                                <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+                                <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
                                     {t('welcome.features.title')}
                                 </h2>
                                 <p className="mt-4 leading-7 text-muted-foreground">
@@ -416,7 +418,7 @@ export default function CentralWelcome() {
                             <Badge variant="outline" className="mb-4">
                                 {t('welcome.stack.kicker')}
                             </Badge>
-                            <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+                            <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
                                 {t('welcome.stack.title')}
                             </h2>
                             <p className="mt-4 leading-7 text-muted-foreground">
@@ -456,7 +458,7 @@ export default function CentralWelcome() {
                                 <Badge className="mb-4 bg-background text-foreground">
                                     {t('welcome.demo.kicker')}
                                 </Badge>
-                                <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+                                <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
                                     {t('welcome.demo.title')}
                                 </h2>
                                 <p className="mt-4 leading-7 text-background/70">
@@ -502,7 +504,7 @@ export default function CentralWelcome() {
                             <Badge variant="outline" className="mb-4">
                                 {t('welcome.code.kicker')}
                             </Badge>
-                            <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+                            <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
                                 {t('welcome.code.title')}
                             </h2>
                             <p className="mt-4 leading-7 text-muted-foreground">
@@ -538,7 +540,7 @@ export default function CentralWelcome() {
                     <section className="border-t border-border/70 bg-muted/25 py-16">
                         <div className="mx-auto flex w-full max-w-7xl flex-col items-start justify-between gap-8 px-4 sm:px-6 md:flex-row md:items-center lg:px-8">
                             <div>
-                                <h2 className="text-balance text-3xl font-semibold tracking-tight">
+                                <h2 className="text-3xl font-semibold tracking-tight text-balance">
                                     {t('welcome.cta.title')}
                                 </h2>
                                 <p className="mt-3 max-w-xl text-muted-foreground">
