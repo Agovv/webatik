@@ -123,7 +123,7 @@ test('tenant automatic domain receives a suffix when the generated domain alread
 
 test('tenant icon upload generates favicon assets', function () {
     Storage::fake('public');
-    $publicDiskRoot = rtrim(Storage::disk('public')->path(''), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
+    $publicDiskRoot = rtrim(Storage::disk(config('filesystems.public_default'))->path(''), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
     config(['app.url' => 'https://central.test']);
     $user = userWithTenantCreationPermission();
     $icon = UploadedFile::fake()->image('tenant-icon.png', 512, 512);
@@ -159,15 +159,15 @@ test('delete tenant icon job removes original and generated icon files', functio
         ],
     ]));
 
-    Storage::disk('public')->put($tenant->icon_path, 'original');
-    Storage::disk('public')->put($tenant->icons['favicon_16'], '16');
-    Storage::disk('public')->put($tenant->icons['favicon_32'], '32');
-    Storage::disk('public')->put($tenant->icons['apple_touch_icon'], 'apple');
+    Storage::disk(config('filesystems.public_default'))->put($tenant->icon_path, 'original');
+    Storage::disk(config('filesystems.public_default'))->put($tenant->icons['favicon_16'], '16');
+    Storage::disk(config('filesystems.public_default'))->put($tenant->icons['favicon_32'], '32');
+    Storage::disk(config('filesystems.public_default'))->put($tenant->icons['apple_touch_icon'], 'apple');
 
     (new DeleteTenantIcon($tenant))->handle();
 
-    Storage::disk('public')->assertMissing($tenant->icon_path);
-    Storage::disk('public')->assertMissing($tenant->icons['favicon_16']);
-    Storage::disk('public')->assertMissing($tenant->icons['favicon_32']);
-    Storage::disk('public')->assertMissing($tenant->icons['apple_touch_icon']);
+    Storage::disk(config('filesystems.public_default'))->assertMissing($tenant->icon_path);
+    Storage::disk(config('filesystems.public_default'))->assertMissing($tenant->icons['favicon_16']);
+    Storage::disk(config('filesystems.public_default'))->assertMissing($tenant->icons['favicon_32']);
+    Storage::disk(config('filesystems.public_default'))->assertMissing($tenant->icons['apple_touch_icon']);
 });

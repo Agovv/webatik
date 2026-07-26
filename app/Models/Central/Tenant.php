@@ -7,6 +7,7 @@ use Database\Factories\Central\TenantFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
@@ -98,7 +99,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             return null;
         }
 
-        return asset("storage/{$this->icon_path}");
+        return Storage::disk(config('filesystems.public_default'))->temporaryUrl("{$this->icon_path}", now()->addMinutes(5));
     }
 
     /**

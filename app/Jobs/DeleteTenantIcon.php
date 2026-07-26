@@ -32,7 +32,7 @@ class DeleteTenantIcon implements ShouldQueue
         }
 
         try {
-            Storage::disk('public')->delete($paths);
+            Storage::disk(config('filesystems.public_default'))->delete($paths);
         } catch (\Exception $exception) {
             Log::error("Error deleting tenant icons for tenant {$this->tenant->id}: ".$exception->getMessage());
         }

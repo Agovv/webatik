@@ -45,11 +45,18 @@ trait ImageTreatment
         return ImageManager::usingDriver($this->getImageDriver());
     }
 
-    protected function scaleDownImage($file, string $pathToSave, ?int $maxWidth = null, ?int $maxHeight = null, ?string $disk = 'public'): string
+    private function getDiskDefaultPublic(?string $custom = null): string
+    {
+
+    return !empty($custom) ? $custom : config('filesystems.public_default');
+    }
+
+    protected function scaleDownImage($file, string $pathToSave, ?int $maxWidth = null, ?int $maxHeight = null, ?string $disk = null): string
     {
         $name = Str::lower(Str::orderedUuid()->toString());
         $extension = $file->extension();
         $manager = $this->getImageManager();
+        $disk = $this->getDiskDefaultPublic($disk);
 
         if (! $manager->driver->supports($extension) || $extension === 'gif') {
             return $this->processImageScaleDownFallback($file, $pathToSave, $name, $extension, $disk);
@@ -61,8 +68,10 @@ trait ImageTreatment
     /**
      * @return array{icon_path: string, icons: array<string, string>}
      */
-    protected function processTenantIcon($file, string $pathToSave = 'tenant_icons', ?string $disk = 'public'): array
+    protected function processTenantIcon($file, string $pathToSave = 'tenant_icons', ?string $disk = null): array
     {
+        $disk = $this->getDiskDefaultPublic($disk);
+
         return [
             'icon_path' => $this->scaleDownImage($file, $pathToSave, 100, 100, $disk),
             'icons' => app(TenantIconGenerator::class)->generate($file, "{$pathToSave}/generated", $disk),
@@ -72,8 +81,10 @@ trait ImageTreatment
     /**
      * @param  array<string, string>|null  $icons
      */
-    protected function deleteTenantIconFiles(?string $iconPath, ?array $icons, ?string $disk = 'public'): void
+    protected function deleteTenantIconFiles(?string $iconPath, ?array $icons, ?string $disk = null): void
     {
+        $disk = $this->getDiskDefaultPublic($disk);
+
         $paths = array_filter([
             $iconPath,
             ...array_values($icons ?? []),
@@ -100,10 +111,11 @@ trait ImageTreatment
         string $extension,
         ?int $maxWidth = null,
         ?int $maxHeight = null,
-        ?string $disk = 'public',
+        ?string $disk = null,
         ?ImageManager $manager = null
     ): string {
         try {
+            $disk = $this->getDiskDefaultPublic($disk);
             $manager ??= $this->getImageManager();
             $image = $manager->decode($file)->scaleDown(width: $maxWidth, height: $maxHeight);
             $webp = (string) $image->encodeUsingFileExtension('webp', quality: 90);
