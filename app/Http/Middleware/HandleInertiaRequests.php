@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Central\User as CentralUser;
+use App\Models\Tenant\User as TenantUser;
 use App\Support\Notifications\UnreadNotificationsCount;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -40,11 +42,14 @@ class HandleInertiaRequests extends Middleware
         $user = $request->user();
         $tenant = tenant();
 
+        $supportedLocales = config('app.supported_locales');
+        $supportedLocales = is_array($supportedLocales) ? $supportedLocales : [];
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'locale' => $locale,
-            'translations' => fn () => collect(config('app.supported_locales'))
+            'translations' => fn () => collect($supportedLocales)
                 ->mapWithKeys(fn (string $locale) => [
                     $locale => $this->loadTranslations($locale),
                 ])
@@ -70,14 +75,23 @@ class HandleInertiaRequests extends Middleware
         ];
     }
 
+    /** @return array<string, string> */
     private function loadTranslations(string $locale): array
     {
         $path = lang_path("{$locale}.json");
 
-        return file_exists($path) ? json_decode(file_get_contents($path), true) : [];
+        $contents = file_get_contents($path);
+
+        if ($contents === false) {
+            return [];
+        }
+
+        $translations = json_decode($contents, true);
+
+        return is_array($translations) ? $translations : [];
     }
 
-    private function getNotificationChannelForUser($user): string
+    private function getNotificationChannelForUser(CentralUser|TenantUser|null $user): string
     {
         if (! $user) {
             return '';

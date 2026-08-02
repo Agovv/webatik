@@ -24,13 +24,14 @@ class RoleController extends Controller
 
     public function __construct(private TenantPlanLimitService $tenantPlanLimits) {}
 
-    private function isPrivilegedUser($user): bool
+    private function isPrivilegedUser(CentralUser|TenantUser $user): bool
     {
         $rootUsr = config('maestro.default.superuser.username');
 
         return in_array($user->username, [$rootUsr]);
     }
 
+    /** @return array<int, array<string, mixed>> */
     private function getRoles(CentralUser|TenantUser $currentUser, bool $isPrivilegedUser, ?string $search = null): array
     {
         $userRoleIds = $isPrivilegedUser ? null : $currentUser->roles->pluck('id');
@@ -44,6 +45,7 @@ class RoleController extends Controller
             ->toArray();
     }
 
+    /** @return array<int, array<string, mixed>> */
     private function getPermissions(CentralUser|TenantUser $currentUser, bool $isPrivilegedUser): array
     {
         return $isPrivilegedUser

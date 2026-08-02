@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Web\Universal\Roles;
 
+use App\Models\Universal\Role;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +24,11 @@ class UpdateRoleRequest extends FormRequest
      */
     public function rules(): array
     {
+        $role = $this->route('role');
+        $roleId = $role instanceof Role ? $role->getKey() : null;
+
         return [
-            'name' => 'required|string|max:255|unique:roles,name,'.$this->route('role')->id,
+            'name' => 'required|string|max:255|unique:roles,name,'.$roleId,
             'permissions' => 'array',
             'permissions.*' => 'exists:permissions,id',
         ];

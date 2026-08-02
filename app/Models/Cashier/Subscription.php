@@ -5,8 +5,17 @@ namespace App\Models\Cashier;
 use App\Models\Central\PlanPrice;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Laravel\Cashier\Subscription as CashierSubscription;
 
+/**
+ * @property string|null $scheduled_plan_price_id
+ * @property Carbon|null $ends_at
+ * @property Carbon|null $renews_at
+ * @property Carbon|null $scheduled_change_at
+ * @property-read PlanPrice|null $scheduledPlanPrice
+ */
 class Subscription extends CashierSubscription
 {
     use HasUlids;
@@ -29,13 +38,21 @@ class Subscription extends CashierSubscription
         ];
     }
 
+    /** @return BelongsTo<PlanPrice, $this> */
     public function planPrice(): BelongsTo
     {
         return $this->belongsTo(PlanPrice::class);
     }
 
+    /** @return BelongsTo<PlanPrice, $this> */
     public function scheduledPlanPrice(): BelongsTo
     {
         return $this->belongsTo(PlanPrice::class, 'scheduled_plan_price_id');
+    }
+
+    /** @return HasMany<SubscriptionItem, $this> */
+    public function items(): HasMany
+    {
+        return $this->hasMany(SubscriptionItem::class);
     }
 }

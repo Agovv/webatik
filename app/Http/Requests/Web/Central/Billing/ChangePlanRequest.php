@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Web\Central\Billing;
 
 use App\Models\Central\PlanPrice;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangePlanRequest extends FormRequest
@@ -17,6 +18,7 @@ class ChangePlanRequest extends FormRequest
             && $this->user()->subscription('default')?->valid();
     }
 
+    /** @return array<string, ValidationRule|array<int, mixed>|string> */
     public function rules(): array
     {
         return [];

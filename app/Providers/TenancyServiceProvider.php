@@ -44,7 +44,8 @@ class TenancyServiceProvider extends ServiceProvider
     // By default, no namespace is used to support the callable array syntax.
     public static string $controllerNamespace = '';
 
-    public function events()
+    /** @return array<class-string, array<int, mixed>> */
+    public function events(): array
     {
         return [
             // Tenant events
@@ -198,7 +199,7 @@ class TenancyServiceProvider extends ServiceProvider
         //
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->bootEvents();
 
@@ -228,7 +229,7 @@ class TenancyServiceProvider extends ServiceProvider
         // });
     }
 
-    protected function bootEvents()
+    protected function bootEvents(): void
     {
         foreach ($this->events() as $event => $listeners) {
             foreach ($listeners as $listener) {
@@ -241,7 +242,7 @@ class TenancyServiceProvider extends ServiceProvider
         }
     }
 
-    protected function mapRoutes()
+    protected function mapRoutes(): void
     {
         $this->app->booted(function () {
             if (file_exists(base_path('routes/tenant.php'))) {
@@ -270,13 +271,13 @@ class TenancyServiceProvider extends ServiceProvider
         $cloneRoutes->handle();
     }
 
-    protected function makeTenancyMiddlewareHighestPriority()
+    protected function makeTenancyMiddlewareHighestPriority(): void
     {
         // PreventAccessFromUnwantedDomains has even higher priority than the identification middleware
         $tenancyMiddleware = array_merge([Middleware\PreventAccessFromUnwantedDomains::class], config('tenancy.identification.middleware'));
 
         foreach (array_reverse($tenancyMiddleware) as $middleware) {
-            $this->app[Kernel::class]->prependToMiddlewarePriority($middleware);
+            $this->app->make(Kernel::class)->prependToMiddlewarePriority($middleware);
         }
     }
 }

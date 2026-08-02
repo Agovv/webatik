@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Central;
 
-use App\Models\User;
+use App\Models\Central\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

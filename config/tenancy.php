@@ -42,6 +42,8 @@ use Stancl\Tenancy\UniqueIdentifierGenerators\UUIDv7Generator;
  *
  * All of these products can also be accessed at https://portal.archte.ch
  */
+$appUrl = env('APP_URL');
+
 return [
     /**
      * Configuration for the models used by Tenancy.
@@ -83,7 +85,7 @@ return [
          * Only relevant if you're using the domain or subdomain identification middleware.
          */
         'central_domains' => [
-            str(env('APP_URL'))->after('://')->before('/')->before(':')->toString(),
+            str(is_string($appUrl) ? $appUrl : null)->after('://')->before('/')->before(':')->toString(),
         ],
 
         /**

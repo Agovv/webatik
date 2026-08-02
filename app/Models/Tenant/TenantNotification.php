@@ -29,7 +29,7 @@ class TenantNotification extends Model
     use HasUlids;
 
     /**
-     * @return HasMany<TenantNotificationRead, TenantNotification>
+     * @return HasMany<TenantNotificationRead, $this>
      */
     public function reads(): HasMany
     {

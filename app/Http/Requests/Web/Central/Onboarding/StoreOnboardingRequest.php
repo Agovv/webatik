@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Web\Central\Onboarding;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOnboardingRequest extends FormRequest
@@ -11,6 +12,7 @@ class StoreOnboardingRequest extends FormRequest
         return $this->user() !== null;
     }
 
+    /** @return array<string, ValidationRule|array<int, mixed>|string> */
     public function rules(): array
     {
         return [

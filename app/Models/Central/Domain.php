@@ -65,7 +65,7 @@ class Domain extends BaseDomain
         $baseSlug = $baseSlug === '' ? Str::lower(Str::random(4)) : $baseSlug;
         $domain = "{$baseSlug}.{$centralDomain}";
 
-        if (static::domainIsAvailable($domain)) {
+        if (self::domainIsAvailable($domain)) {
             return $domain;
         }
 
@@ -77,7 +77,7 @@ class Domain extends BaseDomain
                 ->append('-', $suffix)
                 ->toString();
             $domain = "{$suffixedSlug}.{$centralDomain}";
-        } while (! static::domainIsAvailable($domain));
+        } while (! self::domainIsAvailable($domain));
 
         return $domain;
     }
@@ -90,7 +90,7 @@ class Domain extends BaseDomain
     /**
      * Get the user that created the domain.
      *
-     * @return BelongsTo<User, Domain>
+     * @return BelongsTo<User, $this>
      */
     public function creator(): BelongsTo
     {

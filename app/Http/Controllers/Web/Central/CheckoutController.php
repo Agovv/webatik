@@ -32,9 +32,10 @@ class CheckoutController extends Controller
                 ]],
             ]);
 
-        $checkout->update(['stripe_checkout_session_id' => $session->id]);
+        $stripeSession = $session->asStripeCheckoutSession();
+        $checkout->update(['stripe_checkout_session_id' => $stripeSession->id]);
 
-        return Inertia::location($session->url);
+        return Inertia::location($stripeSession->url);
     }
 
     public function success(SubscriptionCheckout $checkout): Response
@@ -51,7 +52,7 @@ class CheckoutController extends Controller
 
         return Inertia::render('central/billing/checkout-success', [
             'checkout' => $checkout->only(['id', 'status', 'completed_at']),
-            'canOnboard' => request()->user()?->subscribed('default') ?? false,
+            'canOnboard' => request()->user()->subscribed('default'),
         ]);
     }
 }

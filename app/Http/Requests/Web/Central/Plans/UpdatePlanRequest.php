@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Web\Central\Plans;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Validation\Rule;
 
 class UpdatePlanRequest extends StorePlanRequest
@@ -11,6 +12,7 @@ class UpdatePlanRequest extends StorePlanRequest
         return $this->user()?->can('update plans') ?? false;
     }
 
+    /** @return array<string, ValidationRule|array<int, mixed>|string> */
     public function rules(): array
     {
         return [

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Web\Central\Plans;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -12,6 +13,7 @@ class StorePlanRequest extends FormRequest
         return $this->user()?->can('create plans') ?? false;
     }
 
+    /** @return array<string, ValidationRule|array<int, mixed>|string> */
     public function rules(): array
     {
         return [

@@ -19,11 +19,13 @@ class SubscriptionCheckout extends Model
         return ['completed_at' => 'datetime'];
     }
 
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<PlanPrice, $this> */
     public function planPrice(): BelongsTo
     {
         return $this->belongsTo(PlanPrice::class);

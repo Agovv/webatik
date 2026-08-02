@@ -37,6 +37,7 @@ class StoreTenantAnnouncementRequest extends FormRequest
         ];
     }
 
+    /** @return array<int, callable(Validator): void> */
     public function after(): array
     {
         return [
@@ -45,7 +46,7 @@ class StoreTenantAnnouncementRequest extends FormRequest
                     return;
                 }
 
-                if (collect($this->input('roles', []))->filter()->isEmpty()) {
+                if (collect($this->array('roles'))->filter()->isEmpty()) {
                     $validator->errors()->add('roles', __('Select at least one role for this announcement.'));
                 }
             },

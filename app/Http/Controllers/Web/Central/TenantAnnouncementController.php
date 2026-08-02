@@ -35,7 +35,7 @@ class TenantAnnouncementController extends Controller
     public function store(StoreTenantAnnouncementRequest $request, Tenant $tenant): RedirectResponse
     {
         $validated = $request->validated();
-        $roles = collect($validated['roles'] ?? [])
+        $roles = collect($request->array('roles'))
             ->filter()
             ->unique()
             ->values()
@@ -63,7 +63,7 @@ class TenantAnnouncementController extends Controller
     }
 
     /**
-     * @param  array<int, array{id: string, name: string, slug: string}>  $tenants
+     * @param  array<int|string, array{id: string, name: string, slug: string}>  $tenants
      */
     private function render(?Tenant $selectedTenant, array $tenants): Response
     {
@@ -76,18 +76,24 @@ class TenantAnnouncementController extends Controller
     }
 
     /**
-     * @return Collection<int, array{id: string, name: string, slug: string}>
+     * @return Collection<int|string, array{id: string, name: string, slug: string}>
      */
     private function tenantOptions(): Collection
     {
         return Tenant::query()
             ->orderBy('name')
             ->get(['id', 'name', 'slug'])
-            ->map(fn (Tenant $tenant): array => [
-                'id' => $tenant->id,
-                'name' => $tenant->name,
-                'slug' => $tenant->slug,
-            ]);
+            ->map(function ($tenant): array {
+                if (! $tenant instanceof Tenant) {
+                    throw new \LogicException('The configured tenant model must be the Maestro tenant model.');
+                }
+
+                return [
+                    'id' => $tenant->id,
+                    'name' => $tenant->name,
+                    'slug' => $tenant->slug,
+                ];
+            });
     }
 
     private function selectedTenant(Request $request, ?string $fallbackTenantId): ?Tenant

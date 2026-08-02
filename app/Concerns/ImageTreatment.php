@@ -4,12 +4,14 @@ namespace App\Concerns;
 
 use App\Support\TenantIconGenerator;
 use Exception;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Drivers\AbstractDriver;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Interfaces\ImageManagerInterface;
 
 trait ImageTreatment
 {
@@ -40,7 +42,7 @@ trait ImageTreatment
         return new GdDriver;
     }
 
-    protected function getImageManager(): ImageManager
+    protected function getImageManager(): ImageManagerInterface
     {
         return ImageManager::usingDriver($this->getImageDriver());
     }
@@ -51,14 +53,14 @@ trait ImageTreatment
         return ! empty($custom) ? $custom : config('filesystems.public_default');
     }
 
-    protected function scaleDownImage($file, string $pathToSave, ?int $maxWidth = null, ?int $maxHeight = null, ?string $disk = null): string
+    protected function scaleDownImage(UploadedFile $file, string $pathToSave, ?int $maxWidth = null, ?int $maxHeight = null, ?string $disk = null): string
     {
         $name = Str::lower(Str::orderedUuid()->toString());
         $extension = $file->extension();
         $manager = $this->getImageManager();
         $disk = $this->getDiskDefaultPublic($disk);
 
-        if (! $manager->driver->supports($extension) || $extension === 'gif') {
+        if (! $this->supportWebp($this->getImageDriver()) || $extension === 'gif') {
             return $this->processImageScaleDownFallback($file, $pathToSave, $name, $extension, $disk);
         }
 
@@ -68,7 +70,7 @@ trait ImageTreatment
     /**
      * @return array{icon_path: string, icons: array<string, string>}
      */
-    protected function processTenantIcon($file, string $pathToSave = 'tenant_icons', ?string $disk = null): array
+    protected function processTenantIcon(UploadedFile $file, string $pathToSave = 'tenant_icons', ?string $disk = null): array
     {
         $disk = $this->getDiskDefaultPublic($disk);
 
@@ -97,7 +99,7 @@ trait ImageTreatment
         Storage::disk($disk)->delete($paths);
     }
 
-    private function processImageScaleDownFallback($file, string $pathToSave, string $name, string $extension, string $disk): string
+    private function processImageScaleDownFallback(UploadedFile $file, string $pathToSave, string $name, string $extension, string $disk): string
     {
         Storage::disk($disk)->putFileAs($pathToSave, $file, "$name.$extension");
 
@@ -105,14 +107,14 @@ trait ImageTreatment
     }
 
     private function proccessImageScaleDown(
-        $file,
+        UploadedFile $file,
         string $pathToSave,
         string $name,
         string $extension,
         ?int $maxWidth = null,
         ?int $maxHeight = null,
         ?string $disk = null,
-        ?ImageManager $manager = null
+        ?ImageManagerInterface $manager = null
     ): string {
         try {
             $disk = $this->getDiskDefaultPublic($disk);

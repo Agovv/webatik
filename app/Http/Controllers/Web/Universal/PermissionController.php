@@ -14,6 +14,7 @@ use Inertia\Response;
 
 class PermissionController extends Controller
 {
+    /** @return array<int, array{id: string, name: string}> */
     private function getPermissions(?string $search = null): array
     {
         return Permission::query()
@@ -57,9 +58,9 @@ class PermissionController extends Controller
         return back()->with('success', __('Permission updated.'));
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy(string $id): RedirectResponse
     {
-        $permission = Permission::findOrFail($id);
+        $permission = Permission::query()->whereKey($id)->firstOrFail();
         $permission->delete();
 
         return back()->with('success', __('Permission deleted.'));

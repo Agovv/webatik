@@ -3,6 +3,7 @@
 namespace App\Models\Central;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Cashier\Subscription;
 use Database\Factories\Central\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -55,13 +56,30 @@ class User extends Authenticatable implements PasskeyUser
         ];
     }
 
+    /** @return HasMany<Tenant, $this> */
     public function tenants(): HasMany
     {
         return $this->hasMany(Tenant::class, 'created_by');
     }
 
+    /** @return HasMany<Tenant, $this> */
+    public function managedTenants(): HasMany
+    {
+        return $this->hasMany(Tenant::class, 'created_by');
+    }
+
+    /** @return HasMany<SubscriptionCheckout, $this> */
     public function subscriptionCheckouts(): HasMany
     {
         return $this->hasMany(SubscriptionCheckout::class);
+    }
+
+    public function subscription(string $type = 'default'): ?Subscription
+    {
+        return Subscription::query()
+            ->where($this->getForeignKey(), $this->getKey())
+            ->where('type', $type)
+            ->latest()
+            ->first();
     }
 }

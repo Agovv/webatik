@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Web\Universal\Permissions;
 
+use App\Models\Universal\Permission;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +24,11 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function rules(): array
     {
+        $permission = $this->route('permission');
+        $permissionId = $permission instanceof Permission ? $permission->getKey() : null;
+
         return [
-            'name' => 'required|string|max:255|unique:permissions,name,'.$this->route('permission')->id,
+            'name' => 'required|string|max:255|unique:permissions,name,'.$permissionId,
         ];
     }
 }

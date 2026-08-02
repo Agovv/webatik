@@ -17,20 +17,26 @@ class CustomerTenantController extends Controller
     public function index(Request $request): Response
     {
         return Inertia::render('central/customer-tenants/index', [
-            'tenants' => $request->user()->tenants()
+            'tenants' => $request->user()->managedTenants()
                 ->with('domains')
                 ->latest()
                 ->get()
-                ->map(fn (Tenant $tenant) => [
-                    ...$tenant->toArray(),
-                    'domain_limits' => [
-                        PlanLimitKey::CUSTOM_DOMAINS->value => $this->entitlements->domainLimitInfo(
-                            $request->user(),
-                            $tenant,
-                            'custom',
-                        ),
-                    ],
-                ]),
+                ->map(function ($tenant) use ($request): array {
+                    if (! $tenant instanceof Tenant) {
+                        throw new \LogicException('The configured tenant model must be the Maestro tenant model.');
+                    }
+
+                    return [
+                        ...$tenant->toArray(),
+                        'domain_limits' => [
+                            PlanLimitKey::CUSTOM_DOMAINS->value => $this->entitlements->domainLimitInfo(
+                                $request->user(),
+                                $tenant,
+                                'custom',
+                            ),
+                        ],
+                    ];
+                }),
             'usage' => $this->entitlements->usage($request->user()),
             'plan' => $this->entitlements->planFor($request->user()),
             'limits' => $this->entitlements->limits($request->user()),

@@ -12,20 +12,22 @@ use App\Http\Requests\Web\Central\Tenants\StoreTenantsRequest;
 use App\Http\Requests\Web\Central\Tenants\UpdateTenantsRequest;
 use App\Models\Central\Domain;
 use App\Models\Central\Tenant;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class TenantsController extends Controller
 {
     use ImageTreatment;
 
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         abort_unless($request->user()?->can('read tenants'), 403);
 
-        $canReadDomains = $request->user()?->can('read domains') ?? false;
+        $canReadDomains = $request->user()->can('read domains');
         $perPage = min(max(1, (int) $request->query('per_page', 10)), 100);
         $filters = [
             'search' => $request->string('search')->toString(),
@@ -66,12 +68,12 @@ class TenantsController extends Controller
         ]);
     }
 
-    public function show(Request $request, string $id)
+    public function show(Request $request, string $id): Response
     {
         abort_unless($request->user()?->can('read tenants'), 403);
 
         $tenant = Tenant::query()
-            ->when($request->user()?->can('read domains'), fn ($query) => $query->with('domains'))
+            ->when($request->user()->can('read domains'), fn ($query) => $query->with('domains'))
             ->findOrFail($id);
 
         return Inertia::render('central/tenant/show', [
@@ -80,7 +82,7 @@ class TenantsController extends Controller
         ]);
     }
 
-    public function store(StoreTenantsRequest $request)
+    public function store(StoreTenantsRequest $request): RedirectResponse
     {
         $validated = $request->validated();
         $validated['id'] = Str::lower(Str::ulid());
@@ -115,7 +117,7 @@ class TenantsController extends Controller
         return back()->with('success', 'Tenant created successfully.');
     }
 
-    public function update(UpdateTenantsRequest $request, Tenant $tenant)
+    public function update(UpdateTenantsRequest $request, Tenant $tenant): RedirectResponse
     {
         $validated = $request->validated();
         unset($validated['remove_icon']);
@@ -144,7 +146,7 @@ class TenantsController extends Controller
         return back()->with('success', 'Tenant updated successfully.');
     }
 
-    public function destroy(DestroyTenantsRequest $request, Tenant $tenant)
+    public function destroy(DestroyTenantsRequest $request, Tenant $tenant): RedirectResponse
     {
         try {
             $tenant->domains()->delete();

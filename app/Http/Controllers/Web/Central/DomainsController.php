@@ -8,13 +8,15 @@ use App\Http\Requests\Web\Central\Domains\StoreDomainRequest;
 use App\Http\Requests\Web\Central\Domains\UpdateDomainRequest;
 use App\Models\Central\Domain;
 use App\Models\Central\Tenant;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class DomainsController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         abort_unless($request->user()?->can('read domains'), 403);
 
@@ -35,10 +37,10 @@ class DomainsController extends Controller
         ]);
     }
 
-    public function store(StoreDomainRequest $request, ?Tenant $tenant = null)
+    public function store(StoreDomainRequest $request, ?Tenant $tenant = null): RedirectResponse
     {
         $validated = $request->validated();
-        $tenant ??= Tenant::query()->findOrFail($validated['tenant_id']);
+        $tenant ??= Tenant::query()->whereKey($validated['tenant_id'])->firstOrFail();
         $this->abortIfSuspended($tenant);
 
         unset($validated['tenant_id']);
@@ -56,7 +58,7 @@ class DomainsController extends Controller
         return back()->with('success', 'Domain added successfully.');
     }
 
-    public function update(UpdateDomainRequest $request, Tenant $tenant, Domain $domain)
+    public function update(UpdateDomainRequest $request, Tenant $tenant, Domain $domain): RedirectResponse
     {
         abort_unless($domain->tenant_id === $tenant->getKey(), 404);
         $this->abortIfSuspended($tenant);
@@ -77,7 +79,7 @@ class DomainsController extends Controller
         return back()->with('success', 'Domain updated successfully.');
     }
 
-    public function destroy(DestroyDomainRequest $request, Tenant $tenant, Domain $domain)
+    public function destroy(DestroyDomainRequest $request, Tenant $tenant, Domain $domain): RedirectResponse
     {
         abort_unless($domain->tenant_id === $tenant->getKey(), 404);
         $this->abortIfSuspended($tenant);
@@ -90,7 +92,7 @@ class DomainsController extends Controller
     private function abortIfSuspended(Tenant $tenant): void
     {
         abort_if(
-            $tenant->status === 'suspended',
+            $tenant->status->isSuspended(),
             403,
             'This tenant is suspended. Domain management is disabled until the tenant is reactivated.',
         );

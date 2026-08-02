@@ -7,6 +7,7 @@ use App\Enums\Central\TenantStatus;
 use Database\Factories\Central\TenantFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -28,6 +29,8 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
  * @property string $industry
  * @property string $notes
  * @property string $created_by
+ * @property BillingAccess $billing_access
+ * @property Carbon|null $billing_access_changed_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -46,7 +49,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             ->toString();
         $baseSlug = $baseSlug === '' ? Str::lower(Str::random(4)) : $baseSlug;
 
-        if (static::slugIsAvailable($baseSlug, $ignoreTenant)) {
+        if (self::slugIsAvailable($baseSlug, $ignoreTenant)) {
             return $baseSlug;
         }
 
@@ -56,7 +59,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
                 ->trim('-')
                 ->append('-', Str::lower(Str::random(4)))
                 ->toString();
-        } while (! static::slugIsAvailable($slug, $ignoreTenant));
+        } while (! self::slugIsAvailable($slug, $ignoreTenant));
 
         return $slug;
     }
@@ -69,6 +72,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             ->exists();
     }
 
+    /** @return array<int, string> */
     public static function getCustomColumns(): array
     {
         return array_merge(parent::getCustomColumns(), [
@@ -96,6 +100,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'billing_access' => BillingAccess::class,
             'billing_access_changed_at' => 'datetime',
         ];
+    }
+
+    /** @return HasMany<Domain, $this> */
+    public function domains(): HasMany
+    {
+        return $this->hasMany(Domain::class, config('tenancy.models.tenant_key_column'));
     }
 
     public function getIconUrlAttribute(): ?string
@@ -140,7 +150,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     /**
      * Get the user that created the tenant.
      *
-     * @return BelongsTo<User, Tenant>
+     * @return BelongsTo<User, $this>
      */
     public function creator(): BelongsTo
     {

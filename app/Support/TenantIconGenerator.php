@@ -9,6 +9,7 @@ use Intervention\Image\Drivers\AbstractDriver;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Interfaces\ImageManagerInterface;
 use Throwable;
 
 class TenantIconGenerator
@@ -59,7 +60,7 @@ class TenantIconGenerator
         Storage::disk($disk)->delete(array_values($icons));
     }
 
-    private function manager(): ImageManager
+    private function manager(): ImageManagerInterface
     {
         return ImageManager::usingDriver($this->driver());
     }

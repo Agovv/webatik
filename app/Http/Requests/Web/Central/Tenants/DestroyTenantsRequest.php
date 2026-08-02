@@ -37,7 +37,7 @@ class DestroyTenantsRequest extends FormRequest
             'confirmation' => [
                 'required',
                 'string',
-                Rule::in([$tenant?->name ?? '']),
+                Rule::in([$tenant->name]),
             ],
         ];
     }
@@ -51,7 +51,7 @@ class DestroyTenantsRequest extends FormRequest
     {
         /** @var Tenant|null $tenant */
         $tenant = $this->route('tenant');
-        $name = $tenant?->name ?? '';
+        $name = $tenant->name;
 
         return [
             'confirmation.required' => 'Please type the tenant name to confirm the deletion.',

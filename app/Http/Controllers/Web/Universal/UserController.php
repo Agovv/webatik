@@ -35,13 +35,9 @@ class UserController extends Controller
             ->with(['roles:id,name', 'permissions:id,name'])
             ->when(
                 ! $currentUser->hasRole('root'),
-                fn ($query) => $query->whereDoesntHave('roles', fn ($query) => $query->where('name', 'root')),
+                fn ($query) => $query->whereDoesntHave('roles', fn ($roleQuery) => $roleQuery->where('name', 'root')),
             )
-            ->when($search, fn ($query, $search) => $query->where(fn ($query) => $query->where('name', 'like', "%$search%")
-                ->orWhere('username', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%")
-                ->orWhere('phone', 'like', "%$search%")
-            ))
+            ->when($search, fn ($query, $search) => $query->whereAny(['name', 'username', 'email', 'phone'], 'like', "%$search%"))
             ->orderBy('name')
             ->get(['id', 'name', 'username', 'email', 'phone'])
             ->map(fn (CentralUser|TenantUser $user) => [
@@ -54,6 +50,7 @@ class UserController extends Controller
             ->all();
     }
 
+    /** @return array<int, array{id: string, name: string}> */
     private function getRoles(): array
     {
         return Role::when(! Auth::user()->hasRole('root'), fn ($query) => $query->whereNotIn('name', ['root']))
@@ -62,6 +59,7 @@ class UserController extends Controller
             ->toArray();
     }
 
+    /** @return array<int, array{id: string, name: string}> */
     private function getPermissions(): array
     {
         return Permission::when(

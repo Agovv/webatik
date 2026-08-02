@@ -21,7 +21,7 @@ use Illuminate\Support\Carbon;
 class TenantNotificationRead extends Model
 {
     /**
-     * @return BelongsTo<TenantNotification, TenantNotificationRead>
+     * @return BelongsTo<TenantNotification, $this>
      */
     public function notification(): BelongsTo
     {
@@ -29,7 +29,7 @@ class TenantNotificationRead extends Model
     }
 
     /**
-     * @return BelongsTo<User, TenantNotificationRead>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {

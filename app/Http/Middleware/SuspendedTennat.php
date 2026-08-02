@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Central\Tenant;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,13 +16,15 @@ class SuspendedTennat
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (tenancy()->initialized && tenancy()->tenant->isSuspended()) {
+        $tenant = tenancy()->tenant;
+
+        if ($tenant instanceof Tenant && $tenant->isSuspended()) {
             abort(403, 'Site suspended');
         }
 
         if (
-            tenancy()->initialized
-            && tenancy()->tenant->isReadOnly()
+            $tenant instanceof Tenant
+            && $tenant->isReadOnly()
             && ! in_array($request->method(), ['GET', 'HEAD', 'OPTIONS'], true)
         ) {
             abort(423, 'This workspace is read-only while billing is inactive.');

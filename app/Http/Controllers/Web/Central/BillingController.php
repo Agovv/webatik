@@ -30,15 +30,25 @@ class BillingController extends Controller
         $subscription = $user->subscription('default');
         $this->syncRenewalDate($subscription);
 
-        $invoices = $user->stripe_id
-            ? $user->invoicesIncludingPending()->map(fn ($invoice) => [
-                'id' => $invoice->id,
-                'date' => $invoice->date()->toIso8601String(),
-                'total' => $invoice->total(),
-                'status' => $invoice->status,
-            ])->values()
-            : collect();
-        $latestPurchaseAt = $invoices->firstWhere('status', 'paid')['date'] ?? null;
+        $invoices = [];
+        $latestPurchaseAt = null;
+
+        if ($user->stripe_id) {
+            foreach ($user->invoicesIncludingPending() as $invoice) {
+                $stripeInvoice = $invoice->asStripeInvoice();
+                $invoiceData = [
+                    'id' => $stripeInvoice->id,
+                    'date' => $invoice->date()->toIso8601String(),
+                    'total' => $invoice->total(),
+                    'status' => $stripeInvoice->status,
+                ];
+                $invoices[] = $invoiceData;
+
+                if ($latestPurchaseAt === null && $stripeInvoice->status === 'paid') {
+                    $latestPurchaseAt = $invoiceData['date'];
+                }
+            }
+        }
 
         return Inertia::render('central/billing/index', [
             'subscription' => $subscription ? [
@@ -113,7 +123,7 @@ class BillingController extends Controller
     {
         /** @var Subscription|null $subscription */
         $subscription = $request->user()->subscription('default');
-        abort_unless($subscription?->scheduled_plan_price_id, 404);
+        abort_unless(filled($subscription?->scheduled_plan_price_id), 404);
         $this->stripe->cancelScheduledChange($subscription);
 
         return back()->with('success', __('Scheduled plan change canceled.'));
@@ -122,9 +132,10 @@ class BillingController extends Controller
     public function downloadInvoice(Request $request, string $invoice): SymfonyResponse
     {
         $stripeInvoice = $request->user()->findInvoiceOrFail($invoice);
+        $stripeInvoice = $stripeInvoice->asStripeInvoice();
         $url = $stripeInvoice->invoice_pdf ?? $stripeInvoice->hosted_invoice_url;
 
-        abort_unless($url, 404);
+        abort_unless(filled($url), 404);
 
         return redirect()->away($url);
     }

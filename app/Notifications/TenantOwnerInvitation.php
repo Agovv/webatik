@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -32,6 +33,10 @@ class TenantOwnerInvitation extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
+        if (! $notifiable instanceof CanResetPassword) {
+            throw new \LogicException('The tenant owner must be able to reset passwords.');
+        }
+
         $url = Uri::of('https://'.$this->domain.'/reset-password/'.$this->token)
             ->withQuery(['email' => $notifiable->getEmailForPasswordReset()]);
 
