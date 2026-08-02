@@ -13,9 +13,10 @@ import { store } from '@/routes/register';
 
 type Props = {
     passwordRules: string;
+    planPrice?: string | null;
 };
 
-export default function Register({ passwordRules }: Props) {
+export default function Register({ passwordRules, planPrice }: Props) {
     const { t } = useTranslation();
 
     setLayoutProps({
@@ -34,6 +35,13 @@ export default function Register({ passwordRules }: Props) {
             >
                 {({ processing, errors }) => (
                     <>
+                        {planPrice && (
+                            <input
+                                type="hidden"
+                                name="plan_price"
+                                value={planPrice}
+                            />
+                        )}
                         <div className="grid gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="name">

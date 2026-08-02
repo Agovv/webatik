@@ -114,6 +114,9 @@
     },
     "nav": {
         "dashboard": "Panel",
+        "myWorkspaces": "Mis espacios de trabajo",
+        "plans": "Planes",
+        "subscription": "Suscripción",
         "tenants": "Inquilinos",
         "domains": "Dominios",
         "permissions": "Permisos",
@@ -138,6 +141,7 @@
         "poweredBy": "Con tecnología de {name}"
     },
     "appearance": {
+        "label": "Apariencia",
         "light": "Claro",
         "dark": "Oscuro",
         "system": "Sistema"
@@ -822,6 +826,7 @@
         "form": {
             "nameRequired": "Nombre *",
             "usernameRequired": "Nombre de usuario *",
+            "usernameProtected": "Este nombre de usuario del sistema no se puede cambiar.",
             "email": "Email *",
             "phone": "Teléfono",
             "passwordRequired": "Contraseña *",
@@ -993,5 +998,114 @@
     "socialite": {
         "signInWith": "Continuar con {provider}",
         "divider": "O continúa con inicio de sesión social"
+    },
+    "billing": {
+        "title": "Facturación",
+        "subscription": "Suscripción",
+        "month": "Mensual",
+        "year": "Anual",
+        "monthShort": "mes",
+        "yearShort": "año",
+        "currentPlan": "Plan actual",
+        "choosePlan": "Elegir plan",
+        "notPublished": "No publicado",
+        "mostPopular": "Más popular",
+        "description": "Administra tu plan, uso, facturas y método de pago.",
+        "managePayment": "Administrar pago",
+        "syncing": "Sincronizando",
+        "status": "Estado",
+        "cancellationScheduled": "Cancelación programada",
+        "accessUntil": "Acceso activo hasta",
+        "renewsOn": "Se renueva el",
+        "lastPurchase": "Última compra",
+        "notAvailable": "Aún no disponible",
+        "choosePlanDescription": "Elige un plan para comenzar a crear espacios de trabajo.",
+        "usage": "Uso",
+        "scheduledChange": "Tu plan cambiará a {plan} el {date}.",
+        "nextRenewal": "tu próxima renovación",
+        "yearlyOffer": "Anual · 2 meses gratis",
+        "invoiceHistory": "Historial de facturas",
+        "date": "Fecha",
+        "total": "Total",
+        "download": "Descargar",
+        "confirmChange": "Confirmar cambio de plan",
+        "calculatingProration": "Calculando prorrateo de Stripe…",
+        "estimatedDue": "Importe estimado a pagar ahora: {amount}.",
+        "noImmediateCharge": "Sin cargo inmediato",
+        "keepCurrentPlan": "Conservar plan actual",
+        "limits": {
+            "tenants": "espacios de trabajo",
+            "default_domains": "dominios predeterminados",
+            "custom_domains": "dominios personalizados",
+            "workspaces": "espacios de trabajo",
+            "customDomains": "dominios personalizados",
+            "tenant_users": "usuarios del espacio",
+            "tenant_custom_roles": "roles personalizados",
+            "used": "utilizados",
+            "reached": "Has utilizado los {used} de {limit} {resource} incluidos en tu plan."
+        },
+        "access": {
+            "full": "Acceso completo",
+            "read_only": "Solo lectura",
+            "suspended": "Suspendido"
+        }
+    },
+    "customerTenants": {
+        "title": "Mis espacios de trabajo",
+        "heading": "Mis espacios de trabajo",
+        "newWorkspace": "Nuevo espacio",
+        "addCustomDomain": "Agregar dominio personalizado",
+        "add": "Agregar",
+        "of": "de",
+        "dns": "DNS",
+        "ssl": "SSL",
+        "status": "Estado",
+        "save": "Guardar",
+        "deleteDomain": "Eliminar dominio",
+        "editDomain": "Editar dominio",
+        "deleteDescription": "Esto eliminará permanentemente {domain} de este espacio de trabajo.",
+        "customDomain": "Dominio personalizado",
+        "defaultDomain": "Dominio predeterminado"
+    },
+    "tenantLimits": {
+        "usage": "Has utilizado {used}/{limit} {resource}.",
+        "reached": "Has utilizado los {used} de {limit} {resource} incluidos en tu plan."
+    },
+    "onboarding": {
+        "title": "Crear espacio de trabajo",
+        "heading": "Crea tu primer espacio de trabajo",
+        "description": "Tu plan {plan} incluye automáticamente el dominio predeterminado.",
+        "name": "Nombre del espacio",
+        "contactEmail": "Correo de contacto",
+        "region": "Región",
+        "industry": "Industria",
+        "submit": "Crear espacio de trabajo"
+    },
+    "checkout": {
+        "title": "Estado del pago",
+        "confirmed": "Pago confirmado",
+        "confirming": "Confirmando tu suscripción",
+        "activeDescription": "Tu plan está activo. Crea tu primer espacio de trabajo.",
+        "pendingDescription": "Stripe está finalizando el pago. Esta página se actualizará automáticamente.",
+        "startOnboarding": "Iniciar configuración"
+    },
+    "plans": {
+        "title": "Planes",
+        "heading": "Planes y límites",
+        "description": "Las ediciones de precio crean versiones de borrador inmutables. Publica cuando estén listas.",
+        "create": "Crear plan",
+        "createDescription": "Define los precios y límites de recursos incluidos en este plan.",
+        "edit": "Editar plan",
+        "editDescription": "Los cambios de precio crean un borrador que debe publicarse antes de llegar a Stripe.",
+        "active": "Activo",
+        "archived": "Archivado",
+        "publish": "Publicar {interval} · ${amount}",
+        "form": {
+            "name": "Nombre",
+            "slug": "Slug",
+            "description": "Descripción",
+            "monthlyPrice": "Precio mensual (centavos)",
+            "yearlyPrice": "Precio anual (centavos)"
+        }
     }
 }

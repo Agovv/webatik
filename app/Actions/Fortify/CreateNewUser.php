@@ -6,7 +6,9 @@ use App\Concerns\PasswordValidationRules;
 use App\Concerns\ProfileValidationRules;
 use App\Models\Central\User as CentralUser;
 use App\Models\Tenant\User as TenantUser;
+use App\Models\Universal\Role;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
 class CreateNewUser implements CreatesNewUsers
@@ -23,16 +25,24 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             ...$this->profileRules(),
             'password' => $this->passwordRules(),
+            'plan_price' => ['nullable', 'string', Rule::exists('plan_prices', 'id')->where('status', 'published')],
         ])->validate();
 
         $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
 
-        return $model::create([
+        $user = $model::create([
             'name' => $input['name'],
             'username' => $input['username'],
             'phone' => $input['phone'] ?? null,
             'email' => $input['email'],
             'password' => $input['password'],
         ]);
+
+        if (! tenancy()->initialized) {
+            $user->assignRole(Role::findOrCreate('customer'));
+            session(['selected_plan_price' => $input['plan_price'] ?? null]);
+        }
+
+        return $user;
     }
 }

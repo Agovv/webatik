@@ -2,6 +2,7 @@
 
 namespace App\Models\Central;
 
+use App\Enums\Central\BillingAccess;
 use App\Enums\Central\TenantStatus;
 use Database\Factories\Central\TenantFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -82,6 +83,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'industry',
             'notes',
             'created_by',
+            'billing_access',
+            'billing_access_changed_at',
         ]);
     }
 
@@ -90,6 +93,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         return [
             'status' => TenantStatus::class,
             'icons' => 'array',
+            'billing_access' => BillingAccess::class,
+            'billing_access_changed_at' => 'datetime',
         ];
     }
 
@@ -114,7 +119,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 
     public function isSuspended(): bool
     {
-        return $this->status->isSuspended();
+        return $this->status->isSuspended() || $this->billing_access === BillingAccess::SUSPENDED;
+    }
+
+    public function isReadOnly(): bool
+    {
+        return $this->billing_access === BillingAccess::READ_ONLY;
     }
 
     public function isActive(): bool

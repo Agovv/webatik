@@ -58,6 +58,10 @@ return Application::configure(basePath: dirname(__DIR__))
         ['middleware' => ['web', InitializeTenancyByDomain::class, 'universal']],
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->preventRequestForgery(except: [
+            'stripe/*',
+        ]);
+
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->alias([

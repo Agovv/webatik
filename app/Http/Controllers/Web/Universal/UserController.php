@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web\Universal;
 
+use App\Billing\TenantPlanLimitService;
+use App\Enums\Central\PlanLimitKey;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Universal\Users\AssignPermissionsRequest;
 use App\Http\Requests\Web\Universal\Users\AssignRolesRequest;
@@ -14,19 +16,27 @@ use App\Models\Universal\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class UserController extends Controller
 {
-    private function getUsers($search = null): array
+    public function __construct(private TenantPlanLimitService $tenantPlanLimits) {}
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function getUsers(CentralUser|TenantUser $currentUser, ?string $search = null): array
     {
         $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
 
         return $model::query()
             ->with(['roles:id,name', 'permissions:id,name'])
-            // ->when(! Auth::user()->hasRole('root'), fn ($query) => $query->whereNotIn('username', [config('maestro.default.superuser.username')])) // problematic if the user change something of superuser
-            ->whereNotIn('username', [config('maestro.default.superuser.username')])
+            ->when(
+                ! $currentUser->hasRole('root'),
+                fn ($query) => $query->whereDoesntHave('roles', fn ($query) => $query->where('name', 'root')),
+            )
             ->when($search, fn ($query, $search) => $query->where(fn ($query) => $query->where('name', 'like', "%$search%")
                 ->orWhere('username', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%")
@@ -34,7 +44,14 @@ class UserController extends Controller
             ))
             ->orderBy('name')
             ->get(['id', 'name', 'username', 'email', 'phone'])
-            ->toArray();
+            ->map(fn (CentralUser|TenantUser $user) => [
+                ...$user->toArray(),
+                'usernameLocked' => in_array($user->username, [
+                    config('maestro.default.superuser.username'),
+                    config('maestro.default.admin.username'),
+                ], true),
+            ])
+            ->all();
     }
 
     private function getRoles(): array
@@ -61,7 +78,8 @@ class UserController extends Controller
         abort_if(Auth::user()->cannot('read users'), 403, 'Unauthorized action.');
 
         $search = $request->input('search');
-        $users = $this->getUsers($search);
+        $currentUser = $request->user();
+        $users = $this->getUsers($currentUser, $search);
         $roles = $this->getRoles();
         $permissions = $this->getPermissions();
 
@@ -69,6 +87,9 @@ class UserController extends Controller
             'users' => $users,
             'roles' => $roles,
             'permissions' => $permissions,
+            'currentUserId' => $currentUser->getKey(),
+            'isRoot' => $currentUser->hasRole('root'),
+            'tenantLimit' => $this->tenantPlanLimits->limitInfo(PlanLimitKey::TENANT_USERS),
             'filters' => [
                 'search' => $search,
             ],
@@ -77,6 +98,10 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
+        if (tenancy()->initialized && ! $this->tenantPlanLimits->canCreateUser()) {
+            throw ValidationException::withMessages(['name' => __('Your plan user limit has been reached.')]);
+        }
+
         $validated = $request->validated();
         $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
         $model::create($validated);
@@ -84,12 +109,21 @@ class UserController extends Controller
         return back()->with('success', 'Usuario creado.');
     }
 
-    public function update(UpdateUserRequest $request, CentralUser|TenantUser $user): RedirectResponse
+    private function getUsr(string $id): CentralUser|TenantUser
+    {
+        $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
+
+        return $model::findOrFail($id);
+    }
+
+    public function update(UpdateUserRequest $request, string $user): RedirectResponse
     {
         $validated = $request->safe()->except('password');
         $password = $request->safe()->only('password');
+        $user = $this->getUsr($user);
+        $this->abortUnlessCanManageUser($request->user(), $user);
 
-        if (! blank($password['password'])) {
+        if (! blank($password['password'] ?? null)) {
             $validated['password'] = $password['password'];
         }
         if (in_array($user->username, [config('maestro.default.superuser.username'), config('maestro.default.admin.username')])) {
@@ -101,11 +135,12 @@ class UserController extends Controller
         return back()->with('success', 'Usuario actualizado.');
     }
 
-    public function destroy(CentralUser|TenantUser $user): RedirectResponse
+    public function destroy(string $user): RedirectResponse
     {
         abort_if(Auth::user()->cannot('delete users'), 403, 'Unauthorized action.');
+        $user = $this->getUsr($user);
 
-        if (in_array($user->username, [config('maestro.default.superuser.username'), config('maestro.default.admin.username')])) {
+        if ($user->is(Auth::user()) || $user->hasAnyRole(['root', 'admin'])) {
             abort(403, 'Unauthorized action.');
         }
         $user->delete();
@@ -113,10 +148,12 @@ class UserController extends Controller
         return back()->with('success', 'Usuario eliminado.');
     }
 
-    public function assignRoles(AssignRolesRequest $request, CentralUser|TenantUser $user): RedirectResponse
+    public function assignRoles(AssignRolesRequest $request, string $user): RedirectResponse
     {
         $validated = $request->validated();
         $roles = $validated['roles'] ?? [];
+        $user = $this->getUsr($user);
+        $this->abortUnlessCanManageUser($request->user(), $user);
 
         if ($user->username === config('maestro.default.superuser.username')) {
             $roles = array_merge($roles, ['root']);
@@ -130,11 +167,18 @@ class UserController extends Controller
         return back()->with('success', 'Roles asignados correctamente.');
     }
 
-    public function assignPermissions(AssignPermissionsRequest $request, CentralUser|TenantUser $user): RedirectResponse
+    public function assignPermissions(AssignPermissionsRequest $request, string $user): RedirectResponse
     {
         $validated = $request->validated();
+        $user = $this->getUsr($user);
+        $this->abortUnlessCanManageUser($request->user(), $user);
         $user->syncPermissions($validated['permissions'] ?? []);
 
         return back()->with('success', 'Permisos asignados correctamente.');
+    }
+
+    private function abortUnlessCanManageUser(CentralUser|TenantUser $currentUser, CentralUser|TenantUser $user): void
+    {
+        abort_if($user->hasRole('root') && ! $currentUser->hasRole('root'), 403, 'Unauthorized action.');
     }
 }

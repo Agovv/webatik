@@ -443,14 +443,17 @@ export function NotificationsPanel({
             }
 
             if (notification.url) {
-                if(notification?.external || notification.url.startsWith('http')){
+                if (
+                    notification?.external ||
+                    notification.url.startsWith('http')
+                ) {
                     window.location.assign(notification.url);
 
                     return;
                 }
 
                 const origin = window.location.origin + notification.url;
-                router.visit(origin)
+                router.visit(origin);
             }
         },
         [],

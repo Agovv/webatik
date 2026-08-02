@@ -15,6 +15,7 @@ class ConfigureTenantAuth
         config([
             'auth.guards.web.provider' => 'tenant_users',
             'auth.defaults.passwords' => 'tenant',
+            'fortify.passwords' => 'tenant',
         ]);
 
         Auth::forgetGuards();

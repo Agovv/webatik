@@ -21,10 +21,18 @@ export type RoleFormData = {
     permissions: string[];
 };
 
+export type TenantLimit = {
+    used: number;
+    limit: number | null;
+    remaining: number | null;
+    allowed: boolean;
+};
+
 export type RolesPageProps = PageFlashProps &
     SharedPageProps & {
         roles: Role[];
         permissions: Permission[];
+        tenantLimit: TenantLimit;
         filters: SearchFilters;
         [key: string]: any;
     };

@@ -62,6 +62,7 @@ class HandleInertiaRequests extends Middleware
                     'name' => $tenant->name,
                     'slug' => $tenant->slug,
                     'status' => $tenant->status,
+                    'billing_access' => $tenant->billing_access,
                     'logo' => $tenant->icon_url,
                 ]
                 : null,

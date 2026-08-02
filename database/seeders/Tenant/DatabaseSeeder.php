@@ -48,13 +48,33 @@ class DatabaseSeeder extends Seeder
         $rootRole = Role::findOrCreate('root');
         $rootRole->syncPermissions($dbPermissions);
 
+        $_tmpPermissionsAdminNames = [];
+        foreach ([
+            'tenant announcements',
+            'roles',
+            'users',
+        ] as $p) {
+            $_tmpPermissionsAdminNames[] = "create $p";
+            $_tmpPermissionsAdminNames[] = "read $p";
+            $_tmpPermissionsAdminNames[] = "update $p";
+            $_tmpPermissionsAdminNames[] = "delete $p";
+        }
+
+        $adminPermissions = [];
+        foreach ($_tmpPermissionsAdminNames as $p) {
+            $adminPermissions[] = collect($dbPermissions)->firstWhere('name', $p);
+        }
+
         $adminRole = Role::findOrCreate('admin');
-        $adminRole->syncPermissions($dbPermissions);
+        $adminRole->syncPermissions($adminPermissions);
+
+        $ownerRole = Role::findOrCreate('owner');
+        $ownerRole->syncPermissions($adminPermissions);
 
         $managerRole = Role::findOrCreate('manager');
         // only tenant announcements
-        $permissionsManager = collect($dbPermissions)->filter(function ($permission) {
-            return str_starts_with($permission->name, 'tenant announcements');
+        $permissionsManager = collect($adminPermissions)->filter(function ($permission) {
+            return str_ends_with($permission->name, 'tenant announcements');
         });
         $managerRole->syncPermissions($permissionsManager);
 

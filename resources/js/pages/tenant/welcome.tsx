@@ -11,7 +11,7 @@ import { motion } from 'motion/react';
 
 import { useTranslation } from 'react-i18next';
 import AppLogoIcon from '@/components/app-logo-icon';
-import AppearanceToggleTab from '@/components/appearance-tabs';
+import AppearanceSelect from '@/components/appearance-select';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -176,7 +176,7 @@ export default function TenantWelcome() {
                             </span>
                         </Link>
                         <div className="flex items-center gap-2">
-                            <AppearanceToggleTab className="scale-90" />
+                            <AppearanceSelect />
                             <LocaleSwitcher />
                         </div>
                     </div>

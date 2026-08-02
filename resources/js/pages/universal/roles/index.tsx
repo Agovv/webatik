@@ -9,6 +9,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
+import { TenantLimitNotice } from '@/components/tenant-limit-notice';
+import { Button } from '@/components/ui/button';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { usePermissions } from '@/hooks/use-permissions';
 import { destroy, index, store, update } from '@/routes/roles';
 
@@ -25,6 +32,7 @@ export default function Roles() {
     const {
         roles,
         permissions,
+        tenantLimit,
         filters,
         success,
         errors: pageErrors,
@@ -173,19 +181,50 @@ export default function Roles() {
             <Head title={t('roles.title')} />
             <div className="@container flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="flex flex-col gap-3 @md:flex-row @md:items-center @md:justify-between">
-                    <h1 className="text-2xl font-bold">{t('roles.heading')}</h1>
-                    {can('create roles') && (
-                        <RoleFormDialog
-                            mode="create"
-                            open={createModalOpen}
-                            form={createForm}
-                            permissions={permissions}
-                            permissionSearchTerm={createPermissionSearch}
-                            onPermissionSearchChange={setCreatePermissionSearch}
-                            onOpenChange={setCreateModalOpen}
-                            onSubmit={handleCreate}
+                    <div className="flex flex-col gap-1">
+                        <h1 className="text-2xl font-bold">
+                            {t('roles.heading')}
+                        </h1>
+                        <TenantLimitNotice
+                            used={tenantLimit.used}
+                            limit={tenantLimit.limit}
+                            resource={t('billing.limits.tenant_custom_roles')}
                         />
-                    )}
+                    </div>
+                    {can('create roles') &&
+                        (tenantLimit.allowed ? (
+                            <RoleFormDialog
+                                mode="create"
+                                open={createModalOpen}
+                                form={createForm}
+                                permissions={permissions}
+                                permissionSearchTerm={createPermissionSearch}
+                                onPermissionSearchChange={
+                                    setCreatePermissionSearch
+                                }
+                                onOpenChange={setCreateModalOpen}
+                                onSubmit={handleCreate}
+                            />
+                        ) : (
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <span>
+                                        <Button disabled>
+                                            {t('roles.create.button')}
+                                        </Button>
+                                    </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    {t('tenantLimits.reached', {
+                                        used: tenantLimit.used,
+                                        limit: tenantLimit.limit ?? 0,
+                                        resource: t(
+                                            'billing.limits.tenant_custom_roles',
+                                        ),
+                                    })}
+                                </TooltipContent>
+                            </Tooltip>
+                        ))}
                 </div>
 
                 <RoleSearch

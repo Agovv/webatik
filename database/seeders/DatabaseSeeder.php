@@ -8,6 +8,7 @@ use App\Models\Universal\Role;
 use Database\Seeders\Tenant\DatabaseSeeder as TenantDatabaseSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
             'permissions',
             'roles',
             'users',
+            'plans',
             // 'tickets',
         ];
 
@@ -61,6 +63,8 @@ class DatabaseSeeder extends Seeder
         $adminRole = Role::findOrCreate('admin');
         $adminRole->syncPermissions($dbPermissions);
 
+        Role::findOrCreate('customer');
+
         $rootUser = CentralUser::factory()->create([
             'name' => config('maestro.default.superuser.username'),
             'username' => config('maestro.default.superuser.username'),
@@ -70,5 +74,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $rootUser->assignRole($rootRole);
+
+        $this->call([
+            PlanSeeder::class,
+        ]);
+
+        Artisan::call('billing:sync-catalog');
+
     }
 }

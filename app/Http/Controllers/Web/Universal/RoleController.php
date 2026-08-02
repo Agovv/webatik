@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web\Universal;
 
+use App\Billing\TenantPlanLimitService;
+use App\Enums\Central\PlanLimitKey;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Universal\Roles\StoreRoleRequest;
 use App\Http\Requests\Web\Universal\Roles\UpdateRoleRequest;
@@ -12,11 +14,16 @@ use App\Models\Universal\Role;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class RoleController extends Controller
 {
+    private const PROTECTED_ROLE_NAMES = ['root', 'admin'];
+
+    public function __construct(private TenantPlanLimitService $tenantPlanLimits) {}
+
     private function isPrivilegedUser($user): bool
     {
         $rootUsr = config('maestro.default.superuser.username');
@@ -60,6 +67,7 @@ class RoleController extends Controller
         return Inertia::render('universal/roles/index', [
             'roles' => $roles,
             'permissions' => $permissions,
+            'tenantLimit' => $this->tenantPlanLimits->limitInfo(PlanLimitKey::TENANT_CUSTOM_ROLES),
             'filters' => [
                 'search' => $search,
             ],
@@ -68,6 +76,10 @@ class RoleController extends Controller
 
     public function store(StoreRoleRequest $request): RedirectResponse
     {
+        if (tenancy()->initialized && ! $this->tenantPlanLimits->canCreateCustomRole()) {
+            throw ValidationException::withMessages(['name' => __('Your plan custom role limit has been reached.')]);
+        }
+
         $validated = $request->validated();
         $role = Role::create(['name' => $validated['name']]);
 
@@ -101,7 +113,7 @@ class RoleController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        if ($role->name === 'root') {
+        if (in_array($role->name, self::PROTECTED_ROLE_NAMES, true)) {
             abort(403, 'Unauthorized action.');
         }
 

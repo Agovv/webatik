@@ -48,7 +48,7 @@ trait ImageTreatment
     private function getDiskDefaultPublic(?string $custom = null): string
     {
 
-    return !empty($custom) ? $custom : config('filesystems.public_default');
+        return ! empty($custom) ? $custom : config('filesystems.public_default');
     }
 
     protected function scaleDownImage($file, string $pathToSave, ?int $maxWidth = null, ?int $maxHeight = null, ?string $disk = null): string

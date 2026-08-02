@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Http\Responses\Fortify\LoginResponse;
+use App\Http\Responses\Fortify\RegisterResponse;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -14,6 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
 
@@ -34,6 +36,7 @@ class FortifyServiceProvider extends ServiceProvider
     {
         App::forgetInstance(LoginResponseContract::class);
         App::bind(LoginResponseContract::class, LoginResponse::class);
+        App::bind(RegisterResponseContract::class, RegisterResponse::class);
 
         $this->configureActions();
         $this->configureViews();
@@ -73,8 +76,9 @@ class FortifyServiceProvider extends ServiceProvider
             'status' => $request->session()->get('status'),
         ]));
 
-        Fortify::registerView(fn () => Inertia::render('universal/auth/register', [
+        Fortify::registerView(fn (Request $request) => Inertia::render('universal/auth/register', [
             'passwordRules' => Password::defaults()->toPasswordRulesString(),
+            'planPrice' => $request->string('plan_price')->toString() ?: null,
         ]));
 
         Fortify::twoFactorChallengeView(fn () => Inertia::render('universal/auth/two-factor-challenge'));

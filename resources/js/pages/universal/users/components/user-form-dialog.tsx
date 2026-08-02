@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import {
     Field,
+    FieldDescription,
     FieldError,
     FieldGroup,
     FieldLabel,
@@ -76,6 +77,7 @@ type UserFormDialogProps = {
     mode: 'create' | 'edit';
     open: boolean;
     form: InertiaFormProps<UserFormData>;
+    usernameLocked?: boolean;
     onOpenChange: (open: boolean) => void;
     onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
@@ -84,6 +86,7 @@ export function UserFormDialog({
     mode,
     open,
     form,
+    usernameLocked = false,
     onOpenChange,
     onSubmit,
 }: UserFormDialogProps) {
@@ -129,9 +132,17 @@ export function UserFormDialog({
                                 field.placeholderKey?.startsWith('users.')
                                     ? t(field.placeholderKey)
                                     : field.placeholderKey;
+                            const isUsernameLocked =
+                                !isCreate &&
+                                field.name === 'username' &&
+                                usernameLocked;
 
                             return (
-                                <Field key={field.name} data-invalid={!!error}>
+                                <Field
+                                    key={field.name}
+                                    data-invalid={!!error}
+                                    data-disabled={isUsernameLocked}
+                                >
                                     <FieldLabel htmlFor={inputId}>
                                         {t(field.labelKey)}
                                     </FieldLabel>
@@ -147,8 +158,21 @@ export function UserFormDialog({
                                         }
                                         placeholder={placeholder}
                                         required={field.required}
+                                        disabled={isUsernameLocked}
                                         aria-invalid={!!error}
+                                        aria-describedby={
+                                            isUsernameLocked
+                                                ? `${inputId}-description`
+                                                : undefined
+                                        }
                                     />
+                                    {isUsernameLocked && (
+                                        <FieldDescription
+                                            id={`${inputId}-description`}
+                                        >
+                                            {t('users.form.usernameProtected')}
+                                        </FieldDescription>
+                                    )}
                                     {error && <FieldError>{error}</FieldError>}
                                 </Field>
                             );

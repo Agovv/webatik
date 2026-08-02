@@ -7,7 +7,8 @@ export interface SharedPageProps {
     translations: TranslationsByLocale;
     auth: Auth;
     currentTenant?: {
-        status: 'pending' | 'active' | 'trial';
+        status: 'pending' | 'active' | 'trial' | 'suspended';
+        billing_access?: 'full' | 'read_only' | 'suspended';
         logo?: string;
         name: string;
     };

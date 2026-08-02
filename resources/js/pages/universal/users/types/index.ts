@@ -15,6 +15,7 @@ export type User = {
     id: string;
     name: string;
     username: string;
+    usernameLocked: boolean;
     password: string;
     password_confirmation: string;
     email: string;
@@ -34,11 +35,21 @@ export type UserFormData = {
 
 export type AssignmentFormData<Key extends string> = Record<Key, string[]>;
 
+export type TenantLimit = {
+    used: number;
+    limit: number | null;
+    remaining: number | null;
+    allowed: boolean;
+};
+
 export type UsersPageProps = PageFlashProps &
     SharedPageProps & {
         users: User[];
         roles: Role[];
         permissions: Permission[];
+        currentUserId: string;
+        isRoot: boolean;
+        tenantLimit: TenantLimit;
         filters: SearchFilters;
         [key: string]: any;
     };

@@ -1,4 +1,4 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import {
     ArrowRight,
     Blocks,
@@ -12,10 +12,12 @@ import {
     ShieldCheck,
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AppLogoIcon from '@/components/app-logo-icon';
-import AppearanceToggleTab from '@/components/appearance-tabs';
+import AppearanceSelect from '@/components/appearance-select';
+import { PlanCard } from '@/components/billing/plan-card';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -27,7 +29,10 @@ import {
     CardTitle,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { toInternalUrl } from '@/lib/utils';
 import { dashboard, login, register } from '@/routes';
+import { store as checkout } from '@/routes/billing/checkout';
+import type { Plan } from '@/types';
 
 import type { Variants } from 'motion/react';
 
@@ -118,11 +123,16 @@ function FeatureCard({
 
 export default function CentralWelcome() {
     const { t } = useTranslation();
-    const { auth, canLogin, canRegister } = usePage().props as unknown as {
+    const { auth, canLogin, canRegister, plans } = usePage()
+        .props as unknown as {
         auth: { user: { name: string } | null };
         canLogin: boolean;
         canRegister: boolean;
+        plans: Plan[];
     };
+    const [billingInterval, setBillingInterval] = useState<'month' | 'year'>(
+        'month',
+    );
 
     const currentYear = new Date().getFullYear();
 
@@ -161,6 +171,7 @@ export default function CentralWelcome() {
                         <nav className="hidden items-center gap-1 rounded-lg border bg-background/70 p-1 text-sm text-muted-foreground md:flex">
                             {[
                                 ['#features', t('welcome.nav.features')],
+                                ['#pricing', 'Pricing'],
                                 ['#stack', t('welcome.nav.stack')],
                                 ['#demo', t('welcome.nav.demo')],
                                 ['#code', t('welcome.nav.code')],
@@ -176,7 +187,7 @@ export default function CentralWelcome() {
                         </nav>
 
                         <div className="flex items-center gap-2">
-                            <AppearanceToggleTab className="hidden lg:inline-flex" />
+                            <AppearanceSelect />
                             <LocaleSwitcher />
                             {auth.user ? (
                                 <Button asChild>
@@ -535,6 +546,76 @@ export default function CentralWelcome() {
                                 </CardContent>
                             </Card>
                         </motion.div>
+                    </section>
+
+                    <section
+                        id="pricing"
+                        className="border-t border-border/70 py-20"
+                    >
+                        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:px-8">
+                            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+                                <div>
+                                    <Badge variant="outline">
+                                        Simple pricing
+                                    </Badge>
+                                    <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+                                        A plan for every stage
+                                    </h2>
+                                    <p className="mt-3 text-muted-foreground">
+                                        Every plan includes secure tenant
+                                        isolation and complete billing control.
+                                    </p>
+                                </div>
+                                <div className="flex rounded-lg border p-1">
+                                    {(['month', 'year'] as const).map(
+                                        (interval) => (
+                                            <Button
+                                                key={interval}
+                                                type="button"
+                                                variant={
+                                                    billingInterval === interval
+                                                        ? 'default'
+                                                        : 'ghost'
+                                                }
+                                                size="sm"
+                                                onClick={() =>
+                                                    setBillingInterval(interval)
+                                                }
+                                            >
+                                                {interval === 'month'
+                                                    ? 'Monthly'
+                                                    : 'Yearly · save 2 months'}
+                                            </Button>
+                                        ),
+                                    )}
+                                </div>
+                            </div>
+                            <div className="grid gap-5 lg:grid-cols-3">
+                                {plans.map((plan) => (
+                                    <PlanCard
+                                        key={plan.id}
+                                        plan={plan}
+                                        interval={billingInterval}
+                                        onSelect={(priceId) =>
+                                            auth.user
+                                                ? router.post(
+                                                      toInternalUrl(
+                                                          checkout(priceId),
+                                                      ),
+                                                  )
+                                                : router.visit(
+                                                      register({
+                                                          query: {
+                                                              plan_price:
+                                                                  priceId,
+                                                          },
+                                                      }),
+                                                  )
+                                        }
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </section>
 
                     <section className="border-t border-border/70 bg-muted/25 py-16">

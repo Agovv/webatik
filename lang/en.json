@@ -114,6 +114,9 @@
     },
     "nav": {
         "dashboard": "Dashboard",
+        "myWorkspaces": "My workspaces",
+        "plans": "Plans",
+        "subscription": "Subscription",
         "tenants": "Tenants",
         "domains": "Domains",
         "permissions": "Permissions",
@@ -138,6 +141,7 @@
         "poweredBy": "Powered by {name}"
     },
     "appearance": {
+        "label": "Appearance",
         "light": "Light",
         "dark": "Dark",
         "system": "System"
@@ -822,6 +826,7 @@
         "form": {
             "nameRequired": "Name *",
             "usernameRequired": "Username *",
+            "usernameProtected": "This system username cannot be changed.",
             "email": "Email *",
             "phone": "Phone",
             "passwordRequired": "Password *",
@@ -993,5 +998,114 @@
     "socialite": {
         "signInWith": "Sign in with {provider}",
         "divider": "Or continue with social login"
+    },
+    "billing": {
+        "title": "Billing",
+        "subscription": "Subscription",
+        "month": "Monthly",
+        "year": "Yearly",
+        "monthShort": "mo",
+        "yearShort": "yr",
+        "currentPlan": "Current plan",
+        "choosePlan": "Choose plan",
+        "notPublished": "Not published",
+        "mostPopular": "Most popular",
+        "description": "Manage your plan, usage, invoices, and payment method.",
+        "managePayment": "Manage payment",
+        "syncing": "Syncing",
+        "status": "Status",
+        "cancellationScheduled": "Cancellation scheduled",
+        "accessUntil": "Access active until",
+        "renewsOn": "Renews on",
+        "lastPurchase": "Last purchase",
+        "notAvailable": "Not available yet",
+        "choosePlanDescription": "Choose a plan to start creating workspaces.",
+        "usage": "Usage",
+        "scheduledChange": "Your plan changes to {plan} on {date}.",
+        "nextRenewal": "your next renewal",
+        "yearlyOffer": "Yearly · 2 months free",
+        "invoiceHistory": "Invoice history",
+        "date": "Date",
+        "total": "Total",
+        "download": "Download",
+        "confirmChange": "Confirm plan change",
+        "calculatingProration": "Calculating Stripe proration…",
+        "estimatedDue": "Estimated amount due now: {amount}.",
+        "noImmediateCharge": "No immediate charge",
+        "keepCurrentPlan": "Keep current plan",
+        "limits": {
+            "tenants": "workspaces",
+            "default_domains": "default domains",
+            "custom_domains": "custom domains",
+            "workspaces": "workspaces",
+            "customDomains": "custom domains",
+            "tenant_users": "tenant users",
+            "tenant_custom_roles": "custom roles",
+            "used": "used",
+            "reached": "You have used all {used} of {limit} {resource} included in your plan."
+        },
+        "access": {
+            "full": "Full access",
+            "read_only": "Read only",
+            "suspended": "Suspended"
+        }
+    },
+    "customerTenants": {
+        "title": "My workspaces",
+        "heading": "My workspaces",
+        "newWorkspace": "New workspace",
+        "addCustomDomain": "Add custom domain",
+        "add": "Add",
+        "of": "of",
+        "dns": "DNS",
+        "ssl": "SSL",
+        "status": "Status",
+        "save": "Save",
+        "deleteDomain": "Delete domain",
+        "editDomain": "Edit domain",
+        "deleteDescription": "This will permanently remove {domain} from this workspace.",
+        "customDomain": "Custom domain",
+        "defaultDomain": "Default domain"
+    },
+    "tenantLimits": {
+        "usage": "You've used {used}/{limit} {resource}.",
+        "reached": "You have used all {used} of {limit} {resource} included in your plan."
+    },
+    "onboarding": {
+        "title": "Create workspace",
+        "heading": "Create your first workspace",
+        "description": "Your {plan} plan includes the default domain automatically.",
+        "name": "Workspace name",
+        "contactEmail": "Contact email",
+        "region": "Region",
+        "industry": "Industry",
+        "submit": "Create workspace"
+    },
+    "checkout": {
+        "title": "Payment status",
+        "confirmed": "Payment confirmed",
+        "confirming": "Confirming your subscription",
+        "activeDescription": "Your plan is active. Create your first workspace.",
+        "pendingDescription": "Stripe is finalizing the payment. This page updates automatically.",
+        "startOnboarding": "Start onboarding"
+    },
+    "plans": {
+        "title": "Plans",
+        "heading": "Plans and limits",
+        "description": "Price edits create immutable draft versions. Publish when ready.",
+        "create": "Create plan",
+        "createDescription": "Set the prices and resource limits included in this plan.",
+        "edit": "Edit plan",
+        "editDescription": "Price changes create a draft that must be published before it reaches Stripe.",
+        "active": "Active",
+        "archived": "Archived",
+        "publish": "Publish {interval} · ${amount}",
+        "form": {
+            "name": "Name",
+            "slug": "Slug",
+            "description": "Description",
+            "monthlyPrice": "Monthly price (cents)",
+            "yearlyPrice": "Yearly price (cents)"
+        }
     }
 }

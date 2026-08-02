@@ -38,6 +38,8 @@ type UserTableProps = {
     searchTerm: string;
     canUpdate: boolean;
     canDelete: boolean;
+    currentUserId: string;
+    isRoot: boolean;
     onEdit: (user: User) => void;
     onDelete: (user: User) => void;
     onAssignRoles: (user: User) => void;
@@ -49,6 +51,8 @@ export function UserTable({
     searchTerm,
     canUpdate,
     canDelete,
+    currentUserId,
+    isRoot,
     onEdit,
     onDelete,
     onAssignRoles,
@@ -78,100 +82,123 @@ export function UserTable({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {users.map((user) => (
-                        <TableRow key={user.id}>
-                            <TableCell className="font-medium">
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <span className="block w-24 truncate">
-                                            {user.id}
-                                        </span>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p>{user.id}</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TableCell>
-                            <TableCell>
-                                <div className="min-w-40">
-                                    <p className="font-medium">{user.name}</p>
-                                    <p className="text-sm text-muted-foreground">
-                                        @{user.username}
-                                    </p>
-                                </div>
-                            </TableCell>
-                            <TableCell>
-                                <CompactBadges
-                                    items={user.roles ?? []}
-                                    emptyLabel={t('roles.empty.none')}
-                                    moreLabel={t('common.more')}
-                                    onMore={() => onAssignRoles(user)}
-                                />
-                            </TableCell>
-                            <TableCell>
-                                <CompactBadges
-                                    items={user.permissions ?? []}
-                                    emptyLabel={t('permissions.empty.none')}
-                                    moreLabel={t('common.more')}
-                                    onMore={() => onAssignPermissions(user)}
-                                />
-                            </TableCell>
-                            <TableCell>
-                                <div className="flex justify-end gap-1">
-                                    {canUpdate && (
-                                        <>
+                    {users.map((user) => {
+                        const isCurrentUser = user.id === currentUserId;
+                        const isRootUser = user.roles?.some(
+                            (role) => role.name === 'root',
+                        );
+                        const isAdminUser = user.roles?.some(
+                            (role) => role.name === 'admin',
+                        );
+                        const canManageUser =
+                            canUpdate && (!isRootUser || isRoot);
+                        const canDeleteUser =
+                            canDelete &&
+                            !isCurrentUser &&
+                            !isRootUser &&
+                            !isAdminUser;
+
+                        return (
+                            <TableRow key={user.id}>
+                                <TableCell className="font-medium">
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <span className="block w-24 truncate">
+                                                {user.id}
+                                            </span>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>{user.id}</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="min-w-40">
+                                        <p className="font-medium">
+                                            {user.name}
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            @{user.username}
+                                        </p>
+                                    </div>
+                                </TableCell>
+                                <TableCell>
+                                    <CompactBadges
+                                        items={user.roles ?? []}
+                                        emptyLabel={t('roles.empty.none')}
+                                        moreLabel={t('common.more')}
+                                        onMore={() => onAssignRoles(user)}
+                                    />
+                                </TableCell>
+                                <TableCell>
+                                    <CompactBadges
+                                        items={user.permissions ?? []}
+                                        emptyLabel={t('permissions.empty.none')}
+                                        moreLabel={t('common.more')}
+                                        onMore={() => onAssignPermissions(user)}
+                                    />
+                                </TableCell>
+                                <TableCell>
+                                    <div className="flex justify-end gap-1">
+                                        {canManageUser && (
+                                            <>
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() =>
+                                                        onAssignRoles(user)
+                                                    }
+                                                    title={t(
+                                                        'users.assignRoles.button',
+                                                    )}
+                                                >
+                                                    <UserCheckIcon data-icon="inline-start" />
+                                                    {t(
+                                                        'users.assignRoles.button',
+                                                    )}
+                                                </Button>
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() =>
+                                                        onAssignPermissions(
+                                                            user,
+                                                        )
+                                                    }
+                                                    title={t(
+                                                        'users.assignPermissions.button',
+                                                    )}
+                                                >
+                                                    <ShieldIcon data-icon="inline-start" />
+                                                    {t(
+                                                        'users.assignPermissions.button',
+                                                    )}
+                                                </Button>
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() => onEdit(user)}
+                                                >
+                                                    <EditIcon data-icon="inline-start" />
+                                                    {t('common.edit')}
+                                                </Button>
+                                            </>
+                                        )}
+                                        {canDeleteUser && (
                                             <Button
-                                                variant="outline"
+                                                variant="destructive"
                                                 size="sm"
-                                                onClick={() =>
-                                                    onAssignRoles(user)
-                                                }
-                                                title={t(
-                                                    'users.assignRoles.button',
-                                                )}
+                                                onClick={() => onDelete(user)}
                                             >
-                                                <UserCheckIcon data-icon="inline-start" />
-                                                {t('users.assignRoles.button')}
+                                                <Trash2Icon data-icon="inline-start" />
+                                                {t('common.delete')}
                                             </Button>
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() =>
-                                                    onAssignPermissions(user)
-                                                }
-                                                title={t(
-                                                    'users.assignPermissions.button',
-                                                )}
-                                            >
-                                                <ShieldIcon data-icon="inline-start" />
-                                                {t(
-                                                    'users.assignPermissions.button',
-                                                )}
-                                            </Button>
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={() => onEdit(user)}
-                                            >
-                                                <EditIcon data-icon="inline-start" />
-                                                {t('common.edit')}
-                                            </Button>
-                                        </>
-                                    )}
-                                    {canDelete && (
-                                        <Button
-                                            variant="destructive"
-                                            size="sm"
-                                            onClick={() => onDelete(user)}
-                                        >
-                                            <Trash2Icon data-icon="inline-start" />
-                                            {t('common.delete')}
-                                        </Button>
-                                    )}
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                                        )}
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        );
+                    })}
                     {users.length === 0 && (
                         <TableRow>
                             <TableCell colSpan={5} className="py-10">

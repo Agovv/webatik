@@ -113,16 +113,19 @@ export function RoleTable({
                                             {t('common.edit')}
                                         </Button>
                                     )}
-                                    {canDelete && (
-                                        <Button
-                                            variant="destructive"
-                                            size="sm"
-                                            onClick={() => onDelete(role)}
-                                        >
-                                            <Trash2Icon data-icon="inline-start" />
-                                            {t('common.delete')}
-                                        </Button>
-                                    )}
+                                    {canDelete &&
+                                        !['root', 'admin'].includes(
+                                            role.name,
+                                        ) && (
+                                            <Button
+                                                variant="destructive"
+                                                size="sm"
+                                                onClick={() => onDelete(role)}
+                                            >
+                                                <Trash2Icon data-icon="inline-start" />
+                                                {t('common.delete')}
+                                            </Button>
+                                        )}
                                 </div>
                             </TableCell>
                         </TableRow>

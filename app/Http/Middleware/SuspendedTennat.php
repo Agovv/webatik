@@ -19,6 +19,14 @@ class SuspendedTennat
             abort(403, 'Site suspended');
         }
 
+        if (
+            tenancy()->initialized
+            && tenancy()->tenant->isReadOnly()
+            && ! in_array($request->method(), ['GET', 'HEAD', 'OPTIONS'], true)
+        ) {
+            abort(423, 'This workspace is read-only while billing is inactive.');
+        }
+
         return $next($request);
     }
 }

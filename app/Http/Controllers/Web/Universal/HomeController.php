@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Universal;
 
 use App\Http\Controllers\Controller;
+use App\Models\Central\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,6 +21,11 @@ class HomeController extends Controller
             return Inertia::render('central/welcome', [
                 'canLogin' => Route::has('login'),
                 'canRegister' => Route::has('register'),
+                'plans' => Plan::query()
+                    ->where('is_active', true)
+                    ->with(['limits', 'prices' => fn ($query) => $query->whereIn('status', ['draft', 'published'])])
+                    ->orderBy('sort_order')
+                    ->get(),
             ]);
         }
 
