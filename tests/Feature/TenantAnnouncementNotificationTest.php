@@ -1,5 +1,7 @@
 <?php
 
+use App\Contracts\StripeBillingGateway;
+use App\Models\Central\PlanPrice;
 use App\Models\Central\Tenant;
 use App\Models\Central\User as CentralUser;
 use App\Models\Tenant\TenantNotification;
@@ -51,6 +53,11 @@ function centralUserThatCanAnnounce(): CentralUser
 }
 
 test('seeders grant tenant announcement permissions to root and admin roles', function () {
+    $stripe = mock(StripeBillingGateway::class);
+    $stripe->shouldReceive('publishPrice')
+        ->andReturnUsing(fn (PlanPrice $price): PlanPrice => $price);
+    app()->instance(StripeBillingGateway::class, $stripe);
+
     $this->seed(DatabaseSeeder::class);
 
     expect(Permission::query()->where('name', 'create tenant announcements')->exists())->toBeTrue()

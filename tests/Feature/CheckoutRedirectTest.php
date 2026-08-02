@@ -5,7 +5,9 @@ use App\Enums\Central\PlanPriceStatus;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Models\Central\Plan;
 use App\Models\Central\User;
+use Laravel\Cashier\Checkout;
 use Laravel\Cashier\SubscriptionBuilder;
+use Stripe\Checkout\Session;
 
 use function Pest\Laravel\mock;
 
@@ -29,10 +31,10 @@ test('checkout redirects inertia requests to stripe as an external location', fu
         ->andReturn($subscriptionBuilder);
     $subscriptionBuilder->shouldReceive('checkout')
         ->once()
-        ->andReturn((object) [
+        ->andReturn(new Checkout($billableUser, Session::constructFrom([
             'id' => 'cs_test_maestro',
             'url' => 'https://checkout.stripe.com/c/pay/cs_test_maestro',
-        ]);
+        ])));
 
     $plan = Plan::factory()->create([
         'name' => 'Starter',

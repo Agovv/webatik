@@ -14,7 +14,7 @@ trait ProfileValidationRules
      *
      * @return array<string, array<int, ValidationRule|array<mixed>|string>>
      */
-    protected function profileRules(?int $userId = null): array
+    protected function profileRules(int|string|null $userId = null): array
     {
         $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
 
@@ -55,7 +55,7 @@ trait ProfileValidationRules
      *
      * @return array<int, ValidationRule|array<mixed>|string>
      */
-    protected function emailRules(?int $userId = null): array
+    protected function emailRules(int|string|null $userId = null): array
     {
         $model = tenancy()->initialized ? TenantUser::class : CentralUser::class;
 
