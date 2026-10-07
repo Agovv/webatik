@@ -32,6 +32,8 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
  * @property BillingAccess $billing_access
  * @property string|null $blueprint_key
  * @property string|null $blueprint_version
+ * @property string|null $theme_key
+ * @property string|null $theme_version
  * @property string $provisioning_status
  * @property Carbon|null $billing_access_changed_at
  * @property Carbon|null $created_at
@@ -102,6 +104,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'billing_access_changed_at',
             'blueprint_key',
             'blueprint_version',
+            'theme_key',
+            'theme_version',
             'provisioning_status',
         ]);
     }

@@ -22,9 +22,15 @@ it('provisions the corporate blueprint core steps', function (): void {
     $result = app(ProvisioningManager::class)->run($context);
 
     expect($result->isSuccessful())->toBeTrue()
-        ->and($result->steps())->toHaveCount(2)
+        ->and($result->steps())->toHaveCount(3)
         ->and($result->steps()[0]->step)->toBe('blueprint.validate')
-        ->and($result->steps()[1]->step)->toBe('modules.resolve')
+        ->and($result->steps()[1]->step)->toBe('theme.resolve')
+        ->and($result->steps()[2]->step)->toBe('modules.resolve')
+        ->and($context->getState('resolved_theme'))
+            ->toBe([
+                'key' => 'corporate',
+                'version' => '1.0.0',
+            ])
         ->and($context->getState('resolved_modules'))
             ->toBe(['blog']);
 });

@@ -48,10 +48,10 @@ final class ProvisioningRun extends Model
     }
 
     public function steps(): HasMany
-    {
-        return $this->hasMany(
-            ProvisioningStepRun::class,
-            'provisioning_run_id',
-        );
-    }
+{
+    return $this->hasMany(
+        ProvisioningStepRun::class,
+        'provisioning_run_id',
+    )->orderBy('id');
+}
 }

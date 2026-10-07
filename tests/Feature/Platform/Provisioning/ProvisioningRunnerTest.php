@@ -29,11 +29,20 @@ it('runs provisioning and persists every step', function (): void {
         ->and($run->current_step)
         ->toBeNull()
         ->and($run->steps)
-        ->toHaveCount(2);
+        ->toHaveCount(3);
+
+    expect(
+        $run->steps->pluck('step_key')->all()
+    )->toBe([
+        'blueprint.validate',
+        'theme.resolve',
+        'modules.resolve',
+    ]);
 
     expect(
         $run->steps->pluck('status')->all()
     )->toBe([
+        ProvisioningStepRun::STATUS_COMPLETED,
         ProvisioningStepRun::STATUS_COMPLETED,
         ProvisioningStepRun::STATUS_COMPLETED,
     ]);
@@ -73,7 +82,11 @@ it('resumes a failed run without rerunning completed steps', function (): void {
     expect($run->status)
         ->toBe(ProvisioningRun::STATUS_COMPLETED)
         ->and($run->attempts)
-        ->toBe(2);
+        ->toBe(2)
+        ->and($run->current_step)
+        ->toBeNull()
+        ->and($run->steps)
+        ->toHaveCount(4);
 
     expect(
         $run->steps
@@ -83,6 +96,15 @@ it('resumes a failed run without rerunning completed steps', function (): void {
     )->toBe([
         ProvisioningStepRun::STATUS_COMPLETED,
         ProvisioningStepRun::STATUS_SKIPPED,
+    ]);
+
+    expect(
+        $run->steps
+            ->where('step_key', 'theme.resolve')
+            ->pluck('status')
+            ->all()
+    )->toBe([
+        ProvisioningStepRun::STATUS_COMPLETED,
     ]);
 
     expect(
