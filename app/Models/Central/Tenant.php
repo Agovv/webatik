@@ -39,6 +39,14 @@ use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
  */
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
+    public const PROVISIONING_STATUS_UNPROVISIONED = 'unprovisioned';
+
+    public const PROVISIONING_STATUS_PROVISIONING = 'provisioning';
+
+    public const PROVISIONING_STATUS_READY = 'ready';
+
+    public const PROVISIONING_STATUS_FAILED = 'failed';
+
     /** @use HasFactory<TenantFactory> */
     use HasDatabase, HasDomains, HasFactory;
 
