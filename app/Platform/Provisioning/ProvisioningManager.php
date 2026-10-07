@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Platform\Provisioning;
 
+use App\Platform\Provisioning\Contracts\ProvisioningObserver;
 use App\Platform\Provisioning\Contracts\ProvisioningStep;
 use LogicException;
 use Throwable;
@@ -43,23 +44,38 @@ final class ProvisioningManager
         return $this->steps;
     }
 
-    public function run(ProvisioningContext $context): ProvisioningResult
-    {
+    public function run(
+        ProvisioningContext $context,
+        ?ProvisioningObserver $observer = null,
+    ): ProvisioningResult {
         $results = [];
 
         foreach ($this->steps as $step) {
             $key = $step->key();
 
             if ($context->isCompleted($key)) {
-                $results[] = ProvisioningStepResult::skipped(
+                $result = ProvisioningStepResult::skipped(
                     step: $key,
                     message: 'Step was already completed.',
+                );
+
+                $results[] = $result;
+
+                $observer?->stepFinished(
+                    $context,
+                    $step,
+                    $result,
                 );
 
                 continue;
             }
 
             try {
+                $observer?->stepStarted(
+                    $context,
+                    $step,
+                );
+
                 $result = $step->handle($context);
 
                 if ($result->step !== $key) {
@@ -71,16 +87,35 @@ final class ProvisioningManager
                 if ($result->status === ProvisioningStepResult::STATUS_FAILED) {
                     $results[] = $result;
 
-                    return new ProvisioningResult(
+                    $observer?->stepFinished(
+                        $context,
+                        $step,
+                        $result,
+                    );
+
+                    $finalResult = new ProvisioningResult(
                         successful: false,
                         steps: $results,
                     );
+
+                    $observer?->runFinished(
+                        $context,
+                        $finalResult,
+                    );
+
+                    return $finalResult;
                 }
 
                 $context->markCompleted($key);
                 $results[] = $result;
+
+                $observer?->stepFinished(
+                    $context,
+                    $step,
+                    $result,
+                );
             } catch (Throwable $exception) {
-                $results[] = ProvisioningStepResult::failed(
+                $result = ProvisioningStepResult::failed(
                     step: $key,
                     message: $exception->getMessage(),
                     data: [
@@ -88,16 +123,38 @@ final class ProvisioningManager
                     ],
                 );
 
-                return new ProvisioningResult(
+                $results[] = $result;
+
+                $observer?->stepFinished(
+                    $context,
+                    $step,
+                    $result,
+                );
+
+                $finalResult = new ProvisioningResult(
                     successful: false,
                     steps: $results,
                 );
+
+                $observer?->runFinished(
+                    $context,
+                    $finalResult,
+                );
+
+                return $finalResult;
             }
         }
 
-        return new ProvisioningResult(
+        $finalResult = new ProvisioningResult(
             successful: true,
             steps: $results,
         );
+
+        $observer?->runFinished(
+            $context,
+            $finalResult,
+        );
+
+        return $finalResult;
     }
 }

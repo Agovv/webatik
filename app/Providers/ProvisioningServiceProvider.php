@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Platform\Provisioning\ProvisioningManager;
 use App\Platform\Provisioning\ProvisioningRunStore;
+use App\Platform\Provisioning\ProvisioningRunner;
 use Illuminate\Support\ServiceProvider;
 
 final class ProvisioningServiceProvider extends ServiceProvider
@@ -26,6 +27,10 @@ final class ProvisioningServiceProvider extends ServiceProvider
 
                 return new ProvisioningManager($steps);
             },
+        );
+
+        $this->app->singleton(
+            ProvisioningRunner::class,
         );
     }
 }
