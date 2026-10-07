@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Platform\Provisioning;
 
 use App\Platform\Blueprints\BlueprintDefinition;
-use Illuminate\Support\Facades\DB;
 
 final class ProvisioningRunStore
 {
@@ -45,24 +44,26 @@ final class ProvisioningRunStore
         ProvisioningRun $run,
         string $stepKey,
     ): ProvisioningStepRun {
-        return DB::transaction(function () use ($run, $stepKey): ProvisioningStepRun {
-            $attempt = ((int) $run->steps()
-                ->where('step_key', $stepKey)
-                ->max('attempt')) + 1;
+        return $run->getConnection()->transaction(
+            function () use ($run, $stepKey): ProvisioningStepRun {
+                $attempt = ((int) $run->steps()
+                    ->where('step_key', $stepKey)
+                    ->max('attempt')) + 1;
 
-            $step = $run->steps()->create([
-                'step_key' => $stepKey,
-                'status' => ProvisioningStepRun::STATUS_RUNNING,
-                'attempt' => $attempt,
-                'started_at' => now(),
-            ]);
+                $step = $run->steps()->create([
+                    'step_key' => $stepKey,
+                    'status' => ProvisioningStepRun::STATUS_RUNNING,
+                    'attempt' => $attempt,
+                    'started_at' => now(),
+                ]);
 
-            $run->update([
-                'current_step' => $stepKey,
-            ]);
+                $run->update([
+                    'current_step' => $stepKey,
+                ]);
 
-            return $step;
-        });
+                return $step;
+            },
+        );
     }
 
     /**

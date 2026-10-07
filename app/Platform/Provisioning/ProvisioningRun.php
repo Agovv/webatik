@@ -42,6 +42,11 @@ final class ProvisioningRun extends Model
         ];
     }
 
+    public function getConnectionName(): ?string
+    {
+        return config('tenancy.database.central_connection');
+    }
+
     public function steps(): HasMany
     {
         return $this->hasMany(
