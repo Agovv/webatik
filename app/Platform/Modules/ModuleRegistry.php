@@ -53,16 +53,27 @@ final class ModuleRegistry
     }
 
     /**
-     * Resolve dependencies so dependencies always appear first.
+     * Resolve all registered modules.
      *
      * @return list<ModuleContract>
      */
     public function resolveOrder(): array
     {
+        return $this->resolveFor(array_keys($this->modules));
+    }
+
+    /**
+     * Resolve only the requested modules and their dependencies.
+     *
+     * @param list<string> $keys
+     * @return list<ModuleContract>
+     */
+    public function resolveFor(array $keys): array
+    {
         $states = [];
         $orderedKeys = [];
 
-        foreach (array_keys($this->modules) as $key) {
+        foreach (array_unique($keys) as $key) {
             $this->visit($key, $states, $orderedKeys);
         }
 
