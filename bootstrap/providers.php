@@ -2,10 +2,12 @@
 
 use App\Providers\AppServiceProvider;
 use App\Providers\FortifyServiceProvider;
+use App\Providers\ModuleServiceProvider;
 use App\Providers\TenancyServiceProvider;
 
 return [
     AppServiceProvider::class,
+    ModuleServiceProvider::class,
     TenancyServiceProvider::class,
     FortifyServiceProvider::class,
 ];
