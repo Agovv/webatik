@@ -92,7 +92,7 @@ export default function CorporateHome() {
                                         href={login()}
                                         className="hidden rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90 sm:inline-flex"
                                     >
-                                        {t('auth.login')}
+                                        {t('auth.login.submit')}
                                     </Link>
                                 )
                             )}
@@ -130,7 +130,7 @@ export default function CorporateHome() {
                                                     href={login()}
                                                     className="rounded-xl bg-foreground px-3 py-2.5 text-center text-sm font-medium text-background"
                                                 >
-                                                    {t('auth.login')}
+                                                    {t('auth.login.submit')}
                                                 </Link>
                                             )
                                         )}

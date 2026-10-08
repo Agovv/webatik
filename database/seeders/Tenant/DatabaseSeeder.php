@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'permissions',
             'roles',
             'users',
+            'pages',
             // 'tickets',
         ];
 
@@ -53,6 +54,7 @@ class DatabaseSeeder extends Seeder
             'tenant announcements',
             'roles',
             'users',
+            'pages',
         ] as $p) {
             $_tmpPermissionsAdminNames[] = "create $p";
             $_tmpPermissionsAdminNames[] = "read $p";

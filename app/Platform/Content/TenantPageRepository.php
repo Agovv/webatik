@@ -24,13 +24,17 @@ final class TenantPageRepository
     }
 
     private function tenantPagesAvailable(): bool
-    {
-        try {
-            return Schema::connection('tenant')->hasTable('pages');
-        } catch (QueryException) {
-            return false;
-        } catch (\Throwable) {
-            return false;
-        }
-    }
+	{
+		if (! tenancy()->initialized) {
+			return false;
+		}
+
+		try {
+			return Schema::connection('tenant')->hasTable('pages');
+		} catch (QueryException) {
+			return false;
+		} catch (\Throwable) {
+			return false;
+		}
+	}
 }

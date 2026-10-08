@@ -1,5 +1,12 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, Shield, User } from 'lucide-react';
+import {
+    BookOpen,
+    FilePenLine,
+    FolderGit2,
+    LayoutGrid,
+    Shield,
+    User,
+} from 'lucide-react';
 
 import { useTranslation } from 'react-i18next';
 import AppLogo from '@/components/app-logo';
@@ -31,6 +38,12 @@ export function TenantSidebar() {
             title: t('nav.dashboard'),
             href: dashboard(),
             icon: LayoutGrid,
+        },
+        {
+            title: 'Pages',
+            href: '/content/pages',
+            icon: FilePenLine,
+            permission: 'read pages',
         },
         {
             title: t('nav.users'),

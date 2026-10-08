@@ -40,4 +40,4 @@ export type PermissionName =
     | 'update tickets'
     | 'delete tickets'
     | 'reply tickets'
-    | 'assign tickets';
+    | 'assign tickets' | 'read pages';
