@@ -70,6 +70,87 @@ final class ThemeRuntime
         return "themes/{$key}/{$page}";
     }
 
+    public function section(
+        Tenant $tenant,
+        string $sectionKey,
+    ): ThemeSectionDefinition {
+        if (! preg_match(
+            '/^[a-z0-9][a-z0-9_-]*$/i',
+            $sectionKey,
+        )) {
+            throw new InvalidArgumentException(
+                "Invalid theme section [{$sectionKey}]."
+            );
+        }
+
+        $theme = $this->resolve($tenant);
+
+        foreach ($theme->definition()->sections as $section) {
+            if ($section->key === $sectionKey) {
+                return $section;
+            }
+        }
+
+        throw new LogicException(
+            "Theme [{$theme->definition()->key}@{$theme->definition()->version}] "
+            . "does not define section [{$sectionKey}]."
+        );
+    }
+
+    public function sectionComponent(
+        Tenant $tenant,
+        string $sectionKey,
+    ): string {
+        $theme = $this->resolve($tenant);
+        $section = $this->section($tenant, $sectionKey);
+
+        return "themes/{$theme->definition()->key}/{$section->component}";
+    }
+
+    /**
+     * @return list<array{id: string, section: string, variant?: string|null, props?: array<string, mixed>}>
+     */
+    public function blueprintPage(
+        Tenant $tenant,
+        string $page,
+    ): array {
+        if (! preg_match(
+            '/^[a-z0-9][a-z0-9\/_-]*$/i',
+            $page,
+        )) {
+            throw new InvalidArgumentException(
+                "Invalid blueprint page [{$page}]."
+            );
+        }
+
+        if ($tenant->blueprint_key === null) {
+            throw new LogicException(
+                "Tenant [{$tenant->getKey()}] has no resolvable blueprint."
+            );
+        }
+
+        $blueprint = $tenant->blueprint_version !== null
+            ? $this->blueprints->get(
+                $tenant->blueprint_key,
+                $tenant->blueprint_version,
+            )
+            : $this->blueprints->latest(
+                $tenant->blueprint_key,
+            );
+
+        $definition = $blueprint->definition();
+        $pages = $definition->pages;
+
+        if (! array_key_exists($page, $pages)) {
+            throw new LogicException(
+                "Blueprint [{$definition->key}@{$definition->version}] "
+                . "does not define page [{$page}]."
+            );
+        }
+
+        return $pages[$page];
+    }
+
     private function resolveBlueprintTheme(
         BlueprintDefinition $blueprint,
     ): ThemeContract {
