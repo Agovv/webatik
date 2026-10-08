@@ -5,6 +5,8 @@ import {
     useForm,
     usePage,
 } from '@inertiajs/react';
+import { AdminPageContainer } from '@/components/admin-page-container';
+import { AdminPageHeader } from '@/components/admin-page-header';
 import {
     ChevronDown,
     ChevronUp,
@@ -143,24 +145,21 @@ export default function PagesEdit() {
     return (
         <>
             <Head title={`Edit ${page.title}`} />
-            <div className="@container flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4">
-                <div className="flex flex-col gap-3 @md:flex-row @md:items-start @md:justify-between">
-                    <div>
-                        <div className="flex items-center gap-2">
-                            <FilePenLine className="size-5 text-muted-foreground" />
-                            <h1 className="text-2xl font-semibold tracking-tight">
-                                {page.title}
-                            </h1>
-                        </div>
-                        <p className="mt-1 text-sm text-muted-foreground">
+            <AdminPageContainer>
+                <AdminPageHeader
+                    icon={FilePenLine}
+                    title={page.title}
+                    description={
+                        <>
                             Page <span className="font-mono">{page.key}</span>
-                        </p>
-                    </div>
-
-                    <Button asChild variant="outline">
-                        <Link href="/content/pages">Back to pages</Link>
-                    </Button>
-                </div>
+                        </>
+                    }
+                    actions={
+                        <Button asChild variant="outline">
+                            <Link href="/content/pages">Back to pages</Link>
+                        </Button>
+                    }
+                />
 
                 <form onSubmit={submit} className="flex flex-col gap-6">
                     <Card className="shadow-none">
@@ -461,7 +460,7 @@ export default function PagesEdit() {
                         </Button>
                     </div>
                 </form>
-            </div>
+            </AdminPageContainer>
         </>
     );
 }

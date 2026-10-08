@@ -1,5 +1,7 @@
 
 import { Head, Link, setLayoutProps, usePage } from '@inertiajs/react';
+import { AdminPageContainer } from '@/components/admin-page-container';
+import { AdminPageHeader } from '@/components/admin-page-header';
 import { FilePenLine, LayoutTemplate } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -40,18 +42,12 @@ export default function PagesIndex() {
     return (
         <>
             <Head title="Pages" />
-            <div className="@container flex h-full flex-1 flex-col gap-6 overflow-x-auto p-4">
-                <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2">
-                        <LayoutTemplate className="size-5 text-muted-foreground" />
-                        <h1 className="text-2xl font-semibold tracking-tight">
-                            Pages
-                        </h1>
-                    </div>
-                    <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
-                        Manage the tenant page structure, publishing state and section configuration without changing the active theme.
-                    </p>
-                </div>
+            <AdminPageContainer>
+                <AdminPageHeader
+                    icon={LayoutTemplate}
+                    title="Pages"
+                    description="Manage the tenant page structure, publishing state and section configuration without changing the active theme."
+                />
 
                 {pages.length === 0 ? (
                     <Card className="border-dashed shadow-none">
@@ -117,7 +113,7 @@ export default function PagesIndex() {
                         ))}
                     </div>
                 )}
-            </div>
+            </AdminPageContainer>
         </>
     );
 }
