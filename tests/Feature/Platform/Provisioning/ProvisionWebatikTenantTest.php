@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Jobs\ProvisionWebatikTenant;
+use App\Jobs\InitializeTenantPageContent;
 use App\Models\Central\Tenant;
 use App\Platform\Blueprints\BlueprintRegistry;
 use App\Platform\Provisioning\ProvisioningRun;
@@ -36,6 +37,19 @@ it('registers Webatik provisioning after Maestro tenant preparation', function (
             $pipeline->jobs,
             true,
         ),
+    );
+    expect(
+        array_search(
+            InitializeTenantPageContent::class,
+            $pipeline->jobs,
+            true,
+        )
+    )->toBe(
+        array_search(
+            ProvisionWebatikTenant::class,
+            $pipeline->jobs,
+            true,
+        ) + 1,
     );
 });
 

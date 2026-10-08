@@ -7,16 +7,22 @@ namespace App\Platform\Themes;
 use App\Models\Central\Tenant;
 use App\Platform\Blueprints\BlueprintDefinition;
 use App\Platform\Blueprints\BlueprintRegistry;
+use App\Platform\Content\TenantPageRepository;
 use App\Platform\Themes\Contracts\ThemeContract;
 use InvalidArgumentException;
 use LogicException;
 
 final class ThemeRuntime
 {
+    private readonly TenantPageRepository $pages;
+
     public function __construct(
         private readonly ThemeRegistry $themes,
         private readonly BlueprintRegistry $blueprints,
-    ) {}
+        ?TenantPageRepository $pages = null,
+    ) {
+        $this->pages = $pages ?? new TenantPageRepository();
+    }
 
     public function resolve(Tenant $tenant): ThemeContract
     {
@@ -159,9 +165,24 @@ final class ThemeRuntime
         string $page,
     ): array {
         $theme = $this->resolve($tenant);
+        $storedPage = $this->pages->published($page);
+
+        $items = $storedPage !== null
+            ? $storedPage->sections
+                ->filter(static fn ($item): bool => $item->is_enabled)
+                ->map(static fn ($item): array => [
+                    'id' => $item->section_id,
+                    'section' => $item->section,
+                    'variant' => $item->variant,
+                    'props' => $item->props ?? [],
+                ])
+                ->values()
+                ->all()
+            : $this->blueprintPage($tenant, $page);
+
         $sections = [];
 
-        foreach ($this->blueprintPage($tenant, $page) as $item) {
+        foreach ($items as $item) {
             $sectionKey = $item['section'];
             $section = $this->section($tenant, $sectionKey);
             $variant = $item['variant']
@@ -185,6 +206,7 @@ final class ThemeRuntime
 
         return $sections;
     }
+
     private function resolveBlueprintTheme(
         BlueprintDefinition $blueprint,
     ): ThemeContract {

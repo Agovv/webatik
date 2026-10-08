@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Jobs\DeleteTenantIcon;
 use App\Jobs\DeleteTenantLogs;
+use App\Jobs\InitializeTenantPageContent;
 use App\Jobs\ProvisionWebatikTenant;
 use App\Listeners\ConfigureTenantAuth;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -59,6 +60,7 @@ class TenancyServiceProvider extends ServiceProvider
                     // SendTenantWelcomeNotification::class,
                     Jobs\CreateStorageSymlinks::class,
                     ProvisionWebatikTenant::class,
+                    InitializeTenantPageContent::class,
 
                     // Your own jobs to prepare the tenant.
                     // Provision API keys, create S3 buckets, anything you want!

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Platform\Blueprints\BlueprintRegistry;
+use App\Platform\Content\TenantPageRepository;
 use App\Platform\Themes\ThemeRegistry;
 use App\Platform\Themes\ThemeRuntime;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +31,7 @@ final class ThemeServiceProvider extends ServiceProvider
             fn ($app): ThemeRuntime => new ThemeRuntime(
                 $app->make(ThemeRegistry::class),
                 $app->make(BlueprintRegistry::class),
+                $app->make(TenantPageRepository::class),
             ),
         );
     }
