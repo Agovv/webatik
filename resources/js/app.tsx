@@ -27,6 +27,7 @@ createInertiaApp({
             case name === 'welcome':
             case name === 'central/welcome':
             case name === 'tenant/welcome':
+            case name.startsWith('themes/'): 
                 return null;
             case name.startsWith('universal/auth/'):
                 return AuthLayout;
