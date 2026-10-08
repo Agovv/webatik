@@ -3,9 +3,10 @@ import type { ReactNode } from 'react';
 
 type Props = {
     icon?: LucideIcon;
-    title: ReactNode;
+    title?: ReactNode;
     description?: ReactNode;
     actions?: ReactNode;
+    children?: ReactNode;
 };
 
 export function AdminPageHeader({
@@ -13,7 +14,16 @@ export function AdminPageHeader({
     title,
     description,
     actions,
+    children,
 }: Props) {
+    if (children) {
+        return (
+            <div className="border-b pb-5">
+                {children}
+            </div>
+        );
+    }
+
     return (
         <div className="flex flex-col gap-4 border-b pb-5 @md:flex-row @md:items-start @md:justify-between">
             <div className="flex min-w-0 items-start gap-3">

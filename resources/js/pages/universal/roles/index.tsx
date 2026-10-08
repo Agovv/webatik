@@ -5,6 +5,8 @@ import {
     useForm,
     usePage,
 } from '@inertiajs/react';
+import { AdminPageHeader } from '@/components/admin-page-header';
+import { AdminPageContainer } from '@/components/admin-page-container';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -179,8 +181,9 @@ export default function Roles() {
     return (
         <>
             <Head title={t('roles.title')} />
-            <div className="@container flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="flex flex-col gap-3 @md:flex-row @md:items-center @md:justify-between">
+            <AdminPageContainer>
+                <AdminPageHeader>
+<div className="flex flex-col gap-3 @md:flex-row @md:items-center @md:justify-between">
                     <div className="flex flex-col gap-1">
                         <h1 className="text-2xl font-bold">
                             {t('roles.heading')}
@@ -226,6 +229,7 @@ export default function Roles() {
                             </Tooltip>
                         ))}
                 </div>
+</AdminPageHeader>
 
                 <RoleSearch
                     value={searchTerm}
@@ -269,7 +273,7 @@ export default function Roles() {
                     role={selectedRole}
                     onOpenChange={setPermissionsModalOpen}
                 />
-            </div>
+            </AdminPageContainer>
         </>
     );
 }

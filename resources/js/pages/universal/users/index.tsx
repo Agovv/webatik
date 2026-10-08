@@ -5,6 +5,8 @@ import {
     useForm,
     usePage,
 } from '@inertiajs/react';
+import { AdminPageHeader } from '@/components/admin-page-header';
+import { AdminPageContainer } from '@/components/admin-page-container';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -236,8 +238,9 @@ export default function Users() {
     return (
         <>
             <Head title={t('users.title')} />
-            <div className="@container flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="flex flex-col gap-3 @md:flex-row @md:items-center @md:justify-between">
+            <AdminPageContainer>
+                <AdminPageHeader>
+<div className="flex flex-col gap-3 @md:flex-row @md:items-center @md:justify-between">
                     <div className="flex flex-col gap-1">
                         <h1 className="text-2xl font-bold" id="users-header">
                             {t('users.heading')}
@@ -278,6 +281,7 @@ export default function Users() {
                             </Tooltip>
                         ))}
                 </div>
+</AdminPageHeader>
 
                 <UserSearch
                     value={searchTerm}
@@ -366,7 +370,7 @@ export default function Users() {
                     onOpenChange={setPermissionsModalOpen}
                     onSubmit={handleAssignPermissions}
                 />
-            </div>
+            </AdminPageContainer>
         </>
     );
 }
