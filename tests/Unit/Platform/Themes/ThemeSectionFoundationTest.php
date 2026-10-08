@@ -78,6 +78,27 @@ it('resolves theme sections and blueprint page composition', function (): void {
         ->toHaveCount(9);
 });
 
+it('resolves a page into theme-aware section components', function (): void {
+    $runtime = foundationThemeRuntime();
+    $tenant = new Tenant();
+    $tenant->theme_key = 'corporate';
+    $tenant->theme_version = '1.0.0';
+    $tenant->blueprint_key = 'corporate';
+    $tenant->blueprint_version = '1.0.0';
+
+    $sections = $runtime->pageSections($tenant, 'home');
+
+    expect($sections)
+        ->toHaveCount(9)
+        ->and($sections[0]->toArray())
+        ->toMatchArray([
+            'id' => 'hero',
+            'section' => 'hero',
+            'variant' => 'split',
+            'component' => 'sections/hero',
+            'props' => [],
+        ]);
+});
 it('rejects an unknown theme section', function (): void {
     $runtime = foundationThemeRuntime();
     $tenant = new Tenant();

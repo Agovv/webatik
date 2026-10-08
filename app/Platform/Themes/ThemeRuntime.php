@@ -151,6 +151,40 @@ final class ThemeRuntime
         return $pages[$page];
     }
 
+    /**
+     * @return list<ThemePageSection>
+     */
+    public function pageSections(
+        Tenant $tenant,
+        string $page,
+    ): array {
+        $theme = $this->resolve($tenant);
+        $sections = [];
+
+        foreach ($this->blueprintPage($tenant, $page) as $item) {
+            $sectionKey = $item['section'];
+            $section = $this->section($tenant, $sectionKey);
+            $variant = $item['variant']
+                ?? ($section->variants[0] ?? null);
+
+            if (! $section->supportsVariant($variant)) {
+                throw new LogicException(
+                    "Theme [{$theme->definition()->key}@{$theme->definition()->version}] "
+                    . "does not support variant [{$variant}] for section [{$sectionKey}]."
+                );
+            }
+
+            $sections[] = new ThemePageSection(
+                id: $item['id'],
+                section: $sectionKey,
+                variant: $variant,
+                component: $section->component,
+                props: $item['props'] ?? [],
+            );
+        }
+
+        return $sections;
+    }
     private function resolveBlueprintTheme(
         BlueprintDefinition $blueprint,
     ): ThemeContract {

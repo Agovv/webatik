@@ -47,6 +47,10 @@ class HomeController extends Controller
 
         $theme = $this->themes->resolve($tenant);
         $definition = $theme->definition();
+        $pageSections = array_map(
+            static fn (\App\Platform\Themes\ThemePageSection $section): array => $section->toArray(),
+            $this->themes->pageSections($tenant, 'home'),
+        );
 
         return Inertia::render(
             $this->themes->component($tenant, 'home'),
@@ -58,6 +62,7 @@ class HomeController extends Controller
                     'name' => $definition->name,
                     'version' => $definition->version,
                 ],
+                'pageSections' => $pageSections,
                 'tenantData' => [
                     'id' => $tenant->getKey(),
                     'name' => $tenant->name,
