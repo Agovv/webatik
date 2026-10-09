@@ -13,6 +13,8 @@ use App\Jobs\MigrateSubscriptionPrice;
 use App\Models\Cashier\Subscription;
 use App\Models\Central\Plan;
 use App\Models\Central\PlanPrice;
+use App\Platform\Modules\FeatureDefinition;
+use App\Platform\Modules\FeatureRegistry;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -22,14 +24,25 @@ use Inertia\Response;
 
 class PlanController extends Controller
 {
-    public function __construct(private StripeBillingGateway $stripe) {}
+    public function __construct(
+        private StripeBillingGateway $stripe,
+        private FeatureRegistry $features,
+    ) {}
 
     public function index(Request $request): Response
     {
         abort_unless($request->user()?->can('read plans'), 403);
 
         return Inertia::render('central/plans/index', [
-            'plans' => Plan::query()->with(['prices', 'limits'])->orderBy('sort_order')->get(),
+            'plans' => Plan::query()->with(['prices', 'limits', 'features'])->orderBy('sort_order')->get(),
+            'features' => collect($this->features->all())
+                ->map(static fn (FeatureDefinition $feature): array => [
+                    'key' => $feature->key,
+                    'name' => $feature->name,
+                    'module' => $feature->module,
+                    'description' => $feature->description,
+                ])
+                ->values(),
         ]);
     }
 
@@ -82,7 +95,21 @@ class PlanController extends Controller
     private function persist(Plan $plan, array $data): void
     {
         DB::transaction(function () use ($plan, $data): void {
-            $plan->fill(Arr::except($data, ['prices', 'limits']))->save();
+            $plan->fill(Arr::except($data, ['prices', 'limits', 'features', 'feature_selection_present']))->save();
+
+            if ((bool) ($data['feature_selection_present'] ?? false)) {
+                $featureKeys = array_values(array_unique($data['features'] ?? []));
+
+                if ($featureKeys === []) {
+                    $plan->features()->delete();
+                } else {
+                    $plan->features()->whereNotIn('feature_key', $featureKeys)->delete();
+
+                    foreach ($featureKeys as $featureKey) {
+                        $plan->features()->updateOrCreate(['feature_key' => $featureKey]);
+                    }
+                }
+            }
 
             foreach (PlanLimitKey::cases() as $key) {
                 $plan->limits()->updateOrCreate(['key' => $key->value], ['value' => $data['limits'][$key->value]]);

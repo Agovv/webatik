@@ -1105,7 +1105,9 @@
             "slug": "Slug",
             "description": "Descripción",
             "monthlyPrice": "Precio mensual (centavos)",
-            "yearlyPrice": "Precio anual (centavos)"
+            "yearlyPrice": "Precio anual (centavos)",
+            "features": "Funciones incluidas",
+            "featuresDescription": "Elige qué funciones registradas permite este plan. El acceso del tenant también depende del blueprint asignado."
         }
     }
 }

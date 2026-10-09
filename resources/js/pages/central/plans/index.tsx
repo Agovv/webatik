@@ -7,11 +7,17 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { publish } from '@/routes/manage/plan-prices';
-import type { Plan } from '@/types';
+import type { FeatureDefinition, Plan } from '@/types';
 
 import { PlanDialog } from './components/plan-dialog';
 
-export default function PlansIndex({ plans }: { plans: Plan[] }) {
+export default function PlansIndex({
+    plans,
+    features,
+}: {
+    plans: Plan[];
+    features: FeatureDefinition[];
+}) {
     const { t } = useTranslation();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
@@ -140,6 +146,7 @@ export default function PlansIndex({ plans }: { plans: Plan[] }) {
             <PlanDialog
                 open={dialogOpen}
                 plan={selectedPlan}
+                features={features}
                 onOpenChange={setDialogOpen}
             />
         </>

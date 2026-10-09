@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Dialog,
     DialogContent,
@@ -15,21 +16,30 @@ import {
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { store, update } from '@/routes/manage/plans';
-import type { Plan } from '@/types';
+import type { FeatureDefinition, Plan } from '@/types';
 
 type PlanDialogProps = {
     open: boolean;
     plan: Plan | null;
+    features: FeatureDefinition[];
     onOpenChange: (open: boolean) => void;
 };
 
-export function PlanDialog({ open, plan, onOpenChange }: PlanDialogProps) {
+export function PlanDialog({
+    open,
+    plan,
+    features,
+    onOpenChange,
+}: PlanDialogProps) {
     const { t } = useTranslation();
     const isEditing = plan !== null;
     const price = (interval: 'month' | 'year') =>
         [...(plan?.prices ?? [])]
             .reverse()
             .find((candidate) => candidate.interval === interval);
+    const selectedFeatureKeys = new Set(
+        (plan?.features ?? []).map((feature) => feature.feature_key),
+    );
     const limit = (key: string) =>
         plan?.limits.find((candidate) => candidate.key === key)?.value ?? 0;
 
@@ -126,6 +136,78 @@ export function PlanDialog({ open, plan, onOpenChange }: PlanDialogProps) {
                                         min={0}
                                     />
                                 ))}
+                                <section
+                                    className="grid gap-3 md:col-span-2"
+                                    aria-labelledby="plan-features-heading"
+                                >
+                                    <div className="grid gap-1">
+                                        <h3
+                                            id="plan-features-heading"
+                                            className="text-sm font-medium"
+                                        >
+                                            {t('plans.form.features')}
+                                        </h3>
+                                        <p className="text-sm text-muted-foreground">
+                                            {t(
+                                                'plans.form.featuresDescription',
+                                            )}
+                                        </p>
+                                    </div>
+
+                                    <div className="grid gap-2 sm:grid-cols-2">
+                                        {features.map((feature) => {
+                                            const id = `plan-feature-${feature.key.replaceAll('.', '-')}`;
+
+                                            return (
+                                                <label
+                                                    key={feature.key}
+                                                    htmlFor={id}
+                                                    className="flex items-start gap-3 rounded-md border p-3"
+                                                >
+                                                    <Checkbox
+                                                        id={id}
+                                                        name="features[]"
+                                                        value={feature.key}
+                                                        defaultChecked={selectedFeatureKeys.has(
+                                                            feature.key,
+                                                        )}
+                                                    />
+
+                                                    <span className="grid min-w-0 gap-1">
+                                                        <span className="text-sm font-medium">
+                                                            {feature.name}
+                                                        </span>
+
+                                                        <span className="text-xs break-all text-muted-foreground">
+                                                            {feature.key}
+                                                        </span>
+
+                                                        {feature.description && (
+                                                            <span className="text-sm text-muted-foreground">
+                                                                {
+                                                                    feature.description
+                                                                }
+                                                            </span>
+                                                        )}
+                                                    </span>
+                                                </label>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <Input
+                                        type="hidden"
+                                        name="feature_selection_present"
+                                        value="1"
+                                    />
+
+                                    <InputError
+                                        message={
+                                            errors['features.0'] ??
+                                            errors.features
+                                        }
+                                    />
+                                </section>
                             </div>
                             <Input
                                 type="hidden"

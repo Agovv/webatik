@@ -1105,7 +1105,9 @@
             "slug": "Slug",
             "description": "Description",
             "monthlyPrice": "Monthly price (cents)",
-            "yearlyPrice": "Yearly price (cents)"
+            "yearlyPrice": "Yearly price (cents)",
+            "features": "Included features",
+            "featuresDescription": "Choose which registered features this plan grants. Tenant access also depends on the assigned blueprint."
         }
     }
 }

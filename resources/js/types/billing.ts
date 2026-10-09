@@ -18,6 +18,18 @@ export type PlanPrice = {
     stripe_price_id: string | null;
 };
 
+export type PlanFeature = {
+    id: string;
+    feature_key: string;
+};
+
+export type FeatureDefinition = {
+    key: string;
+    name: string;
+    module: string;
+    description: string | null;
+};
+
 export type Plan = {
     id: string;
     name: string;
@@ -27,5 +39,6 @@ export type Plan = {
     is_featured: boolean;
     is_active: boolean;
     limits: PlanLimit[];
+    features?: PlanFeature[];
     prices: PlanPrice[];
 };

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Web\Central\Plans;
 
+use App\Platform\Modules\FeatureRegistry;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -24,6 +25,9 @@ class StorePlanRequest extends FormRequest
             'sort_order' => ['required', 'integer', 'min:0'],
             'is_featured' => ['required', 'boolean'],
             'is_active' => ['required', 'boolean'],
+            'features' => ['sometimes', 'array'],
+            'features.*' => ['string', 'distinct', Rule::in(array_keys(app(FeatureRegistry::class)->all()))],
+            'feature_selection_present' => ['sometimes', 'accepted'],
             'prices' => ['required', 'array'],
             'prices.month' => ['required', 'integer', 'min:50'],
             'prices.year' => ['required', 'integer', 'min:50'],
