@@ -84,10 +84,10 @@ export function TenantSidebar() {
 
     return (
         <Sidebar collapsible="icon" variant="inset" className="border-sidebar-border/70">
-            <SidebarHeader className="p-3">
+            <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild className="h-11 rounded-lg">
+                        <SidebarMenuButton size="lg" asChild>
                             <Link href={dashboard()} prefetch>
                                 <AppLogo />
                             </Link>
