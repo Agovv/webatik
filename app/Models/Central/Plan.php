@@ -46,6 +46,12 @@ class Plan extends Model
         return $this->hasMany(PlanLimit::class);
     }
 
+    /** @return HasMany<PlanFeature, $this> */
+    public function features(): HasMany
+    {
+        return $this->hasMany(PlanFeature::class);
+    }
+
     public function limit(PlanLimitKey $key): int
     {
         return (int) ($this->limits->firstWhere('key', $key)->value ?? 0);
