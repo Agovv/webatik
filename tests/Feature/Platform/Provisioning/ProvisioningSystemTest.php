@@ -32,5 +32,5 @@ it('provisions the corporate blueprint core steps', function (): void {
                 'version' => '1.0.0',
             ])
         ->and($context->getState('resolved_modules'))
-            ->toBe(['blog']);
+            ->toBe(['blog', 'content']);
 });

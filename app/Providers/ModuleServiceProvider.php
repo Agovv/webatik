@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Billing\FeatureAvailability;
+use App\Billing\FeatureEntitlementService;
 use App\Platform\Blueprints\BlueprintRegistry;
 use App\Platform\Modules\FeatureRegistry;
 use App\Platform\Modules\ModuleRegistry;
@@ -13,6 +15,11 @@ final class ModuleServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->bind(
+            FeatureAvailability::class,
+            FeatureEntitlementService::class,
+        );
+
         $this->app->singleton(
             ModuleRegistry::class,
             function ($app): ModuleRegistry {

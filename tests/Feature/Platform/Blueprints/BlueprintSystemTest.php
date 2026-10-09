@@ -24,13 +24,13 @@ it('exposes corporate blueprint features correctly', function (): void {
         ->definition();
 
     expect($definition->modules)
-        ->toBe(['blog']);
+        ->toBe(['blog', 'content']);
 
     foreach ($definition->features as $featureKey) {
         expect($features->has($featureKey))->toBeTrue();
         expect(
             $features->get($featureKey)->module
-        )->toBe('blog');
+        )->toBe(str_starts_with($featureKey, 'blog.') ? 'blog' : 'content');
     }
 });
 
@@ -46,5 +46,5 @@ it('resolves the corporate blueprint module order', function (): void {
             fn ($module): string => $module->definition()->key,
             $modules,
         )
-    )->toBe(['blog']);
+    )->toBe(['blog', 'content']);
 });

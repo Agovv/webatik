@@ -15,6 +15,7 @@ use App\Themes\CorporateTheme;
 it('falls back to blueprint pages when tenant content storage is unavailable', function (): void {
     $modules = new ModuleRegistry([
         new \App\Modules\Blog\BlogModule(),
+        new \App\Modules\Content\ContentModule(),
     ]);
 
     $features = new FeatureRegistry($modules);

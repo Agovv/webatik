@@ -15,5 +15,6 @@ return [
 
     'registry' => [
         \App\Modules\Blog\BlogModule::class,
+        \App\Modules\Content\ContentModule::class,
     ],
 ];

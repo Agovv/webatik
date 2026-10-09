@@ -11,7 +11,7 @@ use App\Platform\Blueprints\BlueprintRegistry;
 use App\Platform\Modules\FeatureRegistry;
 use LogicException;
 
-final class FeatureEntitlementService
+final class FeatureEntitlementService implements FeatureAvailability
 {
     public function __construct(
         private readonly FeatureRegistry $features,

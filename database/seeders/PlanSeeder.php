@@ -54,6 +54,12 @@ class PlanSeeder extends Seeder
             foreach (PlanLimitKey::cases() as $index => $key) {
                 $plan->limits()->updateOrCreate(['key' => $key->value], ['value' => $attributes['limits'][$index]]);
             }
+
+            foreach (['content.pages.view', 'content.pages.update'] as $featureKey) {
+                $plan->features()->updateOrCreate(
+                    ['feature_key' => $featureKey],
+                );
+            }
         }
     }
 }

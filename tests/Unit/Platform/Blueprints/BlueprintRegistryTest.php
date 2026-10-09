@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Blueprints\CorporateBlueprint;
 use App\Modules\Blog\BlogModule;
+use App\Modules\Content\ContentModule;
 use App\Platform\Blueprints\BlueprintDefinition;
 use App\Platform\Blueprints\BlueprintRegistry;
 use App\Platform\Blueprints\Contracts\BlueprintContract;
@@ -14,6 +15,7 @@ function makeBlueprintRegistry(): BlueprintRegistry
 {
     $modules = new ModuleRegistry([
         new BlogModule(),
+        new ContentModule(),
     ]);
 
     $features = new FeatureRegistry($modules);
@@ -88,7 +90,7 @@ it('resolves modules required by a blueprint', function (): void {
 
     $modules = $registry->resolveModules($definition);
 
-    expect($modules)->toHaveCount(1)
+    expect($modules)->toHaveCount(2)
         ->and($modules[0]->definition()->key)->toBe('blog');
 });
 

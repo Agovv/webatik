@@ -15,6 +15,7 @@ function themeRuntime(): ThemeRuntime
 {
     $modules = new ModuleRegistry([
         new \App\Modules\Blog\BlogModule(),
+        new \App\Modules\Content\ContentModule(),
     ]);
 
     $features = new FeatureRegistry($modules);

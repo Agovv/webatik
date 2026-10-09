@@ -17,6 +17,7 @@ final class CorporateBlueprint implements BlueprintContract
             version: '1.0.0',
             modules: [
                 'blog',
+                'content',
             ],
             features: [
                 'blog.posts.view',
@@ -25,6 +26,8 @@ final class CorporateBlueprint implements BlueprintContract
                 'blog.posts.publish',
                 'blog.categories.manage',
                 'blog.tags.manage',
+                'content.pages.view',
+                'content.pages.update',
             ],
             theme: 'corporate',
             themeVersion: '1.0.0',

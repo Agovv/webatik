@@ -58,7 +58,7 @@ test('plan management receives the registered feature catalog and saved grants',
         ->assertSuccessful()
         ->assertInertia(fn (Assert $page) => $page
             ->component('central/plans/index')
-            ->has('features', 9)
+            ->has('features', 11)
             ->where('features.0.key', 'blog.posts.view')
             ->where('plans.0.features.0.feature_key', 'blog.posts.view'));
 });
