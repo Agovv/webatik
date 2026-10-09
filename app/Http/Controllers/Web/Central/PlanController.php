@@ -34,7 +34,16 @@ class PlanController extends Controller
         abort_unless($request->user()?->can('read plans'), 403);
 
         return Inertia::render('central/plans/index', [
-            'plans' => Plan::query()->with(['prices', 'limits', 'features'])->orderBy('sort_order')->get(),
+            'plans' => Plan::query()
+                ->with([
+                    'prices' => static fn ($query) => $query
+                        ->orderBy('created_at')
+                        ->orderBy('id'),
+                    'limits',
+                    'features',
+                ])
+                ->orderBy('sort_order')
+                ->get(),
             'features' => collect($this->features->all())
                 ->map(static fn (FeatureDefinition $feature): array => [
                     'key' => $feature->key,
@@ -71,8 +80,56 @@ class PlanController extends Controller
     public function publish(Request $request, PlanPrice $planPrice): RedirectResponse
     {
         abort_unless($request->user()?->can('update plans'), 403);
-        $planPrice = $this->stripe->publishPrice($planPrice->load('plan'));
 
+        abort_unless(
+            $planPrice->status === PlanPriceStatus::DRAFT,
+            404,
+        );
+
+        $planPrice->load('plan');
+
+        $replacement = $planPrice->plan->prices()
+            ->where('interval', $planPrice->interval->value)
+            ->where('status', PlanPriceStatus::PUBLISHED->value)
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->first();
+
+        // Aynı tutar zaten yayımlanmışsa o tutar için tüm yinelenen
+        // taslakları arşivle; gereksiz bir Stripe fiyatı oluşturma.
+        if ($replacement && (int) $replacement->amount === (int) $planPrice->amount) {
+            $planPrice->plan->prices()
+                ->where('interval', $planPrice->interval->value)
+                ->where('status', PlanPriceStatus::DRAFT->value)
+                ->update([
+                    'status' => PlanPriceStatus::ARCHIVED->value,
+                    'archived_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+            return back()->with(
+                'success',
+                __('The selected amount is already published. Duplicate drafts were archived.'),
+            );
+        }
+
+        // Eski kayıt zincirini güncel yayımlanmış fiyata bağla.
+        $planPrice->update([
+            'replaces_price_id' => $replacement?->getKey(),
+        ]);
+
+        $planPrice->setRelation('replacementOf', $replacement);
+
+        $planPrice = $this->stripe->publishPrice($planPrice);
+        $planPrice->plan->prices()
+            ->where('interval', $planPrice->interval->value)
+            ->where('status', PlanPriceStatus::DRAFT->value)
+            ->where('id', '!=', $planPrice->getKey())
+            ->update([
+                'status' => PlanPriceStatus::ARCHIVED->value,
+                'archived_at' => now(),
+                'updated_at' => now(),
+            ]);
         if ($planPrice->replacementOf?->stripe_price_id) {
             Subscription::query()
                 ->where('stripe_price', $planPrice->replacementOf->stripe_price_id)
@@ -116,18 +173,69 @@ class PlanController extends Controller
             }
 
             foreach (PlanInterval::cases() as $interval) {
-                $current = $plan->prices()->where('interval', $interval->value)->latest()->first();
-                $amount = $data['prices'][$interval->value];
+                // HTML formundan gelen fiyatı tam sayıya dönüştür.
+                $amount = (int) $data['prices'][$interval->value];
 
-                if (! $current || $current->amount !== $amount) {
-                    $plan->prices()->create([
-                        'interval' => $interval,
+                // Aynı dönem için mevcut taslakları bul; en yenisini koru.
+                $drafts = $plan->prices()
+                    ->where('interval', $interval->value)
+                    ->where('status', PlanPriceStatus::DRAFT->value)
+                    ->orderByDesc('created_at')
+                    ->orderByDesc('id')
+                    ->get();
+
+                $draft = $drafts->first();
+
+                // Önceki kayıtlardan kalan yinelenen taslakları arşivle.
+                $drafts->skip(1)->each(
+                    static fn (PlanPrice $duplicate) => $duplicate->update([
+                        'status' => PlanPriceStatus::ARCHIVED,
+                        'archived_at' => now(),
+                    ]),
+                );
+
+                // Güncel yayımlanmış fiyatı bul; taslak başka bir taslağı
+                // değil, gerçek yayımlanmış fiyatı değiştirmelidir.
+                $published = $plan->prices()
+                    ->where('interval', $interval->value)
+                    ->where('status', PlanPriceStatus::PUBLISHED->value)
+                    ->orderByDesc('published_at')
+                    ->orderByDesc('created_at')
+                    ->first();
+
+                if ($draft) {
+                    // Fiyat zaten yayımlanmış olanla aynıysa taslağa gerek yok.
+                    if ($published && (int) $published->amount === $amount) {
+                        $draft->update([
+                            'status' => PlanPriceStatus::ARCHIVED,
+                            'archived_at' => now(),
+                            'replaces_price_id' => $published->getKey(),
+                        ]);
+
+                        continue;
+                    }
+
+                    // Mevcut taslağı güncelle; her kayıtta yenisini oluşturma.
+                    $draft->update([
                         'amount' => $amount,
-                        'currency' => 'usd',
-                        'status' => PlanPriceStatus::DRAFT,
-                        'replaces_price_id' => $current?->getKey(),
+                        'replaces_price_id' => $published?->getKey(),
                     ]);
+
+                    continue;
                 }
+
+                // Tutar değişmediyse yeni bir taslak oluşturma.
+                if ($published && (int) $published->amount === $amount) {
+                    continue;
+                }
+
+                $plan->prices()->create([
+                    'interval' => $interval,
+                    'amount' => $amount,
+                    'currency' => 'usd',
+                    'status' => PlanPriceStatus::DRAFT,
+                    'replaces_price_id' => $published?->getKey(),
+                ]);
             }
         });
     }

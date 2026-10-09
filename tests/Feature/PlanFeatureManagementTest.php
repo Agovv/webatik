@@ -127,3 +127,71 @@ test('plan management rejects feature keys that are not registered', function ()
 
     expect(Plan::query()->where('slug', 'feature-test-plan')->exists())->toBeFalse();
 });
+test('repeated plan edits reuse one draft price per interval', function () {
+    $user = planFeatureManagementAdmin();
+    $payload = planFeatureManagementPayload();
+
+    $this->actingAs($user)
+        ->post(route('manage.plans.store'), $payload)
+        ->assertRedirect();
+
+    $plan = Plan::query()
+        ->where('slug', 'feature-test-plan')
+        ->firstOrFail();
+
+    $monthlyDraftId = $plan->prices()
+        ->where('interval', 'month')
+        ->where('status', 'draft')
+        ->value('id');
+
+    $yearlyDraftId = $plan->prices()
+        ->where('interval', 'year')
+        ->where('status', 'draft')
+        ->value('id');
+
+    expect($monthlyDraftId)->not->toBeNull();
+    expect($yearlyDraftId)->not->toBeNull();
+
+    for ($attempt = 0; $attempt < 3; $attempt++) {
+        $this->actingAs($user)
+            ->patch(route('manage.plans.update', $plan), $payload)
+            ->assertRedirect();
+    }
+
+    expect(
+        $plan->prices()->where('status', 'draft')->count(),
+    )->toBe(2);
+
+    expect(
+        $plan->prices()
+            ->where('interval', 'month')
+            ->where('status', 'draft')
+            ->value('id'),
+    )->toBe($monthlyDraftId);
+
+    expect(
+        $plan->prices()
+            ->where('interval', 'year')
+            ->where('status', 'draft')
+            ->value('id'),
+    )->toBe($yearlyDraftId);
+
+    $payload['prices']['month'] = 2500;
+
+    $this->actingAs($user)
+        ->patch(route('manage.plans.update', $plan), $payload)
+        ->assertRedirect();
+
+    $monthlyDraft = $plan->prices()
+        ->where('interval', 'month')
+        ->where('status', 'draft')
+        ->firstOrFail();
+
+    expect($plan->prices()
+        ->where('interval', 'month')
+        ->where('status', 'draft')
+        ->count())->toBe(1);
+
+    expect($monthlyDraft->id)->toBe($monthlyDraftId);
+    expect((int) $monthlyDraft->amount)->toBe(2500);
+});

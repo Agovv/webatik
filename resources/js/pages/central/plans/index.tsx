@@ -107,6 +107,27 @@ export default function PlansIndex({
                                         .filter(
                                             (price) => price.status === 'draft',
                                         )
+                                        .reduce<Plan['prices']>(
+                                            (latestDrafts, price) => {
+                                                const existingIndex =
+                                                    latestDrafts.findIndex(
+                                                        (candidate) =>
+                                                            candidate.interval ===
+                                                            price.interval,
+                                                    );
+
+                                                if (existingIndex === -1) {
+                                                    latestDrafts.push(price);
+                                                } else {
+                                                    latestDrafts[
+                                                        existingIndex
+                                                    ] = price;
+                                                }
+
+                                                return latestDrafts;
+                                            },
+                                            [],
+                                        )
                                         .map((price) => (
                                             <Form
                                                 key={price.id}
